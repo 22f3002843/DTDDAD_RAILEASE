@@ -61,8 +61,8 @@
           <div class="sm:col-span-2 flex justify-center pt-4 sm:pt-4">
             <button
               type="button"
-              @click="searchStore.swapStations()"
-              class="w-8 h-8 rounded-full border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 flex items-center justify-center shadow-sm hover:scale-105 transition-transform"
+              @click="handleSwap"
+              class="w-8 h-8 rounded-full border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 flex items-center justify-center shadow-sm hover:scale-105 transition-transform cursor-pointer"
             >
               <ArrowLeftRight class="w-3.5 h-3.5" />
             </button>
@@ -112,7 +112,7 @@
         <div>
           <label class="block text-[11px] font-bold text-slate-600 mb-1">Quota</label>
           <CustomSelect
-            v-model="selectedQuota"
+            v-model="searchStore.selectedQuota"
             :options="quotaOptions"
             size="small"
             rounded="medium"
@@ -137,10 +137,10 @@
           </label>
         </div>
 
-        <!-- Orange CTA Button (Search Trains) -->
+        <!-- Orange CTA Button (Search Trains with explicit console & navigation logging) -->
         <button
           type="submit"
-          class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-3"
+          class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-3 cursor-pointer select-none"
         >
           <span>Search Trains</span>
           <ArrowRight class="w-4 h-4" />
@@ -196,7 +196,10 @@ const fromCode = computed({
   get: () => searchStore.fromStation?.code || 'NDLS',
   set: (val) => {
     const st = POPULAR_STATIONS.find(s => s.code === val)
-    if (st) searchStore.fromStation = st
+    if (st) {
+      searchStore.fromStation = st
+      console.log('[RailEase Search] Updated From Station to:', st.city, `(${st.code})`)
+    }
   }
 })
 
@@ -204,16 +207,43 @@ const toCode = computed({
   get: () => searchStore.toStation?.code || 'MMCT',
   set: (val) => {
     const st = POPULAR_STATIONS.find(s => s.code === val)
-    if (st) searchStore.toStation = st
+    if (st) {
+      searchStore.toStation = st
+      console.log('[RailEase Search] Updated To Station to:', st.city, `(${st.code})`)
+    }
   }
 })
 
-const selectedQuota = ref('GENERAL')
 const disabilityConcession = ref(false)
 const flexibleDate = ref(false)
 const railwayPass = ref(false)
 
-function handleQuickSearch() {
-  router.push('/search')
+function handleSwap() {
+  console.log('[RailEase Search] Swapping stations...')
+  searchStore.swapStations()
+}
+
+function handleQuickSearch(e) {
+  if (e) e.preventDefault()
+  
+  const payload = {
+    from: searchStore.fromStation?.name,
+    to: searchStore.toStation?.name,
+    date: searchStore.travelDate,
+    class: searchStore.selectedClass,
+    quota: searchStore.selectedQuota
+  }
+  
+  console.log('--------------------------------------------------')
+  console.log('[RailEase Search] 🚀 Search Trains button clicked!')
+  console.log('[RailEase Search] Query Parameters:', payload)
+  console.log('[RailEase Search] Total matching trains:', searchStore.filteredTrains.length)
+  console.log('[RailEase Router] Navigating to /search view...')
+  console.log('--------------------------------------------------')
+
+  // Direct router navigation
+  router.push('/search').catch(err => {
+    console.error('[RailEase Router] Navigation Error:', err)
+  })
 }
 </script>

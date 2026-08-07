@@ -10,6 +10,7 @@ import CommunityView from '@/views/CommunityView.vue'
 import AlertsView from '@/views/AlertsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import SettingsView from '@/views/SettingsView.vue'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const routes = [
   {
@@ -19,15 +20,15 @@ const routes = [
     meta: { layout: 'landing' }
   },
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: DashboardView,
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/search',
     name: 'search-trains',
     component: SearchTrainsView,
+    meta: { requiresAuth: false } // PUBLIC ACCESS: No login required to search & view trains
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView,
     meta: { requiresAuth: true }
   },
   {
@@ -85,17 +86,19 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior() {
     return { top: 0 }
   }
 })
 
-// Route navigation guard for authentication
+// Navigation Guard
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('railease_auth') === 'true'
-  if (to.meta.requiresAuth && !isAuthenticated) {
+  const authStore = useAuthStore()
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    console.warn('[RailEase Router Guard] Blocked protected route:', to.path, '-> redirecting to landing')
     next({ name: 'landing' })
   } else {
     next()

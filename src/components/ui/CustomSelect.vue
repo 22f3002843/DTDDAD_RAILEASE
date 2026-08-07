@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full" ref="containerRef">
-    <!-- Trigger Button (Replaces native select) -->
+    <!-- Trigger Button -->
     <button
       type="button"
       @click="isOpen = !isOpen"
@@ -27,7 +27,7 @@
       />
     </button>
 
-    <!-- Custom Floating Options Popover Menu (Replaces ugly native browser dropdown popup) -->
+    <!-- Custom Floating Options Popover Menu -->
     <transition
       enter-active-class="transition duration-150 ease-out"
       enter-from-class="transform opacity-0 scale-95 -translate-y-1"
@@ -70,7 +70,7 @@ const props = defineProps({
   },
   options: {
     type: Array,
-    default: () => [] // [{ label: 'All Classes', value: 'All Classes' }]
+    default: () => []
   },
   size: {
     type: String,
@@ -85,7 +85,7 @@ const props = defineProps({
     default: 'solid'
   },
   icon: {
-    type: Object,
+    type: [Object, Function],
     default: null
   }
 })
