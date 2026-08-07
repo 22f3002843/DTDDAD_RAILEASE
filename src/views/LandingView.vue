@@ -3,26 +3,35 @@
     <!-- Top Navbar with Clean RailEase Logo & Top-Right Sign In Button -->
     <Navbar @openLogin="showAuthModal = true" />
 
-    <!-- ==================== AMBIENT LIGHT GLOW BACKGROUND ANIMATIONS ==================== -->
+    <!-- ==================== AMBIENT LIGHT & VANDE BHARAT WATERMARK BACKGROUND ==================== -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+      <!-- Ultra-Transparent Vande Bharat Train Background Watermark Image -->
+      <div class="absolute top-0 right-0 w-full lg:w-3/4 h-[750px] opacity-[0.07] mix-blend-multiply transition-opacity duration-1000 select-none">
+        <img
+          src="/vande_bharat_bg.png"
+          alt="Vande Bharat Express Train Background"
+          class="w-full h-full object-cover object-right-top filter brightness-105 contrast-125 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_40%,transparent_100%)]"
+        />
+      </div>
+
       <!-- Main Soft Ambient Glow Orb 1 (Top Left Hero Brand Area) -->
       <div
-        class="absolute -top-20 left-10 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-rail-400/25 via-sky-300/20 to-indigo-300/15 blur-[120px] animate-ambient-glow"
+        class="absolute -top-20 left-10 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-rail-400/20 via-sky-300/15 to-indigo-300/10 blur-[120px] animate-ambient-glow"
       ></div>
 
       <!-- Rotating Cyan-Blue Glow Orb 2 (Behind Quick Book Widget) -->
       <div
-        class="absolute top-10 right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-tr from-sky-400/20 via-rail-500/15 to-transparent blur-[120px] animate-slow-rotate"
+        class="absolute top-10 right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-tr from-sky-400/15 via-rail-500/10 to-transparent blur-[120px] animate-slow-rotate"
       ></div>
 
       <!-- Pulsing Soft Indigo Tint Orb 3 (Bottom Hero Center) -->
       <div
-        class="absolute top-96 left-1/3 -translate-x-1/2 w-[750px] h-[450px] rounded-full bg-gradient-to-r from-blue-200/35 via-indigo-150/30 to-sky-200/35 blur-[140px] animate-pulse-glow"
+        class="absolute top-96 left-1/3 -translate-x-1/2 w-[750px] h-[450px] rounded-full bg-gradient-to-r from-blue-200/25 via-indigo-150/20 to-sky-200/25 blur-[140px] animate-pulse-glow"
       ></div>
 
       <!-- Subtle Dot Grid Pattern Background -->
       <div
-        class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-50"
+        class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-40"
       ></div>
     </div>
     <!-- =================================================================================== -->
@@ -32,7 +41,7 @@
       <!-- Left Hero Content -->
       <div class="lg:col-span-7 space-y-7 text-left reveal-on-scroll relative">
         <!-- Backlight Glow Aura behind Hero Text -->
-        <div class="absolute -top-10 -left-10 w-[480px] h-[320px] bg-gradient-to-r from-blue-400/20 via-sky-300/20 to-indigo-400/15 rounded-full blur-3xl opacity-80 animate-pulse-glow pointer-events-none -z-10"></div>
+        <div class="absolute -top-10 -left-10 w-[480px] h-[320px] bg-gradient-to-r from-blue-400/15 via-sky-300/15 to-indigo-400/10 rounded-full blur-3xl opacity-80 animate-pulse-glow pointer-events-none -z-10"></div>
 
         <!-- Premium Pill Badges & Mission Tagline -->
         <div class="space-y-3">
@@ -64,7 +73,7 @@
         <div class="flex flex-wrap items-center gap-4 pt-2">
           <button
             @click="showAuthModal = true"
-            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group relative"
+            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group relative cursor-pointer"
           >
             <span>Sign In to Dashboard</span>
             <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -288,7 +297,7 @@
 
             <button
               @click="showAuthModal = true"
-              class="w-full py-3 bg-rail-500 hover:bg-rail-600 text-white font-bold text-xs rounded-btn shadow transition-all"
+              class="w-full py-3 bg-rail-500 hover:bg-rail-600 text-white font-bold text-xs rounded-btn shadow transition-all cursor-pointer"
             >
               Configure High-Stakes Mode &rarr;
             </button>
@@ -366,7 +375,7 @@ useScrollReveal()
 
 const expressCorridors = [
   { name: 'Vande Bharat Express', type: 'High-Speed AC', route: 'New Delhi &rarr; Varanasi', punctuality: '92.4%', speed: '130 km/h' },
-  { name: 'Mumbai Rajdhani', type: 'Superfast AC', route: 'New Delhi &rarr; Mumbai Central', punctuality: '89.2%', speed: '120 km/h' },
+  { name: 'Mumbai Rajdhani', type: 'Superfast AC', route: 'New Delhi &rarr; Varanasi', punctuality: '89.2%', speed: '120 km/h' },
   { name: 'IRCTC Tejas Express', type: 'Premium Chair', route: 'Ahmedabad &rarr; Mumbai Central', punctuality: '94.8%', speed: '125 km/h' }
 ]
 
