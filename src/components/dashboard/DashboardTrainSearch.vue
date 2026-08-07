@@ -1,18 +1,109 @@
 <template>
   <div class="space-y-6 font-sans">
-    <!-- Top Navy Search Header Bar for Dashboard -->
+    <!-- Active Journey Locked Banner (if active trip is set) -->
+    <div
+      v-if="journeyStore.activeTrip"
+      class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white p-4 rounded-card border border-emerald-500/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in"
+    >
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+          <CheckCircle2 class="w-5 h-5 text-emerald-400 animate-pulse" />
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black uppercase text-emerald-300 tracking-wider">Active RailEase Journey Synced</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/30 text-emerald-200 text-[10px] font-bold border border-emerald-400/30">
+              PNR: {{ journeyStore.activeTrip.pnr || 'SYNCED-84920' }}
+            </span>
+          </div>
+          <h4 class="text-base font-black text-white uppercase mt-0.5">
+            {{ journeyStore.activeTrip.trainName }} ({{ journeyStore.activeTrip.trainNumber }})
+          </h4>
+          <p class="text-xs text-slate-300 font-medium">
+            {{ journeyStore.activeTrip.from }} &rarr; {{ journeyStore.activeTrip.to }} • Live Tracking, Safeguards &amp; eCatering Synced
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          @click="router.push('/live-status')"
+          class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-extrabold shadow transition-all flex items-center gap-1.5 cursor-pointer"
+        >
+          <Radio class="w-3.5 h-3.5" />
+          <span>Open Live Tracking &rarr;</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PNR Direct Lookup / Sync Card -->
+    <div class="bg-white p-5 rounded-card border border-slate-200 shadow-sm space-y-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+            <Search class="w-4 h-4 text-rail-500" />
+            <span>Already Booked Externally? Sync Trip by PNR Number</span>
+          </h3>
+          <p class="text-xs text-slate-500 font-medium">
+            Enter your 10-digit IRCTC / ConfirmTkt PNR to lock RailEase Live Radar, Safeguards &amp; eCatering.
+          </p>
+        </div>
+        <span class="text-[11px] font-bold text-slate-400">No Re-Booking Required</span>
+      </div>
+
+      <!-- PNR Search Bar Input & Sample Chips -->
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <div class="relative flex-1 w-full">
+          <input
+            v-model="pnrSearchInput"
+            type="text"
+            placeholder="Enter 10-digit PNR Number (e.g. 84291039, 71940281)"
+            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 text-slate-900 border border-slate-300 rounded-xl text-xs font-bold focus:outline-none focus:border-blue-600"
+            @keyup.enter="handlePnrSync"
+          />
+          <Search class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        </div>
+
+        <button
+          @click="handlePnrSync"
+          class="w-full sm:w-auto px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black uppercase tracking-wider shadow transition-all cursor-pointer shrink-0 flex items-center justify-center gap-1.5"
+        >
+          <CheckCircle2 class="w-4 h-4 text-emerald-400" />
+          <span>Sync PNR Trip</span>
+        </button>
+      </div>
+
+      <!-- Quick Test Sample PNR Chips -->
+      <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
+        <span class="text-slate-500 font-bold">Sample PNRs to try:</span>
+        <button
+          @click="quickSelectSamplePnr('84291039')"
+          class="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-800 rounded-md font-bold border border-slate-200 transition-colors cursor-pointer"
+        >
+          PNR: 84291039 (Vande Bharat 22436)
+        </button>
+        <button
+          @click="quickSelectSamplePnr('71940281')"
+          class="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-800 rounded-md font-bold border border-slate-200 transition-colors cursor-pointer"
+        >
+          PNR: 71940281 (Rajdhani 12952)
+        </button>
+      </div>
+    </div>
+
+    <!-- Top Navy Station Pair Search Header Bar -->
     <div class="bg-[#1E3A8A] text-white p-5 rounded-card shadow-md space-y-4">
       <div class="flex items-center justify-between border-b border-blue-800/80 pb-3">
         <h2 class="text-lg font-black uppercase tracking-wider flex items-center gap-2">
           <Train class="w-5 h-5 text-sky-400" />
-          <span>Dashboard Train Search &amp; ETS Delay Forecasting</span>
+          <span>Train Telemetry &amp; Active Journey Selection Engine</span>
         </h2>
         <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/40">
-          Authenticated ETS Forecasting Unlocked
+          Select any train to align your dashboard
         </span>
       </div>
 
-      <!-- Search Inputs Row -->
+      <!-- Search Inputs Row with Modern Google-Style Date Picker -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
         <!-- From Station -->
         <div class="md:col-span-3">
@@ -52,14 +143,10 @@
           />
         </div>
 
-        <!-- Date -->
+        <!-- Modern Date Picker (Google Calendar Style) -->
         <div class="md:col-span-2">
           <label class="block text-[11px] font-bold text-blue-200 mb-1">Travel Date</label>
-          <input
-            v-model="searchStore.travelDate"
-            type="date"
-            class="w-full px-3 py-2 bg-white text-slate-900 border border-slate-300 rounded-xl text-xs font-bold focus:outline-none cursor-pointer"
-          />
+          <ModernDatePicker v-model="searchStore.travelDate" />
         </div>
 
         <!-- Class & Quota -->
@@ -106,14 +193,15 @@
       </div>
     </div>
 
-    <!-- Main Results Grid (Train Cards with Green/Yellow/Red Badges & Light-Mode Trend CTA) -->
+    <!-- Main Results Grid (Train Cards with "Mark As My Active Journey" CTA) -->
     <div class="space-y-4">
       <div
         v-for="train in searchStore.filteredTrains"
         :key="train.id"
         :class="[
           'bg-white rounded-xl border transition-all overflow-hidden shadow-sm hover:shadow-md',
-          getReliabilityBorderClass(train)
+          getReliabilityBorderClass(train),
+          isTrainSelectedAsActive(train) ? 'ring-2 ring-emerald-500 border-emerald-500' : ''
         ]"
       >
         <!-- Card Header -->
@@ -141,6 +229,12 @@
               <CheckCircle2 v-else-if="getReliabilityLevel(train) === 'green'" class="w-3.5 h-3.5 text-emerald-600" />
               <span>{{ getReliabilityLabel(train) }}</span>
             </span>
+
+            <!-- Active Journey Locked Tag -->
+            <span v-if="isTrainSelectedAsActive(train)" class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black border border-emerald-300 flex items-center gap-1">
+              <CheckCircle2 class="w-3 h-3 text-emerald-600" />
+              ACTIVE DASHBOARD TRIP LOCKED
+            </span>
           </div>
 
           <div class="flex flex-wrap items-center gap-3 text-xs font-bold">
@@ -161,7 +255,7 @@
               class="px-3.5 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
             >
               <TrendingUp class="w-3.5 h-3.5 text-sky-600 animate-pulse" />
-              <span>📈 Light ETS Trend Graph</span>
+              <span>Forecast Graph</span>
             </button>
           </div>
         </div>
@@ -221,7 +315,7 @@
             </div>
           </div>
 
-          <div class="flex items-center justify-between pt-2">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <!-- Warning Alert for Red Trains -->
             <p v-if="getReliabilityLevel(train) === 'red'" class="text-[11px] font-black text-red-600 flex items-center gap-1">
               <AlertTriangle class="w-3.5 h-3.5" />
@@ -231,13 +325,19 @@
               * Verified telemetry recorded from signal clearance
             </p>
 
+            <!-- PROMINENT CTA: MARK AS MY ACTIVE JOURNEY FOR RAIL EASE INTELLIGENCE -->
             <div class="flex items-center gap-2">
               <button
-                @click="openTelemetryModal(train, 'trend')"
-                class="px-4 py-2 bg-[#1E3A8A] hover:bg-blue-900 text-white rounded-lg font-bold text-xs flex items-center gap-1.5 shadow cursor-pointer"
+                @click="handleSelectActiveJourney(train)"
+                :class="[
+                  'px-6 py-2.5 rounded-xl font-extrabold text-xs flex items-center gap-2 shadow-md transition-all cursor-pointer uppercase tracking-wider',
+                  isTrainSelectedAsActive(train)
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white'
+                ]"
               >
-                <TrendingUp class="w-3.5 h-3.5" />
-                <span>Forecast Graph</span>
+                <Star class="w-4 h-4 text-yellow-200" />
+                <span>{{ isTrainSelectedAsActive(train) ? 'Active Journey Selected ✅' : '⭐ Mark As My Active Journey' }}</span>
               </button>
             </div>
           </div>
@@ -260,7 +360,7 @@
         @click.self="selectedTrainForTelemetry = null"
       >
         <div class="relative w-full max-w-2xl max-h-[88vh] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col my-auto overflow-hidden animate-fade-in">
-          <!-- Sticky Modal Header with Mode Switcher -->
+          <!-- Sticky Modal Header -->
           <div class="p-6 pb-4 border-b border-slate-100 relative shrink-0 text-left space-y-3">
             <button
               @click="selectedTrainForTelemetry = null"
@@ -275,7 +375,7 @@
                 <span>ETS Time Series Forecast</span>
               </div>
 
-              <!-- View Mode Tabs (Table vs Light ETS Trend Graph) -->
+              <!-- View Mode Tabs -->
               <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200">
                 <button
                   @click="modalTabMode = 'table'"
@@ -316,7 +416,7 @@
 
           <!-- Scrollable Modal Content Body -->
           <div class="p-6 space-y-5 overflow-y-auto flex-1 text-left">
-            <!-- Animated Punctuality Score & Gauge Bar -->
+            <!-- Punctuality Score & Gauge Bar -->
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
               <div class="grid grid-cols-3 gap-3 text-center">
                 <div>
@@ -370,7 +470,7 @@
             <div v-if="modalTabMode === 'trend'" class="space-y-4 animate-fade-in">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                 <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">
-                  Light Mode ETS Exponential Delay Trend Line &amp; Forecast Projection
+                  ETS Exponential Delay Trend Line &amp; Forecast Projection
                 </h4>
                 <span class="text-[11px] font-extrabold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
                   Forecast Confidence: 91.4%
@@ -386,16 +486,13 @@
 
                 <!-- Clean Light Theme SVG Canvas -->
                 <div class="relative h-56 w-full pt-4">
-                  <!-- Subtle Horizontal Gridlines -->
                   <div class="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] text-slate-300 font-bold">
                     <div class="border-b border-slate-100 flex justify-between"><span>200 mins</span><span>High Delay Zone</span></div>
                     <div class="border-b border-slate-100 flex justify-between"><span>100 mins</span><span>Moderate Delay Zone</span></div>
                     <div class="border-b border-slate-100 flex justify-between"><span>0 mins</span><span>On Time Clearance</span></div>
                   </div>
 
-                  <!-- SVG Curve and Forecast Lines -->
                   <svg class="w-full h-full overflow-visible" viewBox="0 0 560 160">
-                    <!-- Smooth Gradient Area Fill Under Trend Curve -->
                     <defs>
                       <linearGradient id="lightTrendGlow" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25" />
@@ -403,13 +500,11 @@
                       </linearGradient>
                     </defs>
 
-                    <!-- Filled Area Curve -->
                     <path
                       :d="getSvgFilledAreaPath(selectedTrainForTelemetry)"
                       fill="url(#lightTrendGlow)"
                     />
 
-                    <!-- Solid Historical Trend Line (Mon -> Sun) -->
                     <path
                       :d="getSvgSolidTrendPath(selectedTrainForTelemetry)"
                       fill="none"
@@ -419,7 +514,6 @@
                       stroke-linejoin="round"
                     />
 
-                    <!-- Dashed ETS Forecast Projection Extension Line -->
                     <path
                       :d="getSvgForecastPath(selectedTrainForTelemetry)"
                       fill="none"
@@ -429,9 +523,7 @@
                       stroke-linecap="round"
                     />
 
-                    <!-- Data Nodes along Trend Line -->
                     <g v-for="(point, pIdx) in getSvgPoints(selectedTrainForTelemetry)" :key="pIdx">
-                      <!-- Pulsing Outer Aura Ring -->
                       <circle
                         :cx="point.x"
                         :cy="point.y"
@@ -449,7 +541,6 @@
                         :class="point.isForecast ? 'fill-orange-600' : 'fill-sky-600'"
                       />
 
-                      <!-- Value Label Top Anchor -->
                       <text
                         :x="point.x"
                         :y="point.y - 12"
@@ -462,7 +553,6 @@
                   </svg>
                 </div>
 
-                <!-- Days X-Axis Labels Row -->
                 <div class="flex justify-between text-[11px] font-extrabold text-slate-600 pt-2 border-t border-slate-100">
                   <span v-for="(log, lIdx) in selectedTrainForTelemetry.historyLogs" :key="lIdx">
                     {{ log.day.split(',')[0] }}
@@ -472,7 +562,6 @@
                   </span>
                 </div>
 
-                <!-- ETS Model Insight Callout Box -->
                 <div class="p-3.5 rounded-xl bg-sky-50/80 border border-sky-200 flex items-center justify-between text-xs text-sky-900">
                   <div class="flex items-center gap-2">
                     <Sparkles class="w-4 h-4 text-sky-600 shrink-0" />
@@ -529,12 +618,21 @@
           <!-- Sticky Footer Action -->
           <div class="p-4 px-6 border-t border-slate-100 bg-slate-50 flex items-center justify-between shrink-0">
             <span class="text-[11px] text-slate-500 italic">Verified satellite telemetry logs + ETS forecasting</span>
-            <button
-              @click="selectedTrainForTelemetry = null"
-              class="px-6 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold cursor-pointer"
-            >
-              Close Analysis
-            </button>
+            <div class="flex items-center gap-2">
+              <button
+                @click="handleSelectActiveJourney(selectedTrainForTelemetry); selectedTrainForTelemetry = null"
+                class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold cursor-pointer shadow flex items-center gap-1.5"
+              >
+                <Star class="w-3.5 h-3.5 text-yellow-200" />
+                <span>Mark As Active Journey</span>
+              </button>
+              <button
+                @click="selectedTrainForTelemetry = null"
+                class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold cursor-pointer"
+              >
+                Close Analysis
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -544,9 +642,12 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSearchStore } from '@/stores/useSearchStore'
+import { useJourneyStore } from '@/stores/useJourneyStore'
 import { POPULAR_STATIONS } from '@/data/stations'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
+import ModernDatePicker from '@/components/ui/ModernDatePicker.vue'
 import {
   Train,
   MapPin,
@@ -557,12 +658,19 @@ import {
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Search,
+  Radio,
+  Star
 } from 'lucide-vue-next'
 
+const router = useRouter()
 const searchStore = useSearchStore()
+const journeyStore = useJourneyStore()
+
+const pnrSearchInput = ref('')
 const selectedTrainForTelemetry = ref(null)
-const modalTabMode = ref('trend') // 'trend' or 'table'
+const modalTabMode = ref('trend')
 
 const stationOptions = computed(() =>
   POPULAR_STATIONS.map(st => ({ label: `${st.city} (${st.code}) - ${st.name}`, value: st.code }))
@@ -599,6 +707,30 @@ const toCode = computed({
     if (st) searchStore.toStation = st
   }
 })
+
+function isTrainSelectedAsActive(train) {
+  if (!journeyStore.activeTrip) return false
+  return journeyStore.activeTrip.trainNumber === train.number
+}
+
+function handleSelectActiveJourney(train) {
+  journeyStore.setActiveTripFromTrain(train, searchStore.travelDate)
+  console.log('[RailEase Journey Sync] Active trip set to:', train.name, '(', train.number, ')')
+}
+
+function handlePnrSync() {
+  if (!pnrSearchInput.value) return
+  const trip = journeyStore.fetchAndSetActiveTripByPnr(pnrSearchInput.value)
+  if (trip) {
+    pnrSearchInput.value = ''
+    console.log('[RailEase PNR Sync] Trip synced via PNR:', trip.trainName, '(', trip.pnr, ')')
+  }
+}
+
+function quickSelectSamplePnr(pnrCode) {
+  pnrSearchInput.value = pnrCode
+  handlePnrSync()
+}
 
 function getReliabilityLevel(train) {
   if (train.reliabilityColor) return train.reliabilityColor
@@ -658,12 +790,10 @@ function getSvgPoints(train) {
   const points = train.historyLogs.map((log, idx) => {
     const delay = log.delayMinutes || 0
     const x = startX + (idx * stepX)
-    // Map 0 delay to y=140, 200 delay to y=20
     const y = Math.max(20, 140 - (delay / maxDelay) * 120)
     return { x, y, val: delay, isForecast: false }
   })
 
-  // ETS Forecast Node (+1 Day Extension)
   const avg = getAverageDelay(train)
   const forecastVal = getReliabilityLevel(train) === 'red' ? Math.round(avg * 1.1) : Math.max(0, Math.round(avg * 0.7))
   const forecastX = startX + (train.historyLogs.length * stepX)
@@ -676,7 +806,6 @@ function getSvgPoints(train) {
 function getSvgSolidTrendPath(train) {
   const pts = getSvgPoints(train)
   if (pts.length < 2) return ''
-  // Only connect up to last historical point (excluding forecast)
   const histPts = pts.filter(p => !p.isForecast)
   return histPts.reduce((acc, p, i) => i === 0 ? `M ${p.x} ${p.y}` : `${acc} L ${p.x} ${p.y}`, '')
 }

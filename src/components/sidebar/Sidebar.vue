@@ -7,7 +7,7 @@
       </div>
 
       <!-- Main Navigation Menu -->
-      <div class="px-3 py-6 space-y-1.5 overflow-y-auto max-h-[calc(100vh-160px)]">
+      <div class="px-3 py-6 space-y-1.5 overflow-y-auto max-h-[calc(100vh-100px)]">
         <router-link
           v-for="item in navItems"
           :key="item.path"
@@ -37,26 +37,20 @@
       </div>
     </div>
 
-    <!-- Bottom Actions & Logout -->
-    <div class="p-4 border-t border-slate-100 bg-slate-50/50">
-      <button
-        @click="handleLogout"
-        class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-btn text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-all group"
-      >
-        <LogOut class="w-5 h-5 text-slate-400 group-hover:text-red-500 group-hover:-translate-x-0.5 transition-all" />
-        <span>Logout</span>
-      </button>
+    <!-- Bottom Footer Brand Badge (Clean non-redundant footer) -->
+    <div class="p-4 border-t border-slate-100 bg-slate-50/50 text-center">
+      <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+        RailEase v2.4 Intelligence
+      </span>
     </div>
   </aside>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/useAuthStore'
 import Logo from '@/components/common/Logo.vue'
 import {
   LayoutDashboard,
-  Search,
+  Train,
   Calendar,
   Compass,
   Clock,
@@ -65,19 +59,15 @@ import {
   Users,
   User,
   Settings,
-  HelpCircle,
-  LogOut
+  HelpCircle
 } from 'lucide-vue-next'
 
-const router = useRouter()
-const authStore = useAuthStore()
-
 const navItems = [
-  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-  { label: 'Search Trains', path: '/search', icon: Search },
+  { label: 'Dashboard Overview', path: '/dashboard', icon: LayoutDashboard },
+  { label: 'Train Intelligence & Sync', path: '/search', icon: Train },
   { label: 'My Bookings', path: '/bookings', icon: Calendar },
   { label: 'Journey Planner', path: '/journey-planner', icon: Compass },
-  { label: 'Live Status', path: '/live-status', icon: Clock },
+  { label: 'Live Radar', path: '/live-status', icon: Clock },
   { label: 'Alerts', path: '/alerts', icon: Bell },
   { label: 'eCatering', path: '/ecatering', icon: Utensils },
   { label: 'Community', path: '/community', icon: Users },
@@ -85,9 +75,4 @@ const navItems = [
   { label: 'Settings', path: '/settings', icon: Settings },
   { label: 'Support', path: '/support', icon: HelpCircle },
 ]
-
-function handleLogout() {
-  authStore.logout()
-  router.push('/')
-}
 </script>
