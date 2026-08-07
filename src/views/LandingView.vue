@@ -72,7 +72,7 @@
 
         <!-- Subtitle Mission Statement -->
         <p class="text-base sm:text-lg 2xl:text-xl text-slate-600 max-w-2xl leading-relaxed font-normal">
-          RailEase evaluates <strong>historical train telemetry</strong>, signal box history, and seasonal corridor data to provide <strong>reliable delay forecasts</strong> — giving you realistic travel foresight without blind guesswork.
+          RailEase evaluates <strong>historical train telemetry</strong>, signal box history, and seasonal corridor data to provide <strong>reliable delay forecasts</strong> — giving every traveler realistic travel foresight without blind guesswork.
         </p>
 
         <!-- CTA Buttons -->
@@ -105,7 +105,7 @@
           </div>
           <div class="p-4 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
             <div class="text-2xl sm:text-3xl font-black text-emerald-600">Smart Buffer</div>
-            <div class="text-xs text-slate-500 font-medium mt-0.5">High-Stakes Mode</div>
+            <div class="text-xs text-slate-500 font-medium mt-0.5">Everyday Travel Protection</div>
           </div>
         </div>
       </div>
@@ -125,8 +125,8 @@
       <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16">
         <div class="text-center max-w-3xl mx-auto mb-16 space-y-3 reveal-on-scroll">
           <h2 class="text-xs font-extrabold uppercase tracking-widest text-rail-500">From Uncertainty to Assurance</h2>
-          <h3 class="text-3xl sm:text-4xl font-black text-rail-900 tracking-tight">Engineered for Indian Railway Travelers</h3>
-          <p class="text-slate-600 text-sm sm:text-base">Data-driven forecasts to help you plan travel buffer times with confidence.</p>
+          <h3 class="text-3xl sm:text-4xl font-black text-rail-900 tracking-tight">Engineered for Every Indian Railway Passenger</h3>
+          <p class="text-slate-600 text-sm sm:text-base">Data-driven forecasts to help families, daily commuters, and holiday travelers plan with confidence.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -212,9 +212,9 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
-            v-for="corridor in expressCorridors"
+            v-for="(corridor, index) in expressCorridors"
             :key="corridor.name"
-            class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover space-y-4 reveal-on-scroll delay-100"
+            :class="['bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover space-y-4 reveal-on-scroll', `delay-${(index + 1) * 100}`]"
           >
             <div class="flex items-center justify-between">
               <span class="px-3 py-1 rounded-full bg-rail-50 text-rail-700 font-extrabold text-[11px] border border-rail-100">
@@ -240,48 +240,53 @@
       </div>
     </section>
 
-    <!-- SECTION 3: High-Stakes Trip Assurance Breakdown -->
-    <section class="bg-slate-900 text-white py-20 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-rail-500/20 blur-[140px] pointer-events-none"></div>
+    <!-- SECTION 3: General Traveler Trip Assurance Breakdown -->
+    <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white py-20 relative overflow-hidden border-t border-slate-800">
+      <div class="absolute top-0 right-0 w-[700px] h-[700px] bg-rail-500/20 blur-[150px] pointer-events-none"></div>
 
       <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        <div class="lg:col-span-6 space-y-6 reveal-on-scroll">
-          <span class="px-3.5 py-1.5 rounded-full bg-rail-500/20 border border-rail-500/40 text-rail-300 font-extrabold text-xs">
-            High-Stakes Mode Active
+        <!-- Left Text Content -->
+        <div class="lg:col-span-7 space-y-6 text-left reveal-on-scroll">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rail-500/20 border border-rail-500/40 text-rail-300 font-extrabold text-xs">
+            <Sparkles class="w-3.5 h-3.5 text-rail-400" />
+            <span>Smart Travel Shield Active</span>
           </span>
+          
           <h2 class="text-3xl sm:text-4xl 2xl:text-5xl font-black tracking-tight text-white leading-tight">
-            Smart buffer planning for critical exams & flights.
+            Smart buffer &amp; delay planning for every journey.
           </h2>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
-            When you select High-Stakes Mode for critical travel, RailEase provides realistic buffer options and backup ticket suggestions to safeguard your timetable.
+
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+            Whether traveling home for festivals, daily work commutes, family vacations, or urgent trips, RailEase provides realistic buffer recommendations, live train tracking, and backup options for every Indian Railway passenger.
           </p>
 
-          <div class="space-y-4 pt-2">
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-rail-500/20 border border-rail-500/40 text-rail-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+          <div class="space-y-4 pt-2 max-w-xl">
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm">
+              <div class="w-9 h-9 rounded-lg bg-rail-500/20 border border-rail-500/40 text-rail-300 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
                 01
               </div>
               <div>
-                <h4 class="text-sm font-bold text-white">Alternate Train Backup Recommendations</h4>
-                <p class="text-xs text-slate-400 mt-0.5">Suggested secondary train schedules if your primary line shows historical delay trends.</p>
+                <h4 class="text-sm font-extrabold text-white">Alternate Train Backup Options</h4>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">Suggested secondary train routes if your primary line shows historical delay trends.</p>
               </div>
             </div>
 
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-rail-500/20 border border-rail-500/40 text-rail-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm">
+              <div class="w-9 h-9 rounded-lg bg-rail-500/20 border border-rail-500/40 text-rail-300 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
                 02
               </div>
               <div>
-                <h4 class="text-sm font-bold text-white">Delay Protection Coverage</h4>
-                <p class="text-xs text-slate-400 mt-0.5">Automated policy tracking for journey disruption compensation.</p>
+                <h4 class="text-sm font-extrabold text-white">Delay Protection Coverage</h4>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">Automated journey tracking and disruption support for peace of mind.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="lg:col-span-6 flex justify-center lg:justify-end reveal-on-scroll delay-200">
-          <div class="w-full max-w-md bg-slate-800/90 border border-slate-700 p-8 rounded-card shadow-2xl backdrop-blur-md card-glow-hover space-y-6">
-            <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+        <!-- Right Card (Trip Assurance Shield) -->
+        <div class="lg:col-span-5 flex justify-center lg:justify-end reveal-on-scroll delay-200">
+          <div class="w-full max-w-md bg-slate-900/90 border border-slate-700/80 p-8 rounded-card shadow-2xl backdrop-blur-md space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-700/80 pb-4">
               <h3 class="text-base font-extrabold text-white">Trip Assurance Shield</h3>
               <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-bold text-xs">High Reliability</span>
             </div>
@@ -289,7 +294,7 @@
             <div class="space-y-3 text-xs">
               <div class="flex justify-between text-slate-300">
                 <span>Selected Risk Profile:</span>
-                <span class="text-white font-bold">Competitive Exam Priority</span>
+                <span class="text-white font-bold">Everyday &amp; Family Priority</span>
               </div>
               <div class="flex justify-between text-slate-300">
                 <span>Punctuality Rating:</span>
@@ -305,7 +310,7 @@
               @click="showAuthModal = true"
               class="w-full py-3 bg-rail-500 hover:bg-rail-600 text-white font-bold text-xs rounded-btn shadow transition-all cursor-pointer"
             >
-              Configure High-Stakes Mode &rarr;
+              Configure Travel Shield &rarr;
             </button>
           </div>
         </div>
@@ -317,14 +322,14 @@
       <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 space-y-12">
         <div class="text-center max-w-xl mx-auto space-y-3 reveal-on-scroll">
           <h2 class="text-xs font-extrabold uppercase tracking-widest text-rail-500">Verified Passenger Stories</h2>
-          <h3 class="text-3xl font-black text-rail-900 tracking-tight">Trusted by 100,000+ Indian Travelers</h3>
+          <h3 class="text-3xl font-black text-rail-900 tracking-tight">Trusted by 100,000+ Everyday Indian Travelers</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
-            v-for="review in reviews"
+            v-for="(review, index) in reviews"
             :key="review.author"
-            class="bg-slate-50 p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between space-y-4 reveal-on-scroll delay-100"
+            :class="['bg-slate-50 p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between space-y-4 reveal-on-scroll', `delay-${(index + 1) * 100}`]"
           >
             <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium italic">
               "{{ review.text }}"
@@ -351,7 +356,7 @@
       <div class="relative w-full max-w-md">
         <button
           @click="showAuthModal = false"
-          class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-slate-600 hover:text-slate-900 shadow-md flex items-center justify-center z-10 font-black text-sm border border-slate-200"
+          class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-slate-600 hover:text-slate-900 shadow-md flex items-center justify-center z-10 font-black text-sm border border-slate-200 cursor-pointer"
         >
           ✕
         </button>
@@ -388,20 +393,20 @@ const expressCorridors = [
 const reviews = [
   {
     author: 'Aakash Mehta',
-    role: 'UPSC Aspirant',
-    text: 'RailEase historical pattern score gave me an early warning about delay trends so I planned an extra 2-hour buffer for my exam trip.',
+    role: 'Daily Commuter & Traveler',
+    text: 'RailEase historical pattern score gave me an early warning about delay trends so I planned an extra 2-hour buffer for my family festival trip.',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100'
   },
   {
     author: 'Dr. Neha Sharma',
-    role: 'Medical Specialist',
+    role: 'Medical Professional',
     text: 'The historical reliability rating is genuine and grounded. It helps me evaluate travel risk based on real past data.',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100'
   },
   {
     author: 'Rohan Gupta',
-    role: 'Frequent Business Traveler',
-    text: 'Great data-driven insights. Satellite train tracking and station food delivery work seamlessly.',
+    role: 'Frequent Business & Vacation Traveler',
+    text: 'Great data-driven insights. Satellite train tracking and station food delivery work seamlessly for all our family trips.',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100'
   }
 ]

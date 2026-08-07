@@ -46,11 +46,11 @@
   box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
 }
 
-/* --- Scroll Reveal Animations --- */
+/* --- Staggered Scroll Reveal Animations --- */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -116,7 +116,7 @@
   animation: pulseGlow 8s ease-in-out infinite;
 }
 
-/* --- Clean Soft Glow Hover (NO WEIRD OUTLINE BORDERS) --- */
+/* --- Clean Soft Glow Hover --- */
 .card-glow-hover,
 .glow-on-hover {
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);

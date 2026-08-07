@@ -4,20 +4,39 @@
       <!-- Big Prominent App Icon & Brand Logo -->
       <Logo size="lg" />
 
-      <!-- Center Navigation Links -->
+      <!-- Center Navigation Links (Protected Features Require Auth for Guests) -->
       <nav class="hidden md:flex items-center gap-8">
-        <a href="#features" class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors">
-          Reliability Score
-        </a>
-        <a href="#predictions" class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors">
-          Delay Prediction
-        </a>
-        <a href="#tracking" class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors">
-          Live Tracking
-        </a>
-        <a href="#recovery" class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors">
-          Disruption Recovery
-        </a>
+        <button
+          @click="handleFeatureClick('/dashboard', 'Reliability Score')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+        >
+          <span>Reliability Score</span>
+          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+        </button>
+
+        <button
+          @click="handleFeatureClick('/dashboard', 'Delay Prediction')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+        >
+          <span>Delay Prediction</span>
+          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+        </button>
+
+        <button
+          @click="handleFeatureClick('/live-status', 'Live Tracking')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+        >
+          <span>Live Tracking</span>
+          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+        </button>
+
+        <button
+          @click="handleFeatureClick('/journey-planner', 'Disruption Recovery')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+        >
+          <span>Disruption Recovery</span>
+          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+        </button>
       </nav>
 
       <!-- Right Actions: Sign In / Register OR Dashboard & Logout buttons -->
@@ -62,11 +81,20 @@
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import Logo from '@/components/common/Logo.vue'
-import { LayoutDashboard, LogOut, User, ArrowRight } from 'lucide-vue-next'
+import { LayoutDashboard, LogOut, User, ArrowRight, Lock } from 'lucide-vue-next'
 
 const emit = defineEmits(['openLogin'])
 const router = useRouter()
 const authStore = useAuthStore()
+
+function handleFeatureClick(targetRoute, featureName) {
+  if (authStore.isAuthenticated) {
+    router.push(targetRoute)
+  } else {
+    // Guest users clicking protected feature links trigger the Sign In / Register dialog
+    emit('openLogin', featureName)
+  }
+}
 
 function handleLogout() {
   authStore.logout()

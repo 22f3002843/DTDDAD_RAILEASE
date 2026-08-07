@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-slate-100 flex flex-col font-sans selection:bg-rail-500 selection:text-white">
     <!-- Clean Navbar -->
-    <Navbar @openLogin="showAuthModal = true" />
+    <Navbar @openLogin="openAuthDialog('general')" />
 
     <!-- ==================== TOP NAVY MODIFY SEARCH BAR (MATCHING IRCTC SCREENSHOT) ==================== -->
     <div class="bg-[#1E3A8A] text-white py-3.5 px-4 sm:px-10 lg:px-14 border-b border-blue-900 shadow-md">
@@ -244,6 +244,26 @@
           </div>
         </div>
 
+        <!-- Authenticated Feature Promo Banner for Guests -->
+        <div
+          v-if="!authStore.isAuthenticated"
+          @click="openAuthDialog('telemetry')"
+          class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-3.5 rounded-lg shadow-sm flex items-center justify-between gap-3 cursor-pointer hover:brightness-110 transition-all border border-blue-700"
+        >
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blue-700/60 border border-blue-400/40 flex items-center justify-center shrink-0">
+              <Lock class="w-4 h-4 text-sky-300" />
+            </div>
+            <div>
+              <span class="text-xs font-black block text-sky-200 uppercase tracking-wider">Unlock 7-Day Delay Telemetry &amp; AI Punctuality Analytics</span>
+              <span class="text-[11px] text-blue-100">Sign In or Register to view 7-day historical delay logs and book tickets seamlessly.</span>
+            </div>
+          </div>
+          <span class="px-3.5 py-1.5 rounded-md bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs uppercase tracking-wider shrink-0 shadow">
+            Sign In / Register &rarr;
+          </span>
+        </div>
+
         <!-- ==================== TRAIN CARDS LIST ==================== -->
         <div class="space-y-4">
           <div
@@ -260,9 +280,12 @@
               </div>
               <div class="flex items-center gap-4 text-xs font-bold text-slate-600">
                 <span>Runs On: <strong class="text-slate-900 font-extrabold">{{ train.runsOn.join(' ') }}</strong></span>
-                <a href="https://www.irctc.co.in" target="_blank" class="text-blue-700 hover:underline flex items-center gap-1 font-bold">
-                  Train Schedule
-                </a>
+                <button
+                  @click="requireAuthAction('schedule', train)"
+                  class="text-blue-700 hover:underline flex items-center gap-1 font-bold cursor-pointer"
+                >
+                  Train Schedule 🔒
+                </button>
               </div>
             </div>
 
@@ -302,8 +325,8 @@
                 <div
                   v-for="cls in train.classes"
                   :key="cls.code"
-                  @click="refreshClassStatus(cls)"
-                  class="bg-white border border-slate-300 rounded-lg p-3 cursor-pointer hover:border-blue-500 hover:shadow-md transition-all space-y-1.5 group"
+                  @click="requireAuthAction('class', train)"
+                  class="bg-white border border-slate-300 rounded-lg p-3 cursor-pointer hover:border-blue-500 hover:shadow-md transition-all space-y-1.5 group relative"
                 >
                   <div class="flex items-center justify-between text-xs font-extrabold text-slate-900">
                     <span>{{ cls.name }}</span>
@@ -312,9 +335,11 @@
 
                   <div
                     :class="[
-                      'text-xs font-black px-2 py-1 rounded text-center flex items-center justify-center gap-1.5',
-                      cls.statusType === 'available' ? 'bg-emerald-100 text-emerald-800' :
-                      cls.statusType === 'rac' ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800'
+                      'text-xs font-black px-2 py-1 rounded text-center flex items-center justify-center gap-1.5 border',
+                      cls.statusType === 'available' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
+                      cls.statusType === 'rac' ? 'bg-amber-100 text-amber-800 border-amber-300' :
+                      cls.statusType === 'regret' ? 'bg-slate-200 text-slate-800 border-slate-300 font-extrabold' :
+                      'bg-rose-100 text-rose-800 border-rose-300'
                     ]"
                   >
                     <span>{{ cls.status }}</span>
@@ -331,7 +356,7 @@
 
                 <div class="flex items-center gap-3">
                   <button
-                    @click="handleSelectTrain(train)"
+                    @click="requireAuthAction('book', train)"
                     class="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer uppercase tracking-wider"
                   >
                     <span>Book Now / Track</span>
@@ -339,7 +364,7 @@
                   </button>
 
                   <button
-                    @click="handleSelectTrain(train)"
+                    @click="requireAuthAction('dates', train)"
                     class="px-4 py-2.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 rounded font-bold text-xs transition-colors cursor-pointer"
                   >
                     OTHER DATES
@@ -352,20 +377,38 @@
       </main>
     </div>
 
-    <!-- Sign In Modal -->
+    <!-- Sign In / Register Modal Dialog -->
     <div
       v-if="showAuthModal"
-      class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
       @click.self="showAuthModal = false"
     >
-      <div class="relative w-full max-w-md card-glow-hover">
+      <div class="relative w-full max-w-md">
+        <!-- Close Button -->
         <button
           @click="showAuthModal = false"
-          class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-slate-600 hover:text-slate-900 shadow-md flex items-center justify-center z-10 font-black text-sm border border-slate-200"
+          class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-slate-600 hover:text-slate-900 shadow-md flex items-center justify-center z-10 font-black text-sm border border-slate-200 cursor-pointer"
         >
           ✕
         </button>
-        <AuthWidget />
+
+        <!-- Prompt Header Alert inside Modal -->
+        <div class="bg-indigo-900 text-white p-4 rounded-t-2xl space-y-1 text-center border-b border-indigo-800">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-[11px] font-extrabold uppercase tracking-wider border border-orange-500/30">
+            <Lock class="w-3.5 h-3.5" />
+            <span>Sign In Required</span>
+          </div>
+          <h4 class="text-sm font-black pt-1">
+            Sign In or Register to Access Feature
+          </h4>
+          <p class="text-[11px] text-indigo-200 leading-tight">
+            Create a free RailEase account to unlock 7-day past delay telemetry, AI punctuality scores, and complete train booking.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-b-2xl p-2 shadow-2xl">
+          <AuthWidget />
+        </div>
       </div>
     </div>
 
@@ -387,7 +430,8 @@ import {
   MapPin,
   ArrowLeftRight,
   RefreshCw,
-  ArrowRight
+  ArrowRight,
+  Lock
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -400,11 +444,7 @@ const disabilityConcession = ref(false)
 const railwayPass = ref(false)
 
 onMounted(() => {
-  console.log('--------------------------------------------------')
-  console.log('[RailEase Search Results] 🟢 Search View Mounted!')
-  console.log('[RailEase Search Results] Route:', searchStore.fromStation?.name, '➔', searchStore.toStation?.name)
-  console.log('[RailEase Search Results] Total Filtered Trains:', searchStore.filteredTrains.length)
-  console.log('--------------------------------------------------')
+  console.log('[RailEase Public Search] Public Search Trains View Mounted!')
 })
 
 const stationOptions = computed(() =>
@@ -451,8 +491,20 @@ const formattedDate = computed(() => {
   return d.toLocaleDateString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })
 })
 
+function openAuthDialog() {
+  showAuthModal.value = true
+}
+
+function requireAuthAction(actionType, train) {
+  if (!authStore.isAuthenticated) {
+    showAuthModal.value = true
+  } else {
+    router.push('/dashboard')
+  }
+}
+
 function executeSearch() {
-  console.log('[RailEase Search Results] Modify Search triggered for:', searchStore.fromStation?.code, '➔', searchStore.toStation?.code)
+  console.log('[RailEase Search Results] Search triggered for:', searchStore.fromStation?.code, '➔', searchStore.toStation?.code)
 }
 
 function selectAllClasses() {
@@ -467,18 +519,5 @@ function resetFilters() {
   selectAllClasses()
   selectAllTrainTypes()
   searchStore.selectedTimeSlot = 'all'
-}
-
-function refreshClassStatus(cls) {
-  console.log('[RailEase Search Results] Refreshed status for class:', cls.name, cls.status)
-}
-
-function handleSelectTrain(train) {
-  console.log('[RailEase Search Results] Selected Train:', train.name, `#${train.number}`)
-  if (!authStore.isAuthenticated) {
-    showAuthModal.value = true
-  } else {
-    router.push('/journey-planner')
-  }
 }
 </script>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LandingView from '@/views/LandingView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import SearchTrainsView from '@/views/SearchTrainsView.vue'
+import AuthenticatedSearchTrainsView from '@/views/AuthenticatedSearchTrainsView.vue'
 import JourneyPlannerView from '@/views/JourneyPlannerView.vue'
 import BookingsView from '@/views/BookingsView.vue'
 import LiveStatusView from '@/views/LiveStatusView.vue'
@@ -22,8 +23,7 @@ const routes = [
   {
     path: '/search',
     name: 'search-trains',
-    component: SearchTrainsView,
-    meta: { requiresAuth: false } // PUBLIC ACCESS: No login required to search & view trains
+    component: SearchTrainsView
   },
   {
     path: '/dashboard',
@@ -93,9 +93,19 @@ const router = createRouter({
   }
 })
 
-// Navigation Guard
+// Dynamic Navigation Guard
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
+
+  if (to.name === 'search-trains') {
+    if (authStore.isAuthenticated) {
+      // Authenticated users get the Dashboard Search layout with 7-Day Delay Telemetry
+      to.matched[0].components.default = AuthenticatedSearchTrainsView
+    } else {
+      // Guest users get the public IRCTC information search view
+      to.matched[0].components.default = SearchTrainsView
+    }
+  }
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     console.warn('[RailEase Router Guard] Blocked protected route:', to.path, '-> redirecting to landing')

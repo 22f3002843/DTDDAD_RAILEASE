@@ -51,8 +51,10 @@ export const useSearchStore = defineStore('search', () => {
       return t
     })
 
-    // 2. Fallback generator if fewer than 4 direct trains exist
-    if (directMatches.length < 4) {
+    // 2. Ensure every station search includes at least 1 Red (<75%) unreliable train
+    const hasRedTrain = directMatches.some(t => (t.reliabilityColor === 'red' || t.punctualityScore < 75))
+
+    if (!hasRedTrain || directMatches.length < 4) {
       const generated = [
         {
           id: `tr_gen_1_${fromCode}_${toCode}`,
@@ -69,14 +71,23 @@ export const useSearchStore = defineStore('search', () => {
           speedCategory: 'Fastest',
           punctualityScore: 95,
           reliabilityRating: 'High Reliability',
+          reliabilityColor: 'green',
           crowdLevel: 'Low',
           price: 1580,
           classes: [
             { code: 'EC', name: 'Executive Chair', price: 2850, status: 'AVAILABLE-18', statusType: 'available' },
-            { code: 'CC', name: 'AC Chair Car', price: 1580, status: 'AVAILABLE-82', statusType: 'available' }
+            { code: 'CC', name: 'AC Chair Car', price: 1580, status: 'RAC 12', statusType: 'rac' }
           ],
           features: ['High Speed Chair Car', 'Wi-Fi Onboard'],
-          runsOn: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat', 'Sun']
+          runsOn: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat', 'Sun'],
+          historyLogs: [
+            { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' },
+            { day: 'Tue, 04 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '95 km/h' },
+            { day: 'Wed, 05 Aug', status: 'Delayed +3m', delayMinutes: 3, originDept: 'On Time', destArr: '+3m', avgSpeed: '94 km/h' },
+            { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' },
+            { day: 'Sat, 01 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '95 km/h' },
+            { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' }
+          ]
         },
         {
           id: `tr_gen_2_${fromCode}_${toCode}`,
@@ -89,70 +100,63 @@ export const useSearchStore = defineStore('search', () => {
           toName: toName,
           deptTime: '07:50 PM',
           arrTime: '05:20 AM (+1 day)',
-          duration: '33h 30m',
+          duration: '11h 30m',
           speedCategory: 'Fastest',
-          punctualityScore: 92,
-          reliabilityRating: 'High Reliability',
+          punctualityScore: 89,
+          reliabilityRating: 'Moderate Reliability',
+          reliabilityColor: 'yellow',
           crowdLevel: 'High',
           price: 2350,
           classes: [
             { code: '1A', name: 'First AC', price: 4500, status: 'AVAILABLE-2', statusType: 'available' },
-            { code: '2A', name: 'Second AC', price: 2850, status: 'AVAILABLE-14', statusType: 'available' },
-            { code: '3A', name: 'Third AC', price: 2350, status: 'AVAILABLE-95', statusType: 'available' }
+            { code: '2A', name: 'Second AC', price: 2850, status: 'RAC 4', statusType: 'rac' },
+            { code: '3A', name: 'Third AC', price: 2350, status: 'WL 42', statusType: 'wl' }
           ],
           features: ['Pantry Included', 'Priority Track'],
-          runsOn: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          runsOn: ['Daily'],
+          historyLogs: [
+            { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '88 km/h' },
+            { day: 'Tue, 04 Aug', status: 'Delayed +12m', delayMinutes: 12, originDept: '+4m', destArr: '+12m', avgSpeed: '85 km/h' },
+            { day: 'Wed, 05 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' },
+            { day: 'Thu, 06 Aug', status: 'Delayed +8m', delayMinutes: 8, originDept: '+2m', destArr: '+8m', avgSpeed: '87 km/h' },
+            { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '88 km/h' },
+            { day: 'Sat, 01 Aug', status: 'Delayed +14m', delayMinutes: 14, originDept: '+5m', destArr: '+14m', avgSpeed: '84 km/h' },
+            { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' }
+          ]
         },
         {
-          id: `tr_gen_3_${fromCode}_${toCode}`,
-          number: '12630',
-          name: `YPR S KRNTI EXP`,
+          id: `tr_gen_3_red_${fromCode}_${toCode}`,
+          number: '14016',
+          name: `${fromCity} - ${toCity} Seemanchal Passenger Mail`,
           type: 'OTHER',
           fromCode: fromCode,
           fromName: fromName,
           toCode: toCode,
           toName: toName,
-          deptTime: '08:30 AM',
-          arrTime: '05:25 AM (+2 days)',
-          duration: '44h 55m',
+          deptTime: '01:15 PM',
+          arrTime: '11:45 AM (+1 day)',
+          duration: '22h 30m',
           speedCategory: 'Cheapest',
-          punctualityScore: 89,
-          reliabilityRating: 'High',
-          crowdLevel: 'Moderate',
-          price: 1050,
+          punctualityScore: 48,
+          reliabilityRating: 'High Delay Risk (Unreliable)',
+          reliabilityColor: 'red',
+          crowdLevel: 'High',
+          price: 520,
           classes: [
-            { code: 'SL', name: 'Sleeper (SL)', price: 720, status: 'RAC 12', statusType: 'rac' },
-            { code: '3E', name: 'AC 3 Economy (3E)', price: 1250, status: 'AVAILABLE-30', statusType: 'available' },
-            { code: '3A', name: 'AC 3 Tier (3A)', price: 1450, status: 'AVAILABLE-42', statusType: 'available' },
-            { code: '2A', name: 'AC 2 Tier (2A)', price: 2150, status: 'AVAILABLE-8', statusType: 'available' },
-            { code: '1A', name: 'AC First Class (1A)', price: 3450, status: 'AVAILABLE-4', statusType: 'available' }
+            { code: '3A', name: 'Third AC', price: 1350, status: 'GNWL 62', statusType: 'wl' },
+            { code: 'SL', name: 'Sleeper (SL)', price: 520, status: 'REGRET', statusType: 'regret' }
           ],
-          features: ['Superfast Service', 'Pantry Car'],
-          runsOn: ['Mon', 'Wed', 'Thu', 'Sat', 'Sun']
-        },
-        {
-          id: `tr_gen_4_${fromCode}_${toCode}`,
-          number: '12250',
-          name: `${toCity} AC Duronto`,
-          type: 'DURONTO',
-          fromCode: fromCode,
-          fromName: fromName,
-          toCode: toCode,
-          toName: toName,
-          deptTime: '11:00 PM',
-          arrTime: '08:30 AM (+1 day)',
-          duration: '9h 30m',
-          speedCategory: 'Fastest',
-          punctualityScore: 89,
-          reliabilityRating: 'High',
-          crowdLevel: 'Low',
-          price: 1450,
-          classes: [
-            { code: '2A', name: 'Second AC', price: 2150, status: 'AVAILABLE-15', statusType: 'available' },
-            { code: '3A', name: 'Third AC', price: 1450, status: 'AVAILABLE-45', statusType: 'available' }
-          ],
-          features: ['Non-Stop Express', 'Clean Bedding'],
-          runsOn: ['Tue', 'Thu', 'Sat']
+          features: ['Heavy Section Congestion', 'Not Recommended for Time-Sensitive Travel'],
+          runsOn: ['Daily'],
+          historyLogs: [
+            { day: 'Mon, 03 Aug', status: 'Delayed +140m', delayMinutes: 140, originDept: '+60m', destArr: '+140m', avgSpeed: '42 km/h' },
+            { day: 'Tue, 04 Aug', status: 'Delayed +95m', delayMinutes: 95, originDept: '+40m', destArr: '+95m', avgSpeed: '48 km/h' },
+            { day: 'Wed, 05 Aug', status: 'Delayed +120m', delayMinutes: 120, originDept: '+55m', destArr: '+120m', avgSpeed: '45 km/h' },
+            { day: 'Thu, 06 Aug', status: 'Delayed +180m', delayMinutes: 180, originDept: '+80m', destArr: '+180m', avgSpeed: '38 km/h' },
+            { day: 'Fri, 07 Aug', status: 'Delayed +60m', delayMinutes: 60, originDept: '+25m', destArr: '+60m', avgSpeed: '52 km/h' },
+            { day: 'Sat, 01 Aug', status: 'Delayed +110m', delayMinutes: 110, originDept: '+45m', destArr: '+110m', avgSpeed: '46 km/h' },
+            { day: 'Sun, 02 Aug', status: 'Delayed +85m', delayMinutes: 85, originDept: '+35m', destArr: '+85m', avgSpeed: '50 km/h' }
+          ]
         }
       ]
 

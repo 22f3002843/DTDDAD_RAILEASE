@@ -15,17 +15,27 @@ export const MOCK_TRAINS = [
     duration: '21h 50m',
     speedCategory: 'Cheapest',
     punctualityScore: 88,
-    reliabilityRating: 'High Reliability',
+    reliabilityRating: 'Moderate Reliability',
+    reliabilityColor: 'yellow',
     crowdLevel: 'High',
     price: 1450,
     classes: [
       { code: '1A', name: 'First AC', price: 3450, status: 'AVAILABLE-4', statusType: 'available' },
-      { code: '2A', name: 'Second AC', price: 2150, status: 'AVAILABLE-16', statusType: 'available' },
-      { code: '3A', name: 'Third AC', price: 1450, status: 'AVAILABLE-85', statusType: 'available' },
-      { code: 'SL', name: 'Sleeper Class', price: 540, status: 'RAC 14', statusType: 'rac' }
+      { code: '2A', name: 'Second AC', price: 2150, status: 'RAC 6', statusType: 'rac' },
+      { code: '3A', name: 'Third AC', price: 1450, status: 'WL 32', statusType: 'wl' },
+      { code: 'SL', name: 'Sleeper Class', price: 540, status: 'REGRET', statusType: 'regret' }
     ],
     features: ['Daily Service', 'Scenic Western Ghats Route', 'Pantry Catering'],
-    runsOn: ['Daily']
+    runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '78 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +14m', delayMinutes: 14, originDept: '+5m', destArr: '+14m', avgSpeed: '75 km/h' },
+      { day: 'Wed, 05 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '79 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +22m', delayMinutes: 22, originDept: '+10m', destArr: '+22m', avgSpeed: '72 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '78 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +8m', delayMinutes: 8, originDept: '+2m', destArr: '+8m', avgSpeed: '77 km/h' },
+      { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '79 km/h' }
+    ]
   },
   {
     id: 'tr_11013',
@@ -40,65 +50,27 @@ export const MOCK_TRAINS = [
     arrTime: '09:50 PM (+1 day)',
     duration: '23h 15m',
     speedCategory: 'Cheapest',
-    punctualityScore: 84,
-    reliabilityRating: 'Moderate',
-    crowdLevel: 'Moderate',
+    punctualityScore: 58,
+    reliabilityRating: 'High Delay Risk (Unreliable)',
+    reliabilityColor: 'red',
+    crowdLevel: 'High',
     price: 1380,
     classes: [
       { code: '2A', name: 'Second AC', price: 2050, status: 'AVAILABLE-8', statusType: 'available' },
-      { code: '3A', name: 'Third AC', price: 1380, status: 'AVAILABLE-60', statusType: 'available' },
-      { code: 'SL', name: 'Sleeper Class', price: 510, status: 'WL 18', statusType: 'wl' }
+      { code: '3A', name: 'Third AC', price: 1380, status: 'RAC 14', statusType: 'rac' },
+      { code: 'SL', name: 'Sleeper Class', price: 510, status: 'GNWL 48', statusType: 'wl' }
     ],
-    features: ['Night Departure', 'Budget Traveler Comfort'],
-    runsOn: ['Daily']
-  },
-  {
-    id: 'tr_12113',
-    number: '12113',
-    name: 'Garib Rath Express',
-    type: 'Garib Rath AC',
-    fromCode: 'MMCT',
-    fromName: 'Mumbai Central',
-    toCode: 'SBC',
-    toName: 'KSR Bengaluru',
-    deptTime: '04:35 PM',
-    arrTime: '01:30 PM (+1 day)',
-    duration: '20h 55m',
-    speedCategory: 'Fastest',
-    punctualityScore: 90,
-    reliabilityRating: 'High',
-    crowdLevel: 'Low',
-    price: 1050,
-    classes: [
-      { code: '3A', name: 'Third AC Economy', price: 1050, status: 'AVAILABLE-120', statusType: 'available' }
-    ],
-    features: ['Economical AC Fare', 'Superfast Priority'],
-    runsOn: ['Mon', 'Wed', 'Fri']
-  },
-  {
-    id: 'tr_16381',
-    number: '16381',
-    name: 'Mumbai Kanyakumari Express',
-    type: 'Express',
-    fromCode: 'MMCT',
-    fromName: 'Mumbai Central',
-    toCode: 'SBC',
-    toName: 'KSR Bengaluru',
-    deptTime: '03:45 PM',
-    arrTime: '02:10 PM (+1 day)',
-    duration: '22h 25m',
-    speedCategory: 'Cheapest',
-    punctualityScore: 82,
-    reliabilityRating: 'Average',
-    crowdLevel: 'High',
-    price: 1320,
-    classes: [
-      { code: '2A', name: 'Second AC', price: 1980, status: 'AVAILABLE-6', statusType: 'available' },
-      { code: '3A', name: 'Third AC', price: 1320, status: 'RAC 12', statusType: 'rac' },
-      { code: 'SL', name: 'Sleeper Class', price: 490, status: 'WL 32', statusType: 'wl' }
-    ],
-    features: ['Long Distance Mail', 'Pantry Food'],
-    runsOn: ['Daily']
+    features: ['Frequent Track Clearance Delays', 'Not Recommended for Urgent Travel'],
+    runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'Delayed +78m', delayMinutes: 78, originDept: '+35m', destArr: '+78m', avgSpeed: '58 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +45m', delayMinutes: 45, originDept: '+20m', destArr: '+45m', avgSpeed: '64 km/h' },
+      { day: 'Wed, 05 Aug', status: 'Delayed +110m', delayMinutes: 110, originDept: '+50m', destArr: '+110m', avgSpeed: '52 km/h' },
+      { day: 'Thu, 06 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '75 km/h' },
+      { day: 'Fri, 07 Aug', status: 'Delayed +62m', delayMinutes: 62, originDept: '+25m', destArr: '+62m', avgSpeed: '60 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +95m', delayMinutes: 95, originDept: '+40m', destArr: '+95m', avgSpeed: '55 km/h' },
+      { day: 'Sun, 02 Aug', status: 'Delayed +38m', delayMinutes: 38, originDept: '+15m', destArr: '+38m', avgSpeed: '65 km/h' }
+    ]
   },
 
   // ==================== MUMBAI (MMCT) <-> PUNE (PUNE) ====================
@@ -117,115 +89,59 @@ export const MOCK_TRAINS = [
     speedCategory: 'Fastest',
     punctualityScore: 96,
     reliabilityRating: 'High Reliability',
+    reliabilityColor: 'green',
     crowdLevel: 'Low',
     price: 450,
     classes: [
       { code: 'EC', name: 'Executive Dining Chair', price: 1050, status: 'AVAILABLE-15', statusType: 'available' },
       { code: 'CC', name: 'AC Chair Car', price: 450, status: 'AVAILABLE-110', statusType: 'available' },
-      { code: '2S', name: 'Second Seating', price: 120, status: 'AVAILABLE-240', statusType: 'available' }
+      { code: '2S', name: 'Second Seating', price: 120, status: 'RAC 8', statusType: 'rac' }
     ],
     features: ['Historic Icon', 'Onboard Dining Car', 'High Speed Ghat Run'],
-    runsOn: ['Daily']
-  },
-  {
-    id: 'tr_12125',
-    number: '12125',
-    name: 'Pragatie Express',
-    type: 'Superfast',
-    fromCode: 'MMCT',
-    fromName: 'Mumbai Central',
-    toCode: 'PUNE',
-    toName: 'Pune Jn',
-    deptTime: '04:25 PM',
-    arrTime: '07:50 PM',
-    duration: '3h 25m',
-    speedCategory: 'Most Reliable',
-    punctualityScore: 94,
-    reliabilityRating: 'High',
-    crowdLevel: 'Moderate',
-    price: 420,
-    classes: [
-      { code: 'CC', name: 'AC Chair Car', price: 420, status: 'AVAILABLE-85', statusType: 'available' },
-      { code: '2S', name: 'Second Seating', price: 110, status: 'AVAILABLE-180', statusType: 'available' }
-    ],
-    features: ['Daily Commuter Special', 'VistaDome Available'],
-    runsOn: ['Daily']
+    runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '92 km/h' },
+      { day: 'Tue, 04 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '91 km/h' },
+      { day: 'Wed, 05 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '93 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +4m', delayMinutes: 4, originDept: 'On Time', destArr: '+4m', avgSpeed: '90 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '92 km/h' },
+      { day: 'Sat, 01 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '91 km/h' },
+      { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '92 km/h' }
+    ]
   },
   {
     id: 'tr_11009',
     number: '11009',
-    name: 'Sinhagad Express',
-    type: 'Express',
+    name: 'Sinhagad Passenger Special',
+    type: 'Passenger',
     fromCode: 'MMCT',
     fromName: 'Mumbai Central',
     toCode: 'PUNE',
     toName: 'Pune Jn',
     deptTime: '02:30 PM',
-    arrTime: '06:10 PM',
-    duration: '3h 40m',
+    arrTime: '06:40 PM',
+    duration: '4h 10m',
     speedCategory: 'Cheapest',
-    punctualityScore: 89,
-    reliabilityRating: 'Moderate High',
+    punctualityScore: 52,
+    reliabilityRating: 'Unreliable (Heavy Freight Stops)',
+    reliabilityColor: 'red',
     crowdLevel: 'High',
-    price: 380,
+    price: 95,
     classes: [
-      { code: 'CC', name: 'AC Chair Car', price: 380, status: 'AVAILABLE-50', statusType: 'available' },
-      { code: '2S', name: 'Second Seating', price: 95, status: 'RAC 20', statusType: 'rac' }
+      { code: 'CC', name: 'AC Chair Car', price: 380, status: 'RAC 12', statusType: 'rac' },
+      { code: '2S', name: 'Second Seating', price: 95, status: 'REGRET', statusType: 'regret' }
     ],
-    features: ['Afternoon Express', 'Budget Travel'],
-    runsOn: ['Daily']
-  },
-
-  // ==================== NEW DELHI (NDLS) <-> KANPUR (CNB) ====================
-  {
-    id: 'tr_12034',
-    number: '12034',
-    name: 'Kanpur Shatabdi Express',
-    type: 'Shatabdi',
-    fromCode: 'NDLS',
-    fromName: 'New Delhi',
-    toCode: 'CNB',
-    toName: 'Kanpur Central',
-    deptTime: '03:50 PM',
-    arrTime: '08:30 PM',
-    duration: '4h 40m',
-    speedCategory: 'Fastest',
-    punctualityScore: 94,
-    reliabilityRating: 'High Reliability',
-    crowdLevel: 'Low',
-    price: 890,
-    classes: [
-      { code: 'EC', name: 'Executive Chair', price: 1650, status: 'AVAILABLE-10', statusType: 'available' },
-      { code: 'CC', name: 'AC Chair Car', price: 890, status: 'AVAILABLE-75', statusType: 'available' }
-    ],
-    features: ['Hot Tea & Snacks', 'High Priority Track'],
-    runsOn: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  },
-  {
-    id: 'tr_12452',
-    number: '12452',
-    name: 'Shram Shakti Express',
-    type: 'Superfast',
-    fromCode: 'NDLS',
-    fromName: 'New Delhi',
-    toCode: 'CNB',
-    toName: 'Kanpur Central',
-    deptTime: '11:55 PM',
-    arrTime: '06:00 AM',
-    duration: '6h 05m',
-    speedCategory: 'Most Reliable',
-    punctualityScore: 93,
-    reliabilityRating: 'High',
-    crowdLevel: 'High',
-    price: 780,
-    classes: [
-      { code: '1A', name: 'First AC', price: 1950, status: 'AVAILABLE-4', statusType: 'available' },
-      { code: '2A', name: 'Second AC', price: 1180, status: 'AVAILABLE-18', statusType: 'available' },
-      { code: '3A', name: 'Third AC', price: 780, status: 'AVAILABLE-90', statusType: 'available' },
-      { code: 'SL', name: 'Sleeper', price: 290, status: 'RAC 10', statusType: 'rac' }
-    ],
-    features: ['Overnight Non-Stop Kanpur', 'Punctual Guarantee'],
-    runsOn: ['Daily']
+    features: ['Frequent Ghat Section Holds', 'Low Priority Track'],
+    runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'Delayed +54m', delayMinutes: 54, originDept: '+20m', destArr: '+54m', avgSpeed: '48 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +85m', delayMinutes: 85, originDept: '+40m', destArr: '+85m', avgSpeed: '42 km/h' },
+      { day: 'Wed, 05 Aug', status: 'Delayed +40m', delayMinutes: 40, originDept: '+15m', destArr: '+40m', avgSpeed: '51 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +92m', delayMinutes: 92, originDept: '+45m', destArr: '+92m', avgSpeed: '40 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '60 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +68m', delayMinutes: 68, originDept: '+30m', destArr: '+68m', avgSpeed: '45 km/h' },
+      { day: 'Sun, 02 Aug', status: 'Delayed +115m', delayMinutes: 115, originDept: '+55m', destArr: '+115m', avgSpeed: '38 km/h' }
+    ]
   },
 
   // ==================== NEW DELHI (NDLS) <-> VARANASI (BSB) ====================
@@ -244,6 +160,7 @@ export const MOCK_TRAINS = [
     speedCategory: 'Fastest',
     punctualityScore: 92,
     reliabilityRating: 'High Reliability',
+    reliabilityColor: 'green',
     crowdLevel: 'Moderate',
     price: 1750,
     classes: [
@@ -252,32 +169,48 @@ export const MOCK_TRAINS = [
     ],
     features: ['Wi-Fi', 'Onboard Catering', 'Automatic Doors', 'GPS Telemetry'],
     runsOn: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat', 'Sun'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +4m', delayMinutes: 4, originDept: 'On Time', destArr: '+4m', avgSpeed: '95 km/h' },
+      { day: 'Wed, 05 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '97 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +6m', delayMinutes: 6, originDept: '+2m', destArr: '+6m', avgSpeed: '94 km/h' },
+      { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' }
+    ]
   },
   {
-    id: 'tr_12560',
-    number: '12560',
-    name: 'Shiv Ganga Express',
-    type: 'Superfast',
+    id: 'tr_14258',
+    number: '14258',
+    name: 'Kashi Vishwanath Express',
+    type: 'Express',
     fromCode: 'NDLS',
     fromName: 'New Delhi',
     toCode: 'BSB',
     toName: 'Varanasi Jn',
-    deptTime: '08:05 PM',
-    arrTime: '06:10 AM',
-    duration: '10h 05m',
-    speedCategory: 'Fastest',
-    punctualityScore: 89,
-    reliabilityRating: 'High',
+    deptTime: '11:35 AM',
+    arrTime: '04:45 AM (+1 day)',
+    duration: '17h 10m',
+    speedCategory: 'Cheapest',
+    punctualityScore: 48,
+    reliabilityRating: 'High Delay Risk (Avoid for Exams/Flights)',
+    reliabilityColor: 'red',
     crowdLevel: 'High',
-    price: 1250,
+    price: 430,
     classes: [
-      { code: '1A', name: 'First AC', price: 2950, status: 'AVAILABLE-4', statusType: 'available' },
-      { code: '2A', name: 'Second AC', price: 1750, status: 'AVAILABLE-18', statusType: 'available' },
-      { code: '3A', name: 'Third AC', price: 1250, status: 'AVAILABLE-94', statusType: 'available' },
-      { code: 'SL', name: 'Sleeper', price: 480, status: 'RAC 12', statusType: 'rac' }
+      { code: '3A', name: 'Third AC', price: 1150, status: 'RAC 18', statusType: 'rac' },
+      { code: 'SL', name: 'Sleeper', price: 430, status: 'WL 65', statusType: 'wl' }
     ],
-    features: ['Overnight Express', 'Pantry Available', 'Punctual Track Record'],
+    features: ['High Congestion Route', 'Heavy Section Delays'],
     runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'Delayed +140m', delayMinutes: 140, originDept: '+60m', destArr: '+140m', avgSpeed: '42 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +95m', delayMinutes: 95, originDept: '+40m', destArr: '+95m', avgSpeed: '48 km/h' },
+      { day: 'Wed, 05 Aug', status: 'Delayed +120m', delayMinutes: 120, originDept: '+55m', destArr: '+120m', avgSpeed: '45 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +180m', delayMinutes: 180, originDept: '+80m', destArr: '+180m', avgSpeed: '38 km/h' },
+      { day: 'Fri, 07 Aug', status: 'Delayed +60m', delayMinutes: 60, originDept: '+25m', destArr: '+60m', avgSpeed: '52 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +110m', delayMinutes: 110, originDept: '+45m', destArr: '+110m', avgSpeed: '46 km/h' },
+      { day: 'Sun, 02 Aug', status: 'Delayed +85m', delayMinutes: 85, originDept: '+35m', destArr: '+85m', avgSpeed: '50 km/h' }
+    ]
   },
 
   // ==================== NEW DELHI (NDLS) <-> MUMBAI CENTRAL (MMCT) ====================
@@ -295,7 +228,8 @@ export const MOCK_TRAINS = [
     duration: '15h 40m',
     speedCategory: 'Fastest',
     punctualityScore: 89,
-    reliabilityRating: 'High Reliability',
+    reliabilityRating: 'Moderate Reliability',
+    reliabilityColor: 'yellow',
     crowdLevel: 'High',
     price: 2450,
     classes: [
@@ -305,31 +239,49 @@ export const MOCK_TRAINS = [
     ],
     features: ['Pantry Included', 'Cleanliness 5★', 'Bedding Included'],
     runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +8m', delayMinutes: 8, originDept: '+2m', destArr: '+8m', avgSpeed: '88 km/h' },
+      { day: 'Wed, 05 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '90 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +14m', delayMinutes: 14, originDept: '+5m', destArr: '+14m', avgSpeed: '86 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +10m', delayMinutes: 10, originDept: '+3m', destArr: '+10m', avgSpeed: '87 km/h' },
+      { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '90 km/h' }
+    ]
   },
   {
-    id: 'tr_12954',
-    number: '12954',
-    name: 'August Kranti Rajdhani',
-    type: 'Rajdhani',
+    id: 'tr_19020',
+    number: '19020',
+    name: 'Dehradun Express (via MMCT)',
+    type: 'Express Mail',
     fromCode: 'NDLS',
     fromName: 'New Delhi',
     toCode: 'MMCT',
     toName: 'Mumbai Central',
-    deptTime: '05:15 PM',
-    arrTime: '10:05 AM',
-    duration: '16h 50m',
-    speedCategory: 'Fastest',
-    punctualityScore: 88,
-    reliabilityRating: 'High',
-    crowdLevel: 'Moderate',
-    price: 2380,
+    deptTime: '10:20 PM',
+    arrTime: '04:15 AM (+2 days)',
+    duration: '29h 55m',
+    speedCategory: 'Cheapest',
+    punctualityScore: 46,
+    reliabilityRating: 'High Delay Risk (Extremely Slow)',
+    reliabilityColor: 'red',
+    crowdLevel: 'High',
+    price: 610,
     classes: [
-      { code: '1A', name: 'First AC', price: 4720, status: 'AVAILABLE-2', statusType: 'available' },
-      { code: '2A', name: 'Second AC', price: 2890, status: 'AVAILABLE-24', statusType: 'available' },
-      { code: '3A', name: 'Third AC', price: 2380, status: 'AVAILABLE-110', statusType: 'available' },
+      { code: '3A', name: 'Third AC', price: 1650, status: 'GNWL 88', statusType: 'wl' },
+      { code: 'SL', name: 'Sleeper', price: 610, status: 'REGRET', statusType: 'regret' }
     ],
-    features: ['Catering Included', 'Dynamic Fare'],
+    features: ['Many Intermediate Stops', 'Low Priority Line'],
     runsOn: ['Daily'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'Delayed +160m', delayMinutes: 160, originDept: '+45m', destArr: '+160m', avgSpeed: '42 km/h' },
+      { day: 'Tue, 04 Aug', status: 'Delayed +130m', delayMinutes: 130, originDept: '+60m', destArr: '+130m', avgSpeed: '45 km/h' },
+      { day: 'Wed, 05 Aug', status: 'Delayed +210m', delayMinutes: 210, originDept: '+90m', destArr: '+210m', avgSpeed: '36 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +85m', delayMinutes: 85, originDept: '+30m', destArr: '+85m', avgSpeed: '49 km/h' },
+      { day: 'Fri, 07 Aug', status: 'Delayed +175m', delayMinutes: 175, originDept: '+70m', destArr: '+175m', avgSpeed: '39 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +140m', delayMinutes: 140, originDept: '+50m', destArr: '+140m', avgSpeed: '44 km/h' },
+      { day: 'Sun, 02 Aug', status: 'Delayed +190m', delayMinutes: 190, originDept: '+80m', destArr: '+190m', avgSpeed: '37 km/h' }
+    ]
   },
 
   // ==================== AHMEDABAD (ADI) <-> MUMBAI CENTRAL (MMCT) ====================
@@ -348,6 +300,7 @@ export const MOCK_TRAINS = [
     speedCategory: 'Fastest',
     punctualityScore: 94,
     reliabilityRating: 'High Reliability',
+    reliabilityColor: 'green',
     crowdLevel: 'Low',
     price: 1980,
     classes: [
@@ -356,6 +309,14 @@ export const MOCK_TRAINS = [
     ],
     features: ['Travel Insurance Included', 'Infotainment System', 'Hostess Service'],
     runsOn: ['Mon', 'Tue', 'Thu', 'Fri', 'Sat', 'Sun'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' },
+      { day: 'Tue, 04 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '90 km/h' },
+      { day: 'Thu, 06 Aug', status: 'Delayed +4m', delayMinutes: 4, originDept: 'On Time', destArr: '+4m', avgSpeed: '88 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' },
+      { day: 'Sat, 01 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '90 km/h' },
+      { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' }
+    ]
   },
   {
     id: 'tr_20902',
@@ -371,14 +332,23 @@ export const MOCK_TRAINS = [
     duration: '5h 25m',
     speedCategory: 'Fastest',
     punctualityScore: 95,
-    reliabilityRating: 'High',
+    reliabilityRating: 'High Reliability',
+    reliabilityColor: 'green',
     crowdLevel: 'Moderate',
     price: 1420,
     classes: [
       { code: 'EC', name: 'Executive Chair', price: 2630, status: 'AVAILABLE-16', statusType: 'available' },
-      { code: 'CC', name: 'AC Chair Car', price: 1420, status: 'AVAILABLE-68', statusType: 'available' }
+      { code: 'CC', name: 'AC Chair Car', price: 1420, status: 'RAC 5', statusType: 'rac' }
     ],
     features: ['160 km/h Capable', 'Automatic Doors', 'Hot Meals'],
     runsOn: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat', 'Sun'],
+    historyLogs: [
+      { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '95 km/h' },
+      { day: 'Tue, 04 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' },
+      { day: 'Wed, 05 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '95 km/h' },
+      { day: 'Fri, 07 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '96 km/h' },
+      { day: 'Sat, 01 Aug', status: 'Delayed +3m', delayMinutes: 3, originDept: 'On Time', destArr: '+3m', avgSpeed: '94 km/h' },
+      { day: 'Sun, 02 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '95 km/h' }
+    ]
   }
 ]
