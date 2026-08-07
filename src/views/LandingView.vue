@@ -4,7 +4,7 @@
     <Navbar @openLogin="showAuthModal = true" />
 
     <!-- ==================== AMBIENT LIGHT & PROMINENT VANDE BHARAT HERO WATERMARK ==================== -->
-    <div class="absolute inset-x-0 top-0 h-[720px] overflow-hidden pointer-events-none z-0">
+    <div class="absolute inset-x-0 top-0 h-[750px] overflow-hidden pointer-events-none z-0">
       <!-- High-Speed Vande Bharat Train Background Image Layer (z-0 stacking index) -->
       <img
         src="/vande_bharat_bg.png"
@@ -17,12 +17,12 @@
 
       <!-- Main Soft Ambient Glow Orb 1 (Top Left Hero Brand Area) -->
       <div
-        class="absolute -top-20 left-10 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-rail-400/20 via-sky-300/15 to-indigo-300/10 blur-[120px] animate-ambient-glow"
+        class="absolute -top-20 left-10 w-[750px] h-[750px] rounded-full bg-gradient-to-br from-rail-400/20 via-sky-300/15 to-indigo-300/10 blur-[120px] animate-ambient-glow"
       ></div>
 
       <!-- Rotating Cyan-Blue Glow Orb 2 (Behind Quick Book Widget) -->
       <div
-        class="absolute top-10 right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-tr from-sky-400/15 via-rail-500/10 to-transparent blur-[120px] animate-slow-rotate"
+        class="absolute top-10 right-10 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-sky-400/15 via-rail-500/10 to-transparent blur-[120px] animate-slow-rotate"
       ></div>
 
       <!-- Subtle Dot Grid Pattern Background -->
@@ -32,12 +32,12 @@
     </div>
     <!-- =================================================================================== -->
 
-    <!-- Main Hero Section (z-10 layer above Vande Bharat watermark) -->
-    <section class="flex-1 max-w-7xl mx-auto px-6 py-10 lg:py-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+    <!-- Main Hero Section (Scaled to max-w-[1700px] for widescreen & 14" compatibility) -->
+    <section class="flex-1 max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 py-10 lg:py-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
       <!-- Left Hero Content -->
       <div class="lg:col-span-7 space-y-7 text-left reveal-on-scroll relative">
         <!-- Backlight Glow Aura behind Hero Text -->
-        <div class="absolute -top-10 -left-10 w-[480px] h-[320px] bg-gradient-to-r from-blue-400/20 via-sky-300/20 to-indigo-400/15 rounded-full blur-3xl opacity-80 animate-pulse-glow pointer-events-none -z-10"></div>
+        <div class="absolute -top-10 -left-10 w-[550px] h-[350px] bg-gradient-to-r from-blue-400/20 via-sky-300/20 to-indigo-400/15 rounded-full blur-3xl opacity-80 animate-pulse-glow pointer-events-none -z-10"></div>
 
         <!-- Premium Pill Badges & Mission Tagline -->
         <div class="space-y-3">
@@ -49,7 +49,7 @@
 
         <!-- Main Headline: Plan better, Travel smarter. -->
         <div class="space-y-2">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-rail-900 leading-[1.10]">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-black tracking-tight text-rail-900 leading-[1.10]">
             Plan better,<br />
             <span class="bg-gradient-to-r from-rail-500 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Travel smarter.
@@ -57,11 +57,11 @@
           </h1>
 
           <!-- Prominent Tagline Accent ("Know before you go — From Uncertainty to Assurance") -->
-          <div class="flex flex-wrap items-center gap-2 pt-2">
-            <span class="text-xl sm:text-2xl font-black text-slate-800 font-serif italic tracking-tight">
+          <div class="flex flex-wrap items-center gap-2.5 pt-2">
+            <span class="text-xl sm:text-2xl 2xl:text-3xl font-black text-slate-800 font-serif italic tracking-tight">
               Know before you
             </span>
-            <span class="text-2xl sm:text-3xl font-black text-emerald-600 font-serif tracking-tight underline decoration-emerald-400 decoration-2 underline-offset-4">
+            <span class="text-2xl sm:text-3xl 2xl:text-4xl font-black text-emerald-600 font-serif tracking-tight underline decoration-emerald-400 decoration-2 underline-offset-4">
               go
             </span>
             <span class="ml-1 px-3.5 py-1 rounded-full bg-emerald-100/90 text-emerald-800 text-xs sm:text-sm font-black uppercase tracking-wider border border-emerald-300/90 shadow-sm backdrop-blur-sm">
@@ -71,7 +71,7 @@
         </div>
 
         <!-- Subtitle Mission Statement -->
-        <p class="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed font-normal">
+        <p class="text-base sm:text-lg 2xl:text-xl text-slate-600 max-w-2xl leading-relaxed font-normal">
           RailEase evaluates <strong>historical train telemetry</strong>, signal box history, and seasonal corridor data to provide <strong>reliable delay forecasts</strong> — giving you realistic travel foresight without blind guesswork.
         </p>
 
@@ -94,18 +94,18 @@
         </div>
 
         <!-- Trust Stat Cards -->
-        <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/80 text-left">
-          <div class="p-3.5 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
-            <div class="text-2xl font-black text-rail-900">88-94%</div>
-            <div class="text-xs text-slate-500 font-medium">Historical Pattern Match</div>
+        <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/80 text-left max-w-2xl">
+          <div class="p-4 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
+            <div class="text-2xl sm:text-3xl font-black text-rail-900">88-94%</div>
+            <div class="text-xs text-slate-500 font-medium mt-0.5">Historical Pattern Match</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
-            <div class="text-2xl font-black text-rail-900">500+</div>
-            <div class="text-xs text-slate-500 font-medium">Express Corridors</div>
+          <div class="p-4 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
+            <div class="text-2xl sm:text-3xl font-black text-rail-900">500+</div>
+            <div class="text-xs text-slate-500 font-medium mt-0.5">Express Corridors</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
-            <div class="text-2xl font-black text-emerald-600">Smart Buffer</div>
-            <div class="text-xs text-slate-500 font-medium">High-Stakes Mode</div>
+          <div class="p-4 rounded-xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm card-glow-hover">
+            <div class="text-2xl sm:text-3xl font-black text-emerald-600">Smart Buffer</div>
+            <div class="text-xs text-slate-500 font-medium mt-0.5">High-Stakes Mode</div>
           </div>
         </div>
       </div>
@@ -120,76 +120,76 @@
 
     <!-- SECTION 1: 4 Reliability Pillars Showcase -->
     <section id="features" class="bg-white/80 backdrop-blur-md py-20 border-t border-slate-200/80 relative">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-gradient-to-r from-blue-100/40 via-sky-100/30 to-indigo-100/30 blur-[130px] pointer-events-none -z-10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] bg-gradient-to-r from-blue-100/40 via-sky-100/30 to-indigo-100/30 blur-[140px] pointer-events-none -z-10"></div>
 
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3 reveal-on-scroll">
+      <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3 reveal-on-scroll">
           <h2 class="text-xs font-extrabold uppercase tracking-widest text-rail-500">From Uncertainty to Assurance</h2>
-          <h3 class="text-3xl font-black text-rail-900 tracking-tight">Engineered for Indian Railway Travelers</h3>
-          <p class="text-slate-600 text-sm">Data-driven forecasts to help you plan travel buffer times with confidence.</p>
+          <h3 class="text-3xl sm:text-4xl font-black text-rail-900 tracking-tight">Engineered for Indian Railway Travelers</h3>
+          <p class="text-slate-600 text-sm sm:text-base">Data-driven forecasts to help you plan travel buffer times with confidence.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Pillar 1: Reliability Score -->
-          <div id="predictions" class="bg-white p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-100">
+          <div id="predictions" class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-100">
             <div>
               <div class="w-12 h-12 rounded-xl bg-blue-100/80 text-rail-600 flex items-center justify-center mb-5 shadow-sm">
                 <BarChart3 class="w-6 h-6" />
               </div>
-              <h4 class="text-base font-extrabold text-rail-900 mb-2">1. Reliability Score</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">1. Reliability Score</h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Evaluates 30-day historical punctuality logs, signal box history, and corridor data to calculate realistic travel confidence.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-rail-600 flex items-center gap-1">
+            <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-rail-600 flex items-center gap-1">
               <span>View Score Meter</span> &rarr;
             </div>
           </div>
 
           <!-- Pillar 2: Delay Prediction -->
-          <div class="bg-white p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-200">
+          <div class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-200">
             <div>
               <div class="w-12 h-12 rounded-xl bg-amber-100/80 text-amber-600 flex items-center justify-center mb-5 shadow-sm">
                 <Clock class="w-6 h-6" />
               </div>
-              <h4 class="text-base font-extrabold text-rail-900 mb-2">2. Delay Prediction</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">2. Delay Prediction</h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Statistical modeling estimates arrival windows based on track maintenance, weather trends, and historical section delay.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-amber-600 flex items-center gap-1">
+            <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-amber-600 flex items-center gap-1">
               <span>AI Forecast Logs</span> &rarr;
             </div>
           </div>
 
           <!-- Pillar 3: Live Tracking -->
-          <div id="tracking" class="bg-white p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-300">
+          <div id="tracking" class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-300">
             <div>
               <div class="w-12 h-12 rounded-xl bg-indigo-100/80 text-indigo-600 flex items-center justify-center mb-5 shadow-sm">
                 <Navigation class="w-6 h-6" />
               </div>
-              <h4 class="text-base font-extrabold text-rail-900 mb-2">3. Live Tracking</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">3. Live Tracking</h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Station telemetry and GPS train tracking keeping you informed of actual block clearance along the line.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-indigo-600 flex items-center gap-1">
+            <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-indigo-600 flex items-center gap-1">
               <span>Explore Radar</span> &rarr;
             </div>
           </div>
 
           <!-- Pillar 4: Disruption Recovery -->
-          <div id="recovery" class="bg-white p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-400">
+          <div id="recovery" class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-400">
             <div>
               <div class="w-12 h-12 rounded-xl bg-emerald-100/80 text-emerald-600 flex items-center justify-center mb-5 shadow-sm">
                 <ShieldCheck class="w-6 h-6" />
               </div>
-              <h4 class="text-base font-extrabold text-rail-900 mb-2">4. Disruption Recovery</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">4. Disruption Recovery</h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Delay protection guarantees, alternate train backup options, and emergency station cabs so missing your schedule is avoided.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-emerald-600 flex items-center gap-1">
+            <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-emerald-600 flex items-center gap-1">
               <span>Assurance Protection</span> &rarr;
             </div>
           </div>
@@ -199,7 +199,7 @@
 
     <!-- SECTION 2: Live High-Speed Corridors Radar Section -->
     <section class="py-20 border-t border-slate-200/80 relative">
-      <div class="max-w-7xl mx-auto px-6 space-y-12">
+      <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 space-y-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 reveal-on-scroll">
           <div>
             <h2 class="text-xs font-extrabold uppercase tracking-widest text-rail-500">Live Express Radar</h2>
@@ -214,10 +214,10 @@
           <div
             v-for="corridor in expressCorridors"
             :key="corridor.name"
-            class="bg-white p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover space-y-4 reveal-on-scroll delay-100"
+            class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover space-y-4 reveal-on-scroll delay-100"
           >
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-full bg-rail-50 text-rail-700 font-extrabold text-[11px] border border-rail-100">
+              <span class="px-3 py-1 rounded-full bg-rail-50 text-rail-700 font-extrabold text-[11px] border border-rail-100">
                 {{ corridor.type }}
               </span>
               <span class="text-xs font-bold text-emerald-600 flex items-center gap-1">
@@ -227,11 +227,11 @@
             </div>
 
             <div>
-              <h4 class="text-base font-extrabold text-slate-900">{{ corridor.name }}</h4>
-              <p class="text-xs text-slate-500 mt-0.5" v-html="corridor.route"></p>
+              <h4 class="text-lg font-extrabold text-slate-900">{{ corridor.name }}</h4>
+              <p class="text-xs sm:text-sm text-slate-500 mt-0.5" v-html="corridor.route"></p>
             </div>
 
-            <div class="flex items-center justify-between text-xs text-slate-600 border-t border-slate-100 pt-3">
+            <div class="flex items-center justify-between text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
               <span>Avg Speed: <strong>{{ corridor.speed }}</strong></span>
               <span class="text-slate-400">Daily Runs</span>
             </div>
@@ -244,15 +244,15 @@
     <section class="bg-slate-900 text-white py-20 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-rail-500/20 blur-[140px] pointer-events-none"></div>
 
-      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         <div class="lg:col-span-6 space-y-6 reveal-on-scroll">
           <span class="px-3.5 py-1.5 rounded-full bg-rail-500/20 border border-rail-500/40 text-rail-300 font-extrabold text-xs">
             High-Stakes Mode Active
           </span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
+          <h2 class="text-3xl sm:text-4xl 2xl:text-5xl font-black tracking-tight text-white leading-tight">
             Smart buffer planning for critical exams & flights.
           </h2>
-          <p class="text-slate-300 text-sm leading-relaxed">
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
             When you select High-Stakes Mode for critical travel, RailEase provides realistic buffer options and backup ticket suggestions to safeguard your timetable.
           </p>
 
@@ -314,7 +314,7 @@
 
     <!-- SECTION 4: Traveler Testimonials -->
     <section class="py-20 bg-white border-t border-slate-200/80">
-      <div class="max-w-7xl mx-auto px-6 space-y-12">
+      <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 space-y-12">
         <div class="text-center max-w-xl mx-auto space-y-3 reveal-on-scroll">
           <h2 class="text-xs font-extrabold uppercase tracking-widest text-rail-500">Verified Passenger Stories</h2>
           <h3 class="text-3xl font-black text-rail-900 tracking-tight">Trusted by 100,000+ Indian Travelers</h3>
@@ -326,15 +326,15 @@
             :key="review.author"
             class="bg-slate-50 p-6 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between space-y-4 reveal-on-scroll delay-100"
           >
-            <p class="text-xs text-slate-700 leading-relaxed font-medium italic">
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium italic">
               "{{ review.text }}"
             </p>
 
             <div class="flex items-center gap-3 pt-3 border-t border-slate-200/60">
               <img :src="review.avatar" alt="" class="w-9 h-9 rounded-full object-cover border border-slate-300" />
               <div>
-                <span class="text-xs font-bold text-slate-900 block">{{ review.author }}</span>
-                <span class="text-[10px] text-slate-400 font-semibold">{{ review.role }}</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-900 block">{{ review.author }}</span>
+                <span class="text-[10px] sm:text-xs text-slate-400 font-semibold">{{ review.role }}</span>
               </div>
             </div>
           </div>

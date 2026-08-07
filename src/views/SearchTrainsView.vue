@@ -4,8 +4,8 @@
     <Navbar @openLogin="showAuthModal = true" />
 
     <!-- ==================== TOP NAVY MODIFY SEARCH BAR (MATCHING IRCTC SCREENSHOT) ==================== -->
-    <div class="bg-[#1E3A8A] text-white py-3.5 px-4 sm:px-8 border-b border-blue-900 shadow-md">
-      <div class="max-w-7xl mx-auto space-y-3">
+    <div class="bg-[#1E3A8A] text-white py-3.5 px-4 sm:px-10 lg:px-14 border-b border-blue-900 shadow-md">
+      <div class="max-w-[1700px] mx-auto space-y-3">
         <!-- Top Input Fields Row -->
         <div class="flex flex-wrap items-center gap-3">
           <!-- From Station Input -->
@@ -102,14 +102,14 @@
     </div>
 
     <!-- ==================== MAIN CONTENT AREA (SIDEBAR + TRAIN RESULTS) ==================== -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="max-w-[1700px] mx-auto px-4 sm:px-8 lg:px-12 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
       
       <!-- ==================== LEFT SIDEBAR PANEL: REFINE RESULTS ==================== -->
       <aside class="lg:col-span-3 space-y-5">
         <div class="bg-white rounded-card border border-slate-200 shadow-sm p-4 space-y-6">
           <div class="flex items-center justify-between border-b border-slate-100 pb-3">
             <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-wide">Refine Results</h3>
-            <button @click="resetFilters" class="text-[11px] font-bold text-orange-600 hover:underline">
+            <button @click="resetFilters" class="text-[11px] font-bold text-orange-600 hover:underline cursor-pointer">
               Remove Filter
             </button>
           </div>
@@ -118,7 +118,7 @@
           <div class="space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">JOURNEY CLASS</span>
-              <button @click="selectAllClasses" class="text-[10px] font-bold text-rail-600 hover:underline">Select All</button>
+              <button @click="selectAllClasses" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
             </div>
             <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 font-semibold">
               <label class="flex items-center gap-1.5 cursor-pointer">
@@ -148,7 +148,7 @@
           <div class="space-y-2.5 border-t border-slate-100 pt-4">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">TRAIN TYPE</span>
-              <button @click="selectAllTrainTypes" class="text-[10px] font-bold text-rail-600 hover:underline">Select All</button>
+              <button @click="selectAllTrainTypes" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
             </div>
             <div class="space-y-2 text-xs text-slate-700 font-semibold">
               <label class="flex items-center gap-2 cursor-pointer">
@@ -183,7 +183,7 @@
           <div class="space-y-2.5 border-t border-slate-100 pt-4">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">DEPARTURE TIME</span>
-              <button @click="searchStore.selectedTimeSlot = 'all'" class="text-[10px] font-bold text-rail-600 hover:underline">Select All</button>
+              <button @click="searchStore.selectedTimeSlot = 'all'" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
             </div>
             <div class="grid grid-cols-2 gap-2 text-[11px] font-bold text-center">
               <button

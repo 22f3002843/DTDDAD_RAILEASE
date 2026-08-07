@@ -1,6 +1,6 @@
 <template>
   <header class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 transition-all">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 h-20 flex items-center justify-between">
       <!-- Big Prominent App Icon & Brand Logo -->
       <Logo size="lg" />
 
@@ -26,7 +26,7 @@
           <!-- Go to Dashboard button -->
           <button
             @click="router.push('/dashboard')"
-            class="px-5 py-2.5 bg-rail-500 hover:bg-rail-600 text-white font-semibold text-xs rounded-btn shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+            class="px-5 py-2.5 bg-rail-500 hover:bg-rail-600 text-white font-semibold text-xs rounded-btn shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer"
           >
             <LayoutDashboard class="w-4 h-4" />
             <span>Go to Dashboard</span>
@@ -35,7 +35,7 @@
           <!-- Top-Right Logout button -->
           <button
             @click="handleLogout"
-            class="px-4 py-2.5 border border-slate-300 hover:border-red-500 bg-white hover:bg-red-50 text-slate-700 hover:text-red-600 font-semibold text-xs rounded-btn shadow-sm transition-all flex items-center gap-1.5"
+            class="px-4 py-2.5 border border-slate-300 hover:border-red-500 bg-white hover:bg-red-50 text-slate-700 hover:text-red-600 font-semibold text-xs rounded-btn shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
             title="Log Out"
           >
             <LogOut class="w-4 h-4 text-red-500" />
@@ -46,7 +46,7 @@
         <template v-else>
           <button
             @click="$emit('openLogin')"
-            class="px-6 py-2.5 bg-rail-500 hover:bg-rail-600 text-white font-semibold text-sm rounded-btn shadow-md hover:shadow-lg transition-all flex items-center gap-2 group"
+            class="px-6 py-2.5 bg-rail-500 hover:bg-rail-600 text-white font-semibold text-sm rounded-btn shadow-md hover:shadow-lg transition-all flex items-center gap-2 group cursor-pointer"
           >
             <User class="w-4 h-4" />
             <span>Sign In / Register</span>
@@ -62,10 +62,9 @@
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import Logo from '@/components/common/Logo.vue'
-import { LayoutDashboard, User, ArrowRight, LogOut } from 'lucide-vue-next'
+import { LayoutDashboard, LogOut, User, ArrowRight } from 'lucide-vue-next'
 
-defineEmits(['openLogin'])
-
+const emit = defineEmits(['openLogin'])
 const router = useRouter()
 const authStore = useAuthStore()
 
