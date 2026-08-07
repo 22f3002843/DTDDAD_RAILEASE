@@ -56,13 +56,15 @@
             </span>
           </h1>
 
-          <!-- Prominent Tagline Accent ("so travellers go from uncertainty to assurance") -->
+          <!-- Prominent Tagline Accent ("Know before you go — From Uncertainty to Assurance") -->
           <div class="flex flex-wrap items-center gap-2 pt-2">
-            <span class="text-base sm:text-lg font-medium text-slate-700 italic">so travellers</span>
-            <span class="text-xl sm:text-2xl font-black text-emerald-600 font-serif tracking-tight underline decoration-emerald-400 decoration-2 underline-offset-4">
+            <span class="text-xl sm:text-2xl font-black text-slate-800 font-serif italic tracking-tight">
+              Know before you
+            </span>
+            <span class="text-2xl sm:text-3xl font-black text-emerald-600 font-serif tracking-tight underline decoration-emerald-400 decoration-2 underline-offset-4">
               go
             </span>
-            <span class="px-3.5 py-1 rounded-full bg-emerald-100/90 text-emerald-800 text-xs sm:text-sm font-black uppercase tracking-wider border border-emerald-300/90 shadow-sm backdrop-blur-sm">
+            <span class="ml-1 px-3.5 py-1 rounded-full bg-emerald-100/90 text-emerald-800 text-xs sm:text-sm font-black uppercase tracking-wider border border-emerald-300/90 shadow-sm backdrop-blur-sm">
               From Uncertainty to Assurance
             </span>
           </div>
