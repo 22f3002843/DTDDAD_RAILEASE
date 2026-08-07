@@ -45,20 +45,28 @@
             <Sparkles class="w-4 h-4 text-rail-500 animate-pulse" />
             <span>Indian Railway Reliability Intelligence</span>
           </div>
-
-          <div class="text-xs font-black tracking-[0.25em] text-rail-500 uppercase flex items-center gap-2 pt-1">
-            <span class="w-6 h-0.5 bg-rail-500 rounded-full"></span>
-            From Uncertainty to Assurance
-          </div>
         </div>
 
-        <!-- Main Headline -->
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-rail-900 leading-[1.10]">
-          Plan better,<br />
-          <span class="bg-gradient-to-r from-rail-500 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Travel smarter.
-          </span>
-        </h1>
+        <!-- Main Headline: Plan better, Travel smarter. -->
+        <div class="space-y-2">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-rail-900 leading-[1.10]">
+            Plan better,<br />
+            <span class="bg-gradient-to-r from-rail-500 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Travel smarter.
+            </span>
+          </h1>
+
+          <!-- Prominent Tagline Accent ("so travellers go from uncertainty to assurance") -->
+          <div class="flex flex-wrap items-center gap-2 pt-2">
+            <span class="text-base sm:text-lg font-medium text-slate-700 italic">so travellers</span>
+            <span class="text-xl sm:text-2xl font-black text-emerald-600 font-serif tracking-tight underline decoration-emerald-400 decoration-2 underline-offset-4">
+              go
+            </span>
+            <span class="px-3.5 py-1 rounded-full bg-emerald-100/90 text-emerald-800 text-xs sm:text-sm font-black uppercase tracking-wider border border-emerald-300/90 shadow-sm backdrop-blur-sm">
+              From Uncertainty to Assurance
+            </span>
+          </div>
+        </div>
 
         <!-- Subtitle Mission Statement -->
         <p class="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed font-normal">
