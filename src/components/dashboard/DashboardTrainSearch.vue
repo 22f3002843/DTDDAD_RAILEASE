@@ -12,7 +12,7 @@
           <div>
             <h2 class="text-base font-black uppercase tracking-wider text-slate-900">Train Intelligence &amp; Sync</h2>
             <p class="text-xs text-slate-500 font-medium">
-              Select any train below or enter your 10-digit IRCTC PNR to lock live safeguards.
+              Search trains between any stations, analyze historical 7-day delay telemetry, or enter your 10-digit IRCTC PNR.
             </p>
           </div>
         </div>
