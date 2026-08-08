@@ -12,39 +12,30 @@
           <div>
             <h2 class="text-base font-black uppercase tracking-wider text-slate-900">Train Intelligence &amp; Sync</h2>
             <p class="text-xs text-slate-500 font-medium">
-              Select any train below or enter your 10-digit IRCTC PNR to lock live safeguards.
+              Search trains between any stations, analyze historical 7-day delay telemetry, or enter your 10-digit IRCTC PNR.
             </p>
           </div>
         </div>
 
-        <!-- Right Side: Subtle Active Journey Pill + Compact PNR Sync -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <!-- Subtle Synced Journey Pill Tag -->
-          <div v-if="journeyStore.activeTrip" class="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>Synced: <strong class="text-emerald-950 font-bold">{{ journeyStore.activeTrip.trainName }} ({{ journeyStore.activeTrip.trainNumber }})</strong></span>
+        <!-- Right Side: Compact PNR Sync -->
+        <div class="flex items-center gap-2">
+          <div class="relative">
+            <input
+              v-model="pnrSearchInput"
+              type="text"
+              placeholder="Enter 10-digit PNR"
+              class="w-48 pl-8 pr-3 py-1.5 bg-slate-50 text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg text-xs font-bold focus:outline-none focus:border-rail-600"
+              @keyup.enter="handlePnrSync"
+            />
+            <Search class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
           </div>
-
-          <!-- Compact PNR Search Bar -->
-          <div class="flex items-center gap-2">
-            <div class="relative">
-              <input
-                v-model="pnrSearchInput"
-                type="text"
-                placeholder="Enter 10-digit PNR"
-                class="w-48 pl-8 pr-3 py-1.5 bg-slate-50 text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg text-xs font-bold focus:outline-none focus:border-rail-600"
-                @keyup.enter="handlePnrSync"
-              />
-              <Search class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
-            </div>
-            <button
-              @click="handlePnrSync"
-              class="px-3.5 py-1.5 bg-rail-600 hover:bg-rail-700 text-white rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1 shrink-0 shadow-2xs"
-            >
-              <CheckCircle2 class="w-3.5 h-3.5" />
-              <span>Sync</span>
-            </button>
-          </div>
+          <button
+            @click="handlePnrSync"
+            class="px-3.5 py-1.5 bg-rail-600 hover:bg-rail-700 text-white rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1 shrink-0 shadow-2xs"
+          >
+            <CheckCircle2 class="w-3.5 h-3.5" />
+            <span>Sync</span>
+          </button>
         </div>
       </div>
 
@@ -134,7 +125,7 @@
           <span>55-69 Sometimes delayed</span>
         </span>
         <span class="flex items-center gap-1.5 text-red-700">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
           <span>Under 55 Often delayed</span>
         </span>
       </div>

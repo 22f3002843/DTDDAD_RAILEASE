@@ -67,7 +67,9 @@ export function getReliabilityDotClass(train) {
   const level = getReliabilityLevel(train)
   if (level === 'green') return 'bg-emerald-500'
   if (level === 'amber') return 'bg-amber-500'
-  return 'bg-red-500'
+  // The pulse on the worst band came from the dashboard work on main and is
+  // kept here so every surface shows it, not just the one page it started on.
+  return 'bg-red-500 animate-pulse'
 }
 
 /**
