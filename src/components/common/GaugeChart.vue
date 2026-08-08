@@ -25,7 +25,7 @@
       <!-- Center Score Label -->
       <div class="absolute bottom-1 text-center flex flex-col items-center">
         <span class="text-3xl font-extrabold tracking-tight text-rail-900 leading-none">
-          {{ value }}%
+          {{ value }}<span class="text-[0.6em] font-bold opacity-60">/100</span>
         </span>
         <span class="text-xs font-semibold uppercase tracking-wider mt-1" :style="{ color: gaugeColor }">
           {{ statusText }}

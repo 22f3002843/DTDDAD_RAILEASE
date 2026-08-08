@@ -8,7 +8,7 @@
             Welcome back, {{ authStore.user?.name?.split(' ')[0] || 'RailEase' }}
           </h1>
           <p class="text-xs text-slate-500 mt-1 font-medium">
-            Here is your active journey intelligence &amp; 7-day delay telemetry dashboard.
+            Here is your active journey intelligence &amp; 30-day delay telemetry dashboard.
           </p>
         </div>
 
@@ -171,7 +171,7 @@
 
             <!-- Gauge Chart Meter -->
             <div class="my-4">
-              <GaugeChart :value="journeyStore.activeTrip?.riskScore || 92" label="Low Delay Risk" />
+              <GaugeChart :value="activeTrainConfidence" label="Confidence" />
             </div>
 
             <div class="w-full text-center text-xs text-slate-500 pt-2 border-t border-slate-100 flex justify-around">
@@ -181,8 +181,8 @@
               </div>
               <div class="h-8 w-px bg-slate-100"></div>
               <div>
-                <span class="block font-bold text-emerald-600">{{ journeyStore.activeTrip?.routeReliability || '92%' }}</span>
-                <span>Punctuality</span>
+                <span class="block font-bold text-emerald-600">{{ activeTrainConfidence }}/100</span>
+                <span>Confidence</span>
               </div>
             </div>
           </div>
@@ -329,10 +329,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { useJourneyStore } from '@/stores/useJourneyStore'
+import { useSearchStore } from '@/stores/useSearchStore'
+import { computeBaseConfidence } from '@/services/scoring'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DashboardTrainSearch from '@/components/dashboard/DashboardTrainSearch.vue'
 import GaugeChart from '@/components/common/GaugeChart.vue'
@@ -355,6 +357,17 @@ import {
 const router = useRouter()
 const authStore = useAuthStore()
 const journeyStore = useJourneyStore()
+const searchStore = useSearchStore()
+
+// The dashboard must show the SAME figure the search and detail pages show for
+// a given train. Previously it rendered a separate hardcoded riskScore, so the
+// Vande Bharat read 95 here and 98 on search - two numbers for one train, which
+// is the exact contradiction this product cannot afford.
+const activeTrainConfidence = computed(() => {
+  const activeNumber = journeyStore.activeTrip?.trainNumber
+  const match = searchStore.filteredTrains.find((train) => train.number === activeNumber)
+  return match ? computeBaseConfidence(match) : 0
+})
 
 const activeDashboardTab = ref('overview')
 const selectedTripForModal = ref(null)

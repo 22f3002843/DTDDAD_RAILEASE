@@ -12,6 +12,8 @@ import AlertsView from '@/views/AlertsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import SettingsView from '@/views/SettingsView.vue'
 import SupportView from '@/views/SupportView.vue'
+import TrainDetailView from '@/views/TrainDetailView.vue'
+import WatchingView from '@/views/WatchingView.vue'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 const routes = [
@@ -25,6 +27,19 @@ const routes = [
     path: '/search',
     name: 'search-trains',
     component: SearchTrainsView
+  },
+  {
+    // Public on purpose: the risk breakdown is the whole argument for this
+    // product, and nobody signs up for a benefit they have not felt yet.
+    path: '/train/:number',
+    name: 'train-detail',
+    component: TrainDetailView
+  },
+  {
+    // Public: watching is stored in the browser, so no account is required.
+    path: '/watching',
+    name: 'watching',
+    component: WatchingView
   },
   {
     path: '/dashboard',

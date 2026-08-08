@@ -1,31 +1,22 @@
 <template>
   <div class="w-full max-w-md bg-white rounded-card shadow-soft-lg border border-slate-200/80 overflow-hidden relative transition-all duration-300">
-    <!-- Top Navy Action Bar (With Direct IRCTC/IndianRail External Links) -->
-    <div class="grid grid-cols-2 bg-[#1E3A8A] text-white text-xs font-bold divide-x divide-blue-900/50">
-      <!-- PNR STATUS Button -->
+    <!-- Top bar states plainly what this tool does, and what it does not do.
+         Booking links are still offered, but framed as a handoff rather than
+         as our own function. -->
+    <div class="bg-slate-900 text-white px-5 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-[11px] font-bold text-slate-300">
+        <ShieldCheck class="w-4 h-4 text-emerald-400" />
+        <span>We don't sell tickets</span>
+      </div>
       <a
-        href="https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html?locale=en"
+        href="https://www.irctc.co.in/"
         target="_blank"
         rel="noopener noreferrer"
-        class="py-3.5 px-4 flex items-center justify-center gap-2 hover:bg-blue-900/90 text-blue-100 transition-colors group cursor-pointer"
-        title="Official Indian Railways PNR Status Portal"
+        class="text-[11px] font-bold text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+        title="Official IRCTC booking portal"
       >
-        <FileCheck class="w-4 h-4 text-sky-400 group-hover:scale-110 transition-transform" />
-        <span>PNR STATUS</span>
-        <ExternalLink class="w-3 h-3 opacity-60" />
-      </a>
-
-      <!-- CHARTS / VACANCY Button -->
-      <a
-        href="https://www.irctc.co.in/online-charts/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="py-3.5 px-4 flex items-center justify-center gap-2 hover:bg-blue-900/90 text-blue-100 transition-colors group cursor-pointer"
-        title="Official IRCTC Reservation Charts &amp; Vacancy Portal"
-      >
-        <ClipboardList class="w-4 h-4 text-sky-400 group-hover:scale-110 transition-transform" />
-        <span>CHARTS / VACANCY</span>
-        <ExternalLink class="w-3 h-3 opacity-60" />
+        <span>Book on IRCTC</span>
+        <ExternalLink class="w-3 h-3 opacity-70" />
       </a>
     </div>
 
@@ -33,11 +24,11 @@
     <div class="p-6 sm:p-7 space-y-5">
       <!-- Title -->
       <div class="text-center pb-1">
-        <h2 class="text-2xl font-black text-[#1E3A8A] tracking-wider uppercase">
-          BOOK TICKET
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+          Check your train's reliability
         </h2>
-        <p class="text-[11px] text-slate-500 font-medium mt-0.5">
-          Fast &amp; Reliable Indian Railways Search
+        <p class="text-[11px] text-slate-500 font-medium mt-1">
+          See how often it actually arrives on time before you book
         </p>
       </div>
 
@@ -108,41 +99,36 @@
           </div>
         </div>
 
-        <!-- Quota Dropdown -->
+        <!-- Priority selector. One tap, optional, and it is the whole
+             personalisation model: it re-weights how results are ranked without
+             asking anyone to sign up or fill in a profile. -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-600 mb-1">Quota</label>
-          <CustomSelect
-            v-model="searchStore.selectedQuota"
-            :options="quotaOptions"
-            size="small"
-            rounded="medium"
-            fillMode="solid"
-            :icon="Grid"
-          />
+          <label class="block text-[11px] font-bold text-slate-600 mb-1.5">What matters most?</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button
+              v-for="option in priorityOptions"
+              :key="option.value"
+              type="button"
+              @click="searchStore.travelPriority = option.value"
+              :class="[
+                'py-2 px-2 rounded-lg text-[11px] font-bold border transition-all cursor-pointer',
+                searchStore.travelPriority === option.value
+                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400'
+              ]"
+            >
+              {{ option.label }}
+            </button>
+          </div>
         </div>
 
-        <!-- Concession Checkboxes -->
-        <div class="space-y-2 pt-1 text-[11px] font-semibold text-[#1E3A8A]">
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" v-model="disabilityConcession" class="rounded border-slate-300 text-blue-600 w-3.5 h-3.5" />
-            <span>Person With Disability Concession</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" v-model="flexibleDate" class="rounded border-slate-300 text-blue-600 w-3.5 h-3.5" />
-            <span>Flexible With Date</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" v-model="railwayPass" class="rounded border-slate-300 text-blue-600 w-3.5 h-3.5" />
-            <span>Railway Pass Concession</span>
-          </label>
-        </div>
-
-        <!-- Orange CTA Button (Search Trains with explicit console & navigation logging) -->
+        <!-- Primary CTA. The verb is "check", not "book", because checking is
+             what this product actually does. -->
         <button
           type="submit"
-          class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-3 cursor-pointer select-none"
+          class="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-3 cursor-pointer select-none"
         >
-          <span>Search Trains</span>
+          <span>Check reliability</span>
           <ArrowRight class="w-4 h-4" />
         </button>
       </form>
@@ -157,16 +143,14 @@ import { useSearchStore } from '@/stores/useSearchStore'
 import { POPULAR_STATIONS } from '@/data/stations'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
 import {
-  FileCheck,
-  ClipboardList,
   Navigation,
   MapPin,
   ArrowLeftRight,
   Calendar,
   Briefcase,
-  Grid,
   ArrowRight,
-  ExternalLink
+  ExternalLink,
+  ShieldCheck
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -185,11 +169,12 @@ const classOptions = [
   { label: 'Third AC (3A)', value: '3A' }
 ]
 
-const quotaOptions = [
-  { label: 'GENERAL', value: 'GENERAL' },
-  { label: 'TATKAL', value: 'TATKAL' },
-  { label: 'LADIES', value: 'LADIES' },
-  { label: 'PREMIUM TATKAL', value: 'PREMIUM TATKAL' }
+// Maps to the three ways a passenger can weigh a journey. Deliberately three,
+// not five: this is a one-tap hint, not a preferences form.
+const priorityOptions = [
+  { label: 'On time', value: 'reliability' },
+  { label: 'Cheapest', value: 'price' },
+  { label: 'Comfort', value: 'comfort' }
 ]
 
 const fromCode = computed({
@@ -213,10 +198,6 @@ const toCode = computed({
     }
   }
 })
-
-const disabilityConcession = ref(false)
-const flexibleDate = ref(false)
-const railwayPass = ref(false)
 
 function handleSwap() {
   console.log('[RailEase Search] Swapping stations...')

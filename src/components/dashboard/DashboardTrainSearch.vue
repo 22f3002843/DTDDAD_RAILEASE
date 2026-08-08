@@ -118,15 +118,15 @@
       <div class="flex items-center gap-4 text-[11px]">
         <span class="flex items-center gap-1.5 text-emerald-700">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>90%+ On-Time</span>
+          <span>70+ On time</span>
         </span>
         <span class="flex items-center gap-1.5 text-amber-700">
           <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-          <span>75-89% Moderate</span>
+          <span>55-69 Sometimes delayed</span>
         </span>
         <span class="flex items-center gap-1.5 text-red-700">
           <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-          <span>&lt;75% High Risk</span>
+          <span>Under 55 Often delayed</span>
         </span>
       </div>
     </div>
@@ -155,6 +155,11 @@
             <span :class="['px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border', getReliabilityBadgeClass(train)]">
               {{ getReliabilityLabel(train) }}
             </span>
+
+            <!-- Layer 2: why the score is what it is, stated in plain English. -->
+            <span class="text-[11px] text-slate-500 font-semibold">
+              {{ getReliabilityReason(train) }}
+            </span>
           </div>
 
           <div class="flex items-center gap-3 text-xs font-bold text-slate-600">
@@ -165,7 +170,17 @@
               class="px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <TrendingUp class="w-3.5 h-3.5 text-rail-600" />
-              <span>7-Day Telemetry</span>
+              <span>30-Day Telemetry</span>
+            </button>
+
+            <!-- The same route into the risk breakdown that public search offers.
+                 Without this a signed-in user had no way to reach the detail page. -->
+            <button
+              @click="router.push(`/train/${train.number}`)"
+              class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <span>What could go wrong?</span>
+              <ChevronRight class="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -187,7 +202,7 @@
               <span class="w-2 h-2 rounded-full bg-slate-900"></span>
             </div>
             <div class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
-              7-Day Score: <strong :class="getReliabilityTextClass(train)">{{ train.punctualityScore }}%</strong>
+              Confidence: <strong :class="getReliabilityTextClass(train)">{{ confidenceOf(train) }}/100</strong>
             </div>
           </div>
 
@@ -259,7 +274,7 @@
                 <span>{{ selectedTrainForTelemetry.name }} ({{ selectedTrainForTelemetry.number }})</span>
               </h3>
               <p class="text-xs text-slate-500 font-medium mt-0.5">
-                Past 7-day delay history and arrival punctuality
+                Past 30-day delay history and arrival punctuality
               </p>
             </div>
 
@@ -293,7 +308,7 @@
               <div>
                 <div class="text-[11px] text-slate-500 font-bold uppercase">Punctuality Score</div>
                 <div :class="['text-xl font-black mt-0.5', getReliabilityTextClass(selectedTrainForTelemetry)]">
-                  {{ selectedTrainForTelemetry.punctualityScore }}%
+                  {{ confidenceOf(selectedTrainForTelemetry) }}/100
                 </div>
               </div>
               <div>
@@ -335,7 +350,7 @@
               </div>
 
               <div class="flex justify-between text-[11px] font-bold text-slate-500 pt-2 border-t border-slate-100">
-                <span v-for="(log, lIdx) in selectedTrainForTelemetry.historyLogs" :key="lIdx">
+                <span v-for="(log, lIdx) in windowFor(selectedTrainForTelemetry)" :key="lIdx">
                   {{ log.day.split(',')[0] }}
                 </span>
                 <span class="text-orange-600 font-extrabold">Forecast</span>
@@ -354,7 +369,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 font-semibold text-slate-800">
-                  <tr v-for="(log, idx) in selectedTrainForTelemetry.historyLogs" :key="idx">
+                  <tr v-for="(log, idx) in windowFor(selectedTrainForTelemetry)" :key="idx">
                     <td class="p-2.5 font-bold text-slate-900">{{ log.day }}</td>
                     <td class="p-2.5 text-slate-600">{{ log.originDept }}</td>
                     <td class="p-2.5 text-slate-600">{{ log.destArr }}</td>
@@ -396,11 +411,22 @@ import { useJourneyStore } from '@/stores/useJourneyStore'
 import { POPULAR_STATIONS } from '@/data/stations'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
 import ModernDatePicker from '@/components/ui/ModernDatePicker.vue'
+import { getHistory } from '@/services/history'
+import { computeBaseConfidence } from '@/services/scoring'
+import {
+  getReliabilityLevel,
+  getReliabilityLabel,
+  getReliabilityBadgeClass,
+  getReliabilityDotClass,
+  getReliabilityTextClass,
+  getReliabilityReason
+} from '@/services/reliability'
 import {
   Train,
   MapPin,
   ArrowLeftRight,
   TrendingUp,
+  ChevronRight,
   Search,
   CheckCircle2,
   Star
@@ -469,55 +495,57 @@ function handlePnrSync() {
   }
 }
 
-function getReliabilityLevel(train) {
-  if (train.reliabilityColor) return train.reliabilityColor
-  if (train.punctualityScore >= 90) return 'green'
-  if (train.punctualityScore >= 75) return 'yellow'
-  return 'red'
+// Reliability grading now lives in src/services/reliability.js so the public
+// search page and this authenticated page grade every train identically. These
+// local wrappers exist only so the template below needs no changes.
+
+/**
+ * The full running-history window backing this train's score.
+ *
+ * The chart and the log table below must read the SAME window the confidence
+ * score is computed from. They previously read the seven hand-authored days
+ * while the score used thirty, so the evidence on screen did not actually
+ * support the verdict above it.
+ *
+ * @param {Object} train - train object
+ * @returns {Array<Object>} the history window, oldest day first
+ */
+function windowFor(train) {
+  return getHistory(train)
 }
 
-function getReliabilityLabel(train) {
-  const lvl = getReliabilityLevel(train)
-  if (lvl === 'green') return `${train.punctualityScore}% On-Time`
-  if (lvl === 'yellow') return `${train.punctualityScore}% Moderate`
-  return `${train.punctualityScore}% High Delay Risk`
+/**
+ * Confidence score for a train, so no template reads the raw curated field.
+ *
+ * @param {Object} train - train object
+ * @returns {Number} confidence from 0 to 100
+ */
+function confidenceOf(train) {
+  return computeBaseConfidence(train)
 }
 
-function getReliabilityBadgeClass(train) {
-  const lvl = getReliabilityLevel(train)
-  if (lvl === 'green') return 'bg-emerald-50 text-emerald-800 border-emerald-200'
-  if (lvl === 'yellow') return 'bg-amber-50 text-amber-800 border-amber-200'
-  return 'bg-red-50 text-red-800 border-red-200'
-}
-
-function getReliabilityDotClass(train) {
-  const lvl = getReliabilityLevel(train)
-  if (lvl === 'green') return 'bg-emerald-500'
-  if (lvl === 'yellow') return 'bg-amber-500'
-  return 'bg-red-500 animate-pulse'
-}
-
-function getReliabilityTextClass(train) {
-  const lvl = getReliabilityLevel(train)
-  if (lvl === 'green') return 'text-emerald-600 font-black'
-  if (lvl === 'yellow') return 'text-amber-600 font-black'
-  return 'text-red-600 font-black'
-}
-
+/**
+ * Mean delay across the full window, used for the forecast baseline.
+ *
+ * @param {Object} train - train object
+ * @returns {Number} average delay in whole minutes
+ */
 function getAverageDelay(train) {
-  if (!train?.historyLogs?.length) return 0
-  const total = train.historyLogs.reduce((acc, l) => acc + (l.delayMinutes || 0), 0)
-  return Math.round(total / train.historyLogs.length)
+  const window = getHistory(train)
+  if (!window.length) return 0
+  const total = window.reduce((acc, log) => acc + (log.delayMinutes || 0), 0)
+  return Math.round(total / window.length)
 }
 
 function getSvgPoints(train) {
-  if (!train?.historyLogs?.length) return []
+  const window = getHistory(train)
+  if (!window.length) return []
   const maxDelay = 200
   const width = 520
   const startX = 30
-  const stepX = width / (train.historyLogs.length)
+  const stepX = width / (window.length)
 
-  const points = train.historyLogs.map((log, idx) => {
+  const points = window.map((log, idx) => {
     const delay = log.delayMinutes || 0
     const x = startX + (idx * stepX)
     const y = Math.max(20, 130 - (delay / maxDelay) * 100)
@@ -526,7 +554,7 @@ function getSvgPoints(train) {
 
   const avg = getAverageDelay(train)
   const forecastVal = getReliabilityLevel(train) === 'red' ? Math.round(avg * 1.1) : Math.max(0, Math.round(avg * 0.7))
-  const forecastX = startX + (train.historyLogs.length * stepX)
+  const forecastX = startX + (window.length * stepX)
   const forecastY = Math.max(20, 130 - (forecastVal / maxDelay) * 100)
 
   points.push({ x: forecastX, y: forecastY, val: forecastVal, isForecast: true })
