@@ -1,17 +1,17 @@
 <template>
   <div class="space-y-5 font-sans">
-    <!-- UNIFIED HERO CARD: SEARCH + PNR SYNC + ACTIVE TRIP STATUS -->
-    <div class="bg-slate-900 text-white rounded-card shadow-lg p-6 space-y-5 border border-slate-800">
+    <!-- UNIFIED HERO CARD: LIGHT MODE TRAIN INTELLIGENCE & SYNC -->
+    <div class="bg-white text-slate-900 rounded-card shadow-sm p-6 space-y-5 border border-slate-200">
       <!-- Top Row: Active Trip Indicator & Quick PNR Sync -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
         <!-- Header -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-rail-500/20 border border-rail-500/40 flex items-center justify-center shrink-0">
-            <Train class="w-5 h-5 text-rail-400" />
+          <div class="w-10 h-10 rounded-xl bg-rail-50 border border-rail-200 flex items-center justify-center shrink-0">
+            <Train class="w-5 h-5 text-rail-600" />
           </div>
           <div>
-            <h2 class="text-base font-black uppercase tracking-wider text-white">Train Intelligence &amp; Sync</h2>
-            <p class="text-xs text-slate-400 font-medium">
+            <h2 class="text-base font-black uppercase tracking-wider text-slate-900">Train Intelligence &amp; Sync</h2>
+            <p class="text-xs text-slate-500 font-medium">
               Select any train below or enter your 10-digit IRCTC PNR to lock live safeguards.
             </p>
           </div>
@@ -20,9 +20,9 @@
         <!-- Right Side: Subtle Active Journey Pill + Compact PNR Sync -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <!-- Subtle Synced Journey Pill Tag -->
-          <div v-if="journeyStore.activeTrip" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-[11px] text-slate-300 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>Synced: <strong class="text-white font-bold">{{ journeyStore.activeTrip.trainName }} ({{ journeyStore.activeTrip.trainNumber }})</strong></span>
+          <div v-if="journeyStore.activeTrip" class="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Synced: <strong class="text-emerald-950 font-bold">{{ journeyStore.activeTrip.trainName }} ({{ journeyStore.activeTrip.trainNumber }})</strong></span>
           </div>
 
           <!-- Compact PNR Search Bar -->
@@ -32,14 +32,14 @@
                 v-model="pnrSearchInput"
                 type="text"
                 placeholder="Enter 10-digit PNR"
-                class="w-48 pl-8 pr-3 py-1.5 bg-slate-800 text-white placeholder:text-slate-500 border border-slate-700 rounded-lg text-xs font-bold focus:outline-none focus:border-rail-500"
+                class="w-48 pl-8 pr-3 py-1.5 bg-slate-50 text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg text-xs font-bold focus:outline-none focus:border-rail-600"
                 @keyup.enter="handlePnrSync"
               />
               <Search class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             </div>
             <button
               @click="handlePnrSync"
-              class="px-3.5 py-1.5 bg-rail-500 hover:bg-rail-600 text-white rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+              class="px-3.5 py-1.5 bg-rail-600 hover:bg-rail-700 text-white rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1 shrink-0 shadow-2xs"
             >
               <CheckCircle2 class="w-3.5 h-3.5" />
               <span>Sync</span>
@@ -52,7 +52,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
         <!-- From Station -->
         <div class="lg:col-span-3">
-          <label class="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">From</label>
+          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">From</label>
           <CustomSelect
             v-model="fromCode"
             :options="stationOptions"
@@ -68,7 +68,7 @@
           <button
             type="button"
             @click="searchStore.swapStations()"
-            class="w-8 h-8 rounded-full border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center shadow-sm cursor-pointer hover:scale-105 transition-transform"
+            class="w-8 h-8 rounded-full border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center shadow-2xs cursor-pointer hover:scale-105 transition-transform"
             title="Swap Stations"
           >
             <ArrowLeftRight class="w-3.5 h-3.5" />
@@ -77,7 +77,7 @@
 
         <!-- To Station -->
         <div class="lg:col-span-3">
-          <label class="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">To</label>
+          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">To</label>
           <CustomSelect
             v-model="toCode"
             :options="stationOptions"
@@ -90,13 +90,13 @@
 
         <!-- Travel Date -->
         <div class="lg:col-span-2">
-          <label class="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Travel Date</label>
+          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Travel Date</label>
           <ModernDatePicker v-model="searchStore.travelDate" />
         </div>
 
         <!-- Class & Quota Dropdowns -->
         <div class="lg:col-span-3">
-          <label class="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Class &amp; Quota</label>
+          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Class &amp; Quota</label>
           <div class="grid grid-cols-2 gap-2">
             <CustomSelect
               v-model="searchStore.selectedClass"
