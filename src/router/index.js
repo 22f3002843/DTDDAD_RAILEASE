@@ -11,6 +11,7 @@ import CommunityView from '@/views/CommunityView.vue'
 import AlertsView from '@/views/AlertsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import SettingsView from '@/views/SettingsView.vue'
+import SupportView from '@/views/SupportView.vue'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 const routes = [
@@ -77,6 +78,12 @@ const routes = [
     path: '/settings',
     name: 'settings',
     component: SettingsView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/support',
+    name: 'support',
+    component: SupportView,
     meta: { requiresAuth: true }
   },
   {
