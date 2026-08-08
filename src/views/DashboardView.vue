@@ -113,6 +113,12 @@
               What could go wrong?
             </button>
             <button
+              @click="selectedTrip = activeTrip"
+              class="px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
+            >
+              Trip details
+            </button>
+            <button
               @click="router.push('/journey-planner')"
               class="px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
             >
@@ -211,10 +217,12 @@
           <h2 class="text-base font-black text-slate-900">Your other trips</h2>
           <span class="text-xs font-bold text-slate-400">{{ earlierTrips.length }} synced</span>
         </div>
-        <div
+        <button
           v-for="trip in earlierTrips"
           :key="trip.id"
-          class="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3"
+          type="button"
+          @click="selectedTrip = trip"
+          class="w-full text-left bg-white rounded-xl border border-slate-200 hover:border-slate-400 p-4 flex flex-wrap items-center justify-between gap-3 cursor-pointer transition-colors"
         >
           <div class="min-w-0">
             <p class="text-sm font-extrabold text-slate-900 uppercase truncate">
@@ -224,8 +232,11 @@
               {{ trip.from }} &rarr; {{ trip.to }} &middot; {{ trip.date }}
             </p>
           </div>
-          <span class="text-xs font-extrabold text-slate-600">{{ trip.status }}</span>
-        </div>
+          <span class="text-xs font-extrabold text-slate-600 flex items-center gap-1.5">
+            {{ trip.status }}
+            <ChevronRight class="w-3.5 h-3.5 text-slate-400" />
+          </span>
+        </button>
       </div>
 
       <!-- ============ EMPTY STATE ============
@@ -258,6 +269,12 @@
           </button>
         </div>
       </div>
+      <TripDetailsModal
+        v-if="selectedTrip"
+        :trip="selectedTrip"
+        @close="selectedTrip = null"
+      />
+
       <AuthWidget v-if="showAuthModal" @close="showAuthModal = false" />
     </div>
   </AppLayout>
@@ -272,19 +289,21 @@ import { useSearchStore } from '@/stores/useSearchStore'
 import { useWatchStore } from '@/stores/useWatchStore'
 import RiskCard from '@/components/common/RiskCard.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
+import TripDetailsModal from '@/components/common/TripDetailsModal.vue'
 import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
 import LiveRoutePreview from '@/components/common/LiveRoutePreview.vue'
 import { generateRiskCards } from '@/services/predictions'
 import { getRealisticArrival } from '@/services/reliability'
 import { getHistory } from '@/services/history'
 import { minutesUntilDeparture, describeWait } from '@/services/recovery'
-import { Compass, X, Bell } from 'lucide-vue-next'
+import { Compass, X, Bell, ChevronRight } from 'lucide-vue-next'
 
 const router = useRouter()
 const journeyStore = useJourneyStore()
 const searchStore = useSearchStore()
 const watchStore = useWatchStore()
 const showAuthModal = ref(false)
+const selectedTrip = ref(null)
 
 const activeTrip = computed(() => journeyStore.activeTrip)
 

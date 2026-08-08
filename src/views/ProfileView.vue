@@ -69,10 +69,8 @@ import {
   ArrowLeft,
   Pencil,
   ClipboardList,
-  Bookmark,
   Sliders,
   CreditCard,
-  History,
   HelpCircle,
   ChevronRight
 } from 'lucide-vue-next'
@@ -81,11 +79,9 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const profileCards = [
-  { title: 'My Bookings', path: '/bookings', icon: ClipboardList },
-  { title: 'Saved Trips', path: '/bookings', icon: Bookmark },
+  { title: 'Your travel', path: '/dashboard', icon: ClipboardList },
   { title: 'Preferences', path: '/settings', icon: Sliders },
   { title: 'Payment Methods', path: '/settings', icon: CreditCard },
-  { title: 'Travel History', path: '/bookings', icon: History },
   { title: 'Help & Support', path: '/support', icon: HelpCircle },
 ]
 </script>
