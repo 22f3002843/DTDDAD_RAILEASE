@@ -130,67 +130,67 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <!-- Pillar 1: Reliability Score -->
+          <!-- Pillar 1: will my train be on time -->
           <div id="predictions" class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-100">
             <div>
               <div class="w-12 h-12 rounded-xl bg-blue-100/80 text-rail-600 flex items-center justify-center mb-5 shadow-sm">
                 <BarChart3 class="w-6 h-6" />
               </div>
-              <h4 class="text-lg font-extrabold text-rail-900 mb-2">1. Reliability Score</h4>
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">1. Will my train be on time?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Evaluates 30-day historical punctuality logs, signal box history, and corridor data to calculate realistic travel confidence.
+                We look at how a train actually ran over the last 30 days and give it a confidence score, with the record behind it so you can check us.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-rail-600 flex items-center gap-1">
-              <span>View Score Meter</span> &rarr;
+              <span>Check any train</span> &rarr;
             </div>
           </div>
 
-          <!-- Pillar 2: Delay Prediction -->
+          <!-- Pillar 2: how late will it really be -->
           <div class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-200">
             <div>
               <div class="w-12 h-12 rounded-xl bg-amber-100/80 text-amber-600 flex items-center justify-center mb-5 shadow-sm">
                 <Clock class="w-6 h-6" />
               </div>
-              <h4 class="text-lg font-extrabold text-rail-900 mb-2">2. Delay Prediction</h4>
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">2. How late will it really be?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Statistical modeling estimates arrival windows based on track maintenance, weather trends, and historical section delay.
+                The timetable says one thing and reality often says another. We show the arrival time you should actually plan around.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-amber-600 flex items-center gap-1">
-              <span>AI Forecast Logs</span> &rarr;
+              <span>See the real arrival time</span> &rarr;
             </div>
           </div>
 
-          <!-- Pillar 3: Live Tracking -->
+          <!-- Pillar 3: where is my train -->
           <div id="tracking" class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-300">
             <div>
               <div class="w-12 h-12 rounded-xl bg-indigo-100/80 text-indigo-600 flex items-center justify-center mb-5 shadow-sm">
                 <Navigation class="w-6 h-6" />
               </div>
-              <h4 class="text-lg font-extrabold text-rail-900 mb-2">3. Live Tracking</h4>
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">3. Where is my train right now?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Station telemetry and GPS train tracking keeping you informed of actual block clearance along the line.
+                Follow your train live on the map, and see what its current delay means for when you will actually arrive.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-indigo-600 flex items-center gap-1">
-              <span>Explore Radar</span> &rarr;
+              <span>Track it live</span> &rarr;
             </div>
           </div>
 
-          <!-- Pillar 4: Disruption Recovery -->
+          <!-- Pillar 4: recovery after a missed train -->
           <div id="recovery" class="bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover flex flex-col justify-between reveal-on-scroll delay-400">
             <div>
               <div class="w-12 h-12 rounded-xl bg-emerald-100/80 text-emerald-600 flex items-center justify-center mb-5 shadow-sm">
                 <ShieldCheck class="w-6 h-6" />
               </div>
-              <h4 class="text-lg font-extrabold text-rail-900 mb-2">4. Disruption Recovery</h4>
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">4. What if I miss my train?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Delay protection guarantees, alternate train backup options, and emergency station cabs so missing your schedule is avoided.
+                Missed it, or about to? Tell us which train and we work out how you still get there, and whether you can claim a refund.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-emerald-600 flex items-center gap-1">
-              <span>Assurance Protection</span> &rarr;
+              <span>Get a recovery plan</span> &rarr;
             </div>
           </div>
         </div>

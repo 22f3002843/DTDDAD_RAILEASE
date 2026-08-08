@@ -5,37 +5,45 @@
       <Logo size="lg" />
 
       <!-- Center Navigation Links (Protected Features Require Auth for Guests) -->
-      <nav class="hidden md:flex items-center gap-8">
+      <!-- Navigation labels are the QUESTIONS a passenger has, not the names of
+           features we built. Each one lands on a page that answers it directly:
+           a label that promises an answer and delivers a dashboard is worse than
+           no label at all, because the failure is silent. -->
+      <nav class="hidden md:flex items-center gap-7">
         <button
-          @click="handleFeatureClick('/dashboard', 'Reliability Score')"
-          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+          @click="router.push('/search')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer"
         >
-          <span>Reliability Score</span>
-          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+          Will my train be on time?
         </button>
 
         <button
-          @click="handleFeatureClick('/dashboard', 'Delay Prediction')"
-          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+          @click="router.push('/live-status')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer"
         >
-          <span>Delay Prediction</span>
-          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+          Where is my train?
         </button>
 
         <button
-          @click="handleFeatureClick('/live-status', 'Live Tracking')"
+          @click="handleFeatureClick('/journey-planner', 'Missed your train')"
           class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
         >
-          <span>Live Tracking</span>
+          <span>I missed my train</span>
           <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
         </button>
 
+        <!-- Watching carries a live count so the user can see they have saved
+             trains. Without this the watchlist was unreachable by clicking. -->
         <button
-          @click="handleFeatureClick('/journey-planner', 'Disruption Recovery')"
-          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1 group"
+          @click="router.push('/watching')"
+          class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1.5"
         >
-          <span>Disruption Recovery</span>
-          <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
+          <Eye class="w-4 h-4" />
+          <span>Watching</span>
+          <span
+            v-if="watchStore.watchCount"
+            class="px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-black leading-none"
+          >{{ watchStore.watchCount }}</span>
         </button>
       </nav>
 
@@ -80,12 +88,14 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
+import { useWatchStore } from '@/stores/useWatchStore'
 import Logo from '@/components/common/Logo.vue'
-import { LayoutDashboard, LogOut, User, ArrowRight, Lock } from 'lucide-vue-next'
+import { LayoutDashboard, LogOut, User, ArrowRight, Lock, Eye } from 'lucide-vue-next'
 
 const emit = defineEmits(['openLogin'])
 const router = useRouter()
 const authStore = useAuthStore()
+const watchStore = useWatchStore()
 
 function handleFeatureClick(targetRoute, featureName) {
   if (authStore.isAuthenticated) {
