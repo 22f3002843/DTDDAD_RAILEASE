@@ -9,17 +9,17 @@
       class="absolute -inset-2 bg-gradient-to-r from-blue-500/25 via-sky-400/20 to-indigo-500/25 rounded-3xl blur-md opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 -z-10 animate-pulse-glow"
     ></div>
 
-    <!-- Big App Icon Container with Glowing Border Hover Effect -->
+    <!-- Big App Icon Container: Edge-to-Edge with NO White Border -->
     <div
       :class="[
-        'relative bg-white border border-slate-200/80 flex items-center justify-center shadow-soft group-hover:scale-105 group-hover:shadow-glow transition-all duration-300 card-glow-hover',
-        size === 'xl' ? 'w-24 h-24 p-3 rounded-3xl' : size === 'lg' ? 'w-16 h-16 p-2.5 rounded-2xl' : 'w-12 h-12 p-2 rounded-2xl'
+        'relative overflow-hidden flex items-center justify-center shadow-md group-hover:scale-105 group-hover:shadow-glow transition-all duration-300',
+        size === 'xl' ? 'w-24 h-24 rounded-3xl' : size === 'lg' ? 'w-16 h-16 rounded-2xl' : 'w-11 h-11 rounded-xl'
       ]"
     >
       <img
         src="/logo.png"
         alt="RailEase Application Logo"
-        class="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform"
       />
     </div>
 

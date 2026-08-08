@@ -72,7 +72,6 @@ const navItems = [
   { label: 'eCatering', path: '/ecatering', icon: Utensils },
   { label: 'Community', path: '/community', icon: Users },
   { label: 'Profile', path: '/profile', icon: User },
-  { label: 'Settings', path: '/settings', icon: Settings },
   { label: 'Support', path: '/support', icon: HelpCircle },
 ]
 </script>
