@@ -140,14 +140,14 @@ const mealsList = [
   },
   {
     id: 4,
-    name: 'Jain Special Thali',
+    name: 'Jain Special Thali (100% Satvik)',
     vendor: 'Sattvik Rail Meals',
     price: 250,
     type: 'Jain',
     deliveryTime: '20-25 min',
-    rating: '4.7',
-    description: 'No Onion No Garlic Dal Fry, Matar Paneer, Phulka Rotis, Steamed Rice',
-    image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&q=80&w=400'
+    rating: '4.9',
+    description: '100% Pure Satvik Jain Meal (No Onion, No Garlic, No Root Veggies, No Eggs). Dal Fry, Matar Paneer, Phulka Rotis & Steamed Rice',
+    image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&q=80&w=400'
   }
 ]
 
