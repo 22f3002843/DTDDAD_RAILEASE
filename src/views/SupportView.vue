@@ -281,8 +281,8 @@ const faqs = ref([
   {
     id: 2,
     categoryId: 'telemetry',
-    question: 'What is the Confidence Score?',
-    answer: 'RailEase calculates a <strong>Confidence Score (0-100)</strong> from the past 30 days of running history. It combines how often the train arrives close to schedule, how consistent it is, and how bad a bad day gets - because a train that is reliably 20 minutes late is easier to plan around than one that is randomly between 0 and 3 hours late. 70 and above is on time (green), 55 to 69 is sometimes delayed (amber), below 55 is often delayed (red). Every score is shown with the record behind it, so you can check the reasoning yourself.'
+    question: 'What is 7-Day Delay Telemetry and Punctuality Score?',
+    answer: 'RailEase calculates a <strong>Punctuality Score (0-100%)</strong> based on past 30-day running logs. 90%+ is On-Time (Green), 75-89% Moderate (Yellow), and &lt;75% High Risk (Red).'
   },
   {
     id: 3,
@@ -300,7 +300,7 @@ const faqs = ref([
     id: 5,
     categoryId: 'account',
     question: 'What are the default test login credentials?',
-    answer: 'This is a prototype build. Demo sign-in details are shared separately by the RailEase team and are not published here. Your session persists locally in your browser once signed in.'
+    answer: 'Username: <code>railease</code> | Password: <code>123456</code>. Credentials persist locally in your browser.'
   }
 ])
 

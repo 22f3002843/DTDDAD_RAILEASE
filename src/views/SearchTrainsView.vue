@@ -4,7 +4,7 @@
     <Navbar @openLogin="openAuthDialog('general')" />
 
     <!-- ==================== TOP NAVY MODIFY SEARCH BAR (MATCHING IRCTC SCREENSHOT) ==================== -->
-    <div class="bg-white py-4 px-4 sm:px-10 lg:px-14 border-b border-slate-200 shadow-sm">
+    <div class="bg-[#1E3A8A] text-white py-3.5 px-4 sm:px-10 lg:px-14 border-b border-blue-900 shadow-md">
       <div class="max-w-[1700px] mx-auto space-y-3">
         <!-- Top Input Fields Row -->
         <div class="flex flex-wrap items-center gap-3">
@@ -73,16 +73,31 @@
             />
           </div>
 
-          <!-- Orange Update search Button -->
+          <!-- Orange Modify Search Button -->
           <button
             type="button"
             @click="executeSearch"
-            class="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold text-xs tracking-wide shadow-sm hover:shadow transition-all shrink-0 cursor-pointer"
+            class="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all shrink-0 cursor-pointer"
           >
-            Update search
+            Modify Search
           </button>
         </div>
 
+        <!-- Concession Checkboxes Sub-Bar -->
+        <div class="flex flex-wrap items-center gap-6 text-[11px] font-semibold text-blue-100 pt-1 border-t border-blue-800/60">
+          <label class="flex items-center gap-2 cursor-pointer hover:text-white">
+            <input type="checkbox" v-model="flexibleDate" class="rounded border-blue-400 text-blue-600 w-3.5 h-3.5" />
+            <span>Flexible With Date</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-white">
+            <input type="checkbox" v-model="disabilityConcession" class="rounded border-blue-400 text-blue-600 w-3.5 h-3.5" />
+            <span>Person With Disability Concession</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-white">
+            <input type="checkbox" v-model="railwayPass" class="rounded border-blue-400 text-blue-600 w-3.5 h-3.5" />
+            <span>Railway Pass Concession</span>
+          </label>
+        </div>
       </div>
     </div>
 
@@ -106,7 +121,7 @@
                 <span>Refine Results</span>
               </h3>
               <div class="flex items-center gap-2">
-                <button @click="resetFilters" class="text-[11px] font-bold text-rail-600 hover:underline cursor-pointer">
+                <button @click="resetFilters" class="text-[11px] font-bold text-orange-600 hover:underline cursor-pointer">
                   Reset
                 </button>
                 <button @click="isFilterOpen = false" class="text-[11px] font-bold text-slate-400 hover:text-slate-700 cursor-pointer">
@@ -189,25 +204,25 @@
               <div class="grid grid-cols-2 gap-2 text-[11px] font-bold text-center">
                 <button
                   @click="searchStore.selectedTimeSlot = 'early'"
-                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'early' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'early' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
                 >
                   00:00 - 06:00<br /><span class="font-normal text-[10px]">Early Morning</span>
                 </button>
                 <button
                   @click="searchStore.selectedTimeSlot = 'morning'"
-                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'morning' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'morning' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
                 >
                   06:00 - 12:00<br /><span class="font-normal text-[10px]">Morning</span>
                 </button>
                 <button
                   @click="searchStore.selectedTimeSlot = 'midday'"
-                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'midday' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'midday' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
                 >
                   12:00 - 18:00<br /><span class="font-normal text-[10px]">Mid Day</span>
                 </button>
                 <button
                   @click="searchStore.selectedTimeSlot = 'night'"
-                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'night' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'night' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
                 >
                   18:00 - 24:00<br /><span class="font-normal text-[10px]">Night</span>
                 </button>
@@ -236,7 +251,7 @@
             >
               <SlidersHorizontal class="w-3.5 h-3.5" />
               <span>{{ isFilterOpen ? 'Hide Filters' : 'Filter Results' }}</span>
-              <span v-if="activeFilterCount > 0" class="px-1.5 py-0.2 bg-slate-900 text-white rounded text-[10px] font-extrabold">
+              <span v-if="activeFilterCount > 0" class="px-1.5 py-0.2 bg-orange-500 text-white rounded text-[10px] font-extrabold">
                 {{ activeFilterCount }}
               </span>
               <ChevronDown v-if="!isFilterOpen" class="w-3.5 h-3.5 opacity-60" />
@@ -245,7 +260,7 @@
 
             <div>
               <span class="text-slate-900 text-sm font-black">{{ searchStore.filteredTrains.length }} Results</span> for
-              <span class="text-slate-900 uppercase font-black px-1.5">{{ searchStore.fromStation?.name }} ➔ {{ searchStore.toStation?.name }}</span> |
+              <span class="text-[#1E3A8A] uppercase font-black px-1.5">{{ searchStore.fromStation?.name }} ➔ {{ searchStore.toStation?.name }}</span> |
               <span class="text-slate-600"> {{ formattedDate }}</span> | Quota:
               <span class="text-slate-900 px-1">{{ searchStore.selectedQuota }}</span>
             </div>
@@ -255,7 +270,7 @@
           <div class="flex items-center gap-2">
             <button
               @click="searchStore.activeFilter = 'Fastest'"
-              :class="['px-3 py-1.5 rounded text-[11px] font-bold border transition-colors cursor-pointer', searchStore.activeFilter === 'Fastest' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200']"
+              :class="['px-3 py-1.5 rounded text-[11px] font-bold border transition-colors cursor-pointer', searchStore.activeFilter === 'Fastest' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200']"
             >
               Sort By | Departure
             </button>
@@ -279,11 +294,11 @@
               <Lock class="w-4 h-4 text-sky-300" />
             </div>
             <div>
-              <span class="text-xs font-black block text-sky-200 uppercase tracking-wider">Unlock Full 30-Day Delay Telemetry &amp; Live Journey Sync</span>
-              <span class="text-[11px] text-blue-100">Sign In to sync a live journey and get alerts. Reliability scores are free for everyone.</span>
+              <span class="text-xs font-black block text-sky-200 uppercase tracking-wider">Unlock 7-Day Delay Telemetry &amp; AI Punctuality Analytics</span>
+              <span class="text-[11px] text-blue-100">Sign In or Register to view 7-day historical delay logs and book tickets seamlessly.</span>
             </div>
           </div>
-          <span class="px-3.5 py-1.5 rounded-md bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs tracking-wide shrink-0 shadow-sm">
+          <span class="px-3.5 py-1.5 rounded-md bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs uppercase tracking-wider shrink-0 shadow">
             Sign In / Register &rarr;
           </span>
         </div>
@@ -293,40 +308,22 @@
           <div
             v-for="train in searchStore.filteredTrains"
             :key="train.id"
-            :class="[
-              'bg-white rounded-xl border shadow-sm hover:shadow-md transition-all overflow-hidden',
-              isBestTrain(train) ? 'border-emerald-500 ring-1 ring-emerald-500' : 'border-slate-200'
-            ]"
+            class="bg-white rounded-lg border border-slate-300 shadow-sm overflow-hidden"
           >
-            <!-- One recommendation only. Three recommendations is a shrug;
-                 one is a judgement, which is what this product is for. -->
-            <div
-              v-if="isBestTrain(train)"
-              class="bg-emerald-600 text-white px-5 py-2 flex items-center gap-2 text-[11px] font-black uppercase tracking-wider"
-            >
-              <Star class="w-3.5 h-3.5" />
-              <span>Best for you &middot; {{ priorityLabel }}</span>
-            </div>
             <!-- Card Header -->
-            <div class="bg-slate-50/80 border-b border-slate-200/80 px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
-              <div class="flex flex-col gap-1.5">
+            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-3">
                 <h4 class="text-base font-black text-slate-900 uppercase">
                   {{ train.name }} ({{ train.number }})
                 </h4>
-                <!-- Reliability verdict + reason, shown to everyone. This is the
-                     differentiator, so it must not sit behind the login. -->
-                <ReliabilityBadge :train="train" />
               </div>
               <div class="flex items-center gap-4 text-xs font-bold text-slate-600">
                 <span>Runs On: <strong class="text-slate-900 font-extrabold">{{ train.runsOn.join(' ') }}</strong></span>
-                <!-- The route into the depth layer. Public, and phrased as a
-                     question a passenger would actually ask. -->
                 <button
-                  @click="router.push(`/train/${train.number}`)"
-                  class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white flex items-center gap-1.5 font-extrabold cursor-pointer transition-colors"
+                  @click="requireAuthAction('schedule', train)"
+                  class="text-blue-700 hover:underline flex items-center gap-1 font-bold cursor-pointer"
                 >
-                  <span>What could go wrong?</span>
-                  <ChevronRight class="w-3.5 h-3.5" />
+                  Train Schedule <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400" />
                 </button>
               </div>
             </div>
@@ -349,9 +346,7 @@
                   <div class="flex-1 h-0.5 bg-slate-300 relative"></div>
                   <span class="w-2 h-2 rounded-full bg-slate-900"></span>
                 </div>
-                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                  {{ confidenceOf(train) }}/100 Confidence
-                </div>
+                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Superfast Line</div>
               </div>
 
               <!-- Arrival Station & Time -->
@@ -359,14 +354,6 @@
                 <div class="text-xl font-black text-slate-900">{{ train.arrTime }}</div>
                 <div class="text-xs font-bold text-slate-700 uppercase mt-0.5">
                   {{ train.toName }} ({{ train.toCode }})
-                </div>
-                <!-- Only rendered when the typical delay is large enough to matter.
-                     A card that says nothing here is telling you there is nothing to worry about. -->
-                <div
-                  v-if="getRealisticArrival(train)"
-                  class="text-[11px] font-bold text-amber-700 mt-1"
-                >
-                  Realistically around {{ getRealisticArrival(train) }}
                 </div>
               </div>
             </div>
@@ -427,7 +414,7 @@
 
                   <button
                     @click="requireAuthAction('book', train)"
-                    class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold text-xs shadow-sm transition-all flex items-center gap-1.5 cursor-pointer tracking-wide"
+                    class="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer uppercase tracking-wider"
                   >
                     <span>Book Now / Track</span>
                     <ArrowRight class="w-3.5 h-3.5" />
@@ -464,7 +451,7 @@
 
         <!-- Prompt Header Alert inside Modal -->
         <div class="bg-indigo-900 text-white p-4 rounded-t-2xl space-y-1 text-center border-b border-indigo-800">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-extrabold uppercase tracking-wider border border-emerald-500/30">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-[11px] font-extrabold uppercase tracking-wider border border-orange-500/30">
             <Lock class="w-3.5 h-3.5" />
             <span>Sign In Required</span>
           </div>
@@ -497,9 +484,6 @@ import Navbar from '@/components/navbar/Navbar.vue'
 import Footer from '@/components/footer/Footer.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
-import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
-import { getRealisticArrival } from '@/services/reliability'
-import { pickBestTrain, computeBaseConfidence } from '@/services/scoring'
 import {
   MapPin,
   ArrowLeftRight,
@@ -510,9 +494,7 @@ import {
   ChevronDown,
   ChevronUp,
   Plus,
-  Check,
-  Star,
-  ChevronRight
+  Check
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -521,50 +503,10 @@ const authStore = useAuthStore()
 const journeyStore = useJourneyStore()
 
 const showAuthModal = ref(false)
-
-// The single recommended train, recomputed whenever results or priority change.
-// This is what makes the priority selector visible: without it the re-ranking
-// happens silently and the traveller never learns their choice did anything.
-const bestTrain = computed(() =>
-  pickBestTrain(searchStore.filteredTrains, {
-    priority: searchStore.travelPriority,
-    highStakes: false
-  })
-)
-
-const priorityLabel = computed(() => ({
-  reliability: 'most likely to arrive on time',
-  price: 'best value that is still dependable',
-  comfort: 'most comfortable that is still dependable'
-}[searchStore.travelPriority] || 'recommended'))
-
-/**
- * Whether a train is the one being recommended.
- *
- * @param {Object} train - train object
- * @returns {Boolean} true when this is the recommended train
- */
-function isBestTrain(train) {
-  return !!bestTrain.value && bestTrain.value.number === train.number
-}
-
-/**
- * The confidence score for a train, used wherever a figure is shown inline.
- *
- * This exists so no template ever reaches for the raw punctualityScore field.
- * That field is now an INPUT to the model rather than something to display:
- * showing it beside a derived score produced two different percentages for the
- * same train on the same card, which is exactly the self-contradiction this
- * product cannot afford.
- *
- * @param {Object} train - train object
- * @returns {Number} confidence from 0 to 100
- */
-function confidenceOf(train) {
-  return computeBaseConfidence(train)
-}
 const isFilterOpen = ref(false)
 const flexibleDate = ref(false)
+const disabilityConcession = ref(false)
+const railwayPass = ref(false)
 
 onMounted(() => {
   console.log('[RailEase Public Search] Search Trains View Mounted!')

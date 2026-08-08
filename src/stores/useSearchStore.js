@@ -11,9 +11,6 @@ export const useSearchStore = defineStore('search', () => {
   const selectedQuota = ref('GENERAL')
   const travelPurpose = ref('')
   const activeFilter = ref('All') // 'Fastest', 'Most Reliable', 'Cheapest'
-  // What the traveller said matters most: 'reliability' | 'price' | 'comfort'.
-  // Set from the landing search card; drives the default ranking of results.
-  const travelPriority = ref('reliability')
 
   // Refine Results Sidebar Filters (IRCTC Style)
   const selectedJourneyClasses = ref(['1A', '2A', '3A', '3E', 'SL', 'EC', 'CC'])
@@ -201,35 +198,13 @@ export const useSearchStore = defineStore('search', () => {
       })
     }
 
-    // Sorting.
-    //
-    // An explicit filter chosen by the user always wins. When none is set we do
-    // NOT fall back to source order or departure time: results are ranked by the
-    // traveller's stated priority, defaulting to reliability. Ranking is the
-    // product's opinion, and sorting by confidence rather than by clock time is
-    // the most visible expression of what RailEase is for.
+    // Sorting
     if (activeFilter.value === 'Fastest') {
       result = result.sort((a, b) => parseFloat(a.duration) - parseFloat(b.duration))
     } else if (activeFilter.value === 'Most Reliable') {
       result = result.sort((a, b) => b.punctualityScore - a.punctualityScore)
     } else if (activeFilter.value === 'Cheapest') {
       result = result.sort((a, b) => a.price - b.price)
-    } else if (travelPriority.value === 'price') {
-      // Cheapest first, but reliability breaks ties so a cheap unreliable train
-      // never outranks an equally cheap dependable one.
-      result = [...result].sort(
-        (a, b) => a.price - b.price || b.punctualityScore - a.punctualityScore
-      )
-    } else if (travelPriority.value === 'comfort') {
-      // Lower crowding first, reliability as the tiebreaker.
-      const crowdRank = { Low: 0, Moderate: 1, High: 2 }
-      result = [...result].sort(
-        (a, b) =>
-          (crowdRank[a.crowdLevel] ?? 1) - (crowdRank[b.crowdLevel] ?? 1) ||
-          b.punctualityScore - a.punctualityScore
-      )
-    } else {
-      result = [...result].sort((a, b) => b.punctualityScore - a.punctualityScore)
     }
 
     return result
@@ -242,7 +217,6 @@ export const useSearchStore = defineStore('search', () => {
     selectedClass,
     selectedQuota,
     travelPurpose,
-    travelPriority,
     activeFilter,
     selectedJourneyClasses,
     selectedTrainTypes,
