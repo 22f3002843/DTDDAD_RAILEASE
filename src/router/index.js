@@ -37,6 +37,7 @@ const routes = [
   },
   {
     // Public: watching is stored in the browser, so no account is required.
+    // Signed-in users see this same list merged into /dashboard instead.
     path: '/watching',
     name: 'watching',
     component: WatchingView

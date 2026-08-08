@@ -35,7 +35,7 @@
         <!-- Watching carries a live count so the user can see they have saved
              trains. Without this the watchlist was unreachable by clicking. -->
         <button
-          @click="router.push('/watching')"
+          @click="router.push(authStore.isAuthenticated ? '/dashboard' : '/watching')"
           class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1.5"
         >
           <Eye class="w-4 h-4" />
@@ -56,7 +56,7 @@
             class="px-5 py-2.5 bg-rail-500 hover:bg-rail-600 text-white font-semibold text-xs rounded-btn shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer"
           >
             <LayoutDashboard class="w-4 h-4" />
-            <span>Go to Dashboard</span>
+            <span>Your travel</span>
           </button>
 
           <!-- Top-Right Logout button -->

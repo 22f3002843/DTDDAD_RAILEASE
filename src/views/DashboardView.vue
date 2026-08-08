@@ -130,36 +130,75 @@
         <RiskCard v-for="card in attentionCards" :key="card.id" :card="card" />
       </div>
 
-      <!-- ============ WATCHING ============ -->
+      <!-- ============ WATCHING ============
+           Merged in from its own page. Watching and "your travel" were two
+           screens describing the same thing: trains this person cares about.
+           Keeping them apart meant a user had to know which one to open. -->
       <div v-if="watchStore.watchCount" class="space-y-3">
-        <div class="flex items-baseline justify-between gap-3">
-          <h2 class="text-base font-black text-slate-900">Watching</h2>
-          <button
-            @click="router.push('/watching')"
-            class="text-xs font-extrabold text-slate-500 hover:text-slate-900 cursor-pointer"
-          >
-            See all &rsaquo;
-          </button>
-        </div>
+        <h2 class="text-base font-black text-slate-900">Watching</h2>
 
         <div
-          v-for="entry in watchStore.watchedNewestFirst.slice(0, 3)"
+          v-for="entry in watchStore.watchedNewestFirst"
           :key="entry.id"
-          class="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3"
+          class="bg-white rounded-xl border border-slate-200 p-4 space-y-3"
         >
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-sm font-extrabold text-slate-900 uppercase truncate">
+                {{ entry.name }} <span class="text-slate-400">({{ entry.number }})</span>
+              </p>
+              <p class="text-xs text-slate-600 font-semibold mt-0.5">
+                {{ entry.fromCode }} {{ entry.deptTime }} &rarr; {{ entry.toCode }} {{ entry.arrTime }}
+              </p>
+            </div>
+            <button
+              @click="watchStore.removeWatch(entry.id)"
+              class="shrink-0 text-slate-400 hover:text-red-600 transition-colors cursor-pointer p-1"
+              title="Stop watching"
+            >
+              <X class="w-4 h-4" />
+            </button>
+          </div>
+
+          <ReliabilityBadge v-if="resolveWatched(entry)" :train="resolveWatched(entry)" />
+          <p v-else class="text-xs text-slate-500 font-semibold">
+            Search this route again to refresh its reliability record.
+          </p>
+
+          <div v-if="resolveWatched(entry)" class="flex flex-wrap gap-2">
+            <button
+              @click="router.push(`/train/${entry.number}`)"
+              class="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold cursor-pointer transition-colors"
+            >
+              What could go wrong?
+            </button>
+            <button
+              @click="router.push('/live-status')"
+              class="px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
+            >
+              Live status
+            </button>
+          </div>
+        </div>
+
+        <!-- The one place an account is ever asked for, and only as an upgrade
+             to something the traveller has already chosen to do. -->
+        <div class="bg-slate-900 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
           <div class="min-w-0">
-            <p class="text-sm font-extrabold text-slate-900 uppercase truncate">
-              {{ entry.name }} <span class="text-slate-400">({{ entry.number }})</span>
+            <p class="text-sm font-extrabold text-white flex items-center gap-2">
+              <Bell class="w-4 h-4 text-emerald-400" />
+              Get alerts on your phone
             </p>
-            <p class="text-xs text-slate-600 font-semibold mt-0.5">
-              {{ entry.fromCode }} {{ entry.deptTime }} &rarr; {{ entry.toCode }}
+            <p class="text-xs text-slate-300 font-medium mt-1">
+              We will tell you if one of these trains is running late before you leave for the station.
             </p>
           </div>
-          <ReliabilityBadge
-            v-if="resolveWatched(entry)"
-            :train="resolveWatched(entry)"
-            :show-reason="false"
-          />
+          <button
+            @click="showAuthModal = true"
+            class="px-4 py-2.5 rounded-xl bg-white text-slate-900 text-xs font-extrabold cursor-pointer hover:bg-slate-100 transition-colors shrink-0"
+          >
+            Set up alerts
+          </button>
         </div>
       </div>
 
@@ -198,7 +237,7 @@
       >
         <Compass class="w-10 h-10 text-slate-300 mx-auto" />
         <div class="space-y-1.5">
-          <p class="text-base font-extrabold text-slate-900">No trips yet</p>
+          <p class="text-base font-extrabold text-slate-900">Nothing to show yet</p>
           <p class="text-sm text-slate-600 font-medium max-w-md mx-auto leading-relaxed">
             Check how reliably a train actually runs before you book it, or sync a journey
             you have already booked using its PNR.
@@ -219,30 +258,33 @@
           </button>
         </div>
       </div>
+      <AuthWidget v-if="showAuthModal" @close="showAuthModal = false" />
     </div>
   </AppLayout>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { useJourneyStore } from '@/stores/useJourneyStore'
 import { useSearchStore } from '@/stores/useSearchStore'
 import { useWatchStore } from '@/stores/useWatchStore'
 import RiskCard from '@/components/common/RiskCard.vue'
+import AuthWidget from '@/components/common/AuthWidget.vue'
 import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
 import LiveRoutePreview from '@/components/common/LiveRoutePreview.vue'
 import { generateRiskCards } from '@/services/predictions'
 import { getRealisticArrival } from '@/services/reliability'
 import { getHistory } from '@/services/history'
 import { minutesUntilDeparture, describeWait } from '@/services/recovery'
-import { Compass } from 'lucide-vue-next'
+import { Compass, X, Bell } from 'lucide-vue-next'
 
 const router = useRouter()
 const journeyStore = useJourneyStore()
 const searchStore = useSearchStore()
 const watchStore = useWatchStore()
+const showAuthModal = ref(false)
 
 const activeTrip = computed(() => journeyStore.activeTrip)
 
@@ -251,10 +293,19 @@ const matchedTrain = computed(() =>
   searchStore.filteredTrains.find((train) => train.number === activeTrip.value?.trainNumber) || null
 )
 
+// The page has one job in three situations: you are travelling, you have
+// trains you care about but are not travelling yet, or you have neither. The
+// heading says which of the three you are in rather than making you work it out.
 const headerLine = computed(() => {
-  if (!activeTrip.value) return 'Trips you are taking, and trains you are keeping an eye on.'
-  if (attentionCards.value.length) return 'Something on your trip needs a decision.'
-  return 'Everything on your trip looks fine right now.'
+  if (activeTrip.value) {
+    return attentionCards.value.length
+      ? 'Something on your trip needs a decision.'
+      : 'Everything on your trip looks fine right now.'
+  }
+  if (watchStore.watchCount || earlierTrips.value.length) {
+    return 'No trip today. Here are the trains you are keeping an eye on.'
+  }
+  return 'Check how reliably a train runs before you book it.'
 })
 
 // Station codes pulled out of the trip's "New Delhi (NDLS)" style strings so

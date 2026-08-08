@@ -52,7 +52,6 @@ import {
   LayoutDashboard,
   Train,
   Compass,
-  Eye,
   Clock,
   Bell,
   Utensils,
@@ -63,10 +62,9 @@ import {
 } from 'lucide-vue-next'
 
 const navItems = [
-  { label: 'Dashboard Overview', path: '/dashboard', icon: LayoutDashboard },
+  { label: 'Your travel', path: '/dashboard', icon: LayoutDashboard },
   { label: 'Train Intelligence & Sync', path: '/train-intelligence', icon: Train },
   { label: 'I missed my train', path: '/journey-planner', icon: Compass },
-  { label: 'Watching', path: '/watching', icon: Eye },
   { label: 'Live Radar', path: '/live-status', icon: Clock },
   { label: 'Alerts', path: '/alerts', icon: Bell },
   { label: 'eCatering', path: '/ecatering', icon: Utensils },

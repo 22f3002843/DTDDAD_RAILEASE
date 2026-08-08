@@ -56,23 +56,12 @@
             </span>
           </h1>
 
-          <!-- Prominent Tagline Accent ("Know before you go — From Uncertainty to Assurance") -->
-          <div class="flex flex-wrap items-center gap-2.5 pt-2">
-            <span class="text-xl sm:text-2xl 2xl:text-3xl font-black text-slate-800 font-serif italic tracking-tight">
-              Know before you
-            </span>
-            <span class="text-2xl sm:text-3xl 2xl:text-4xl font-black text-emerald-600 font-serif tracking-tight underline decoration-emerald-400 decoration-2 underline-offset-4">
-              go
-            </span>
-            <span class="ml-1 px-3.5 py-1 rounded-full bg-emerald-100/90 text-emerald-800 text-xs sm:text-sm font-black uppercase tracking-wider border border-emerald-300/90 shadow-sm backdrop-blur-sm">
-              From Uncertainty to Assurance
-            </span>
-          </div>
         </div>
 
         <!-- Subtitle Mission Statement -->
         <p class="text-base sm:text-lg 2xl:text-xl text-slate-600 max-w-2xl leading-relaxed font-normal">
-          RailEase evaluates <strong>historical train telemetry</strong>, signal box history, and seasonal corridor data to provide <strong>reliable delay forecasts</strong> — giving every traveler realistic travel foresight without blind guesswork.
+          See how often a train <strong>actually</strong> arrives on time, from its last 30 days of
+          running, before you book.
         </p>
 
         <!-- One primary action, and it changes with sign-in state. Previously
@@ -131,8 +120,8 @@
       <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16">
         <div class="text-center max-w-3xl mx-auto mb-16 space-y-3 reveal-on-scroll">
           <h2 class="text-xs font-extrabold uppercase tracking-widest text-rail-500">From Uncertainty to Assurance</h2>
-          <h3 class="text-3xl sm:text-4xl font-black text-rail-900 tracking-tight">Engineered for Every Indian Railway Passenger</h3>
-          <p class="text-slate-600 text-sm sm:text-base">Data-driven forecasts to help families, daily commuters, and holiday travelers plan with confidence.</p>
+          <h3 class="text-3xl sm:text-4xl font-black text-rail-900 tracking-tight">What RailEase answers</h3>
+          <p class="text-slate-600 text-sm sm:text-base">Four questions, answered before and during your journey.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -144,7 +133,7 @@
               </div>
               <h4 class="text-lg font-extrabold text-rail-900 mb-2">1. Will my train be on time?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                We look at how a train actually ran over the last 30 days and give it a confidence score, with the record behind it so you can check us.
+                A confidence score from 30 days of real running, with the record behind it.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-rail-600 flex items-center gap-1">
@@ -160,7 +149,7 @@
               </div>
               <h4 class="text-lg font-extrabold text-rail-900 mb-2">2. How late will it really be?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                The timetable says one thing and reality often says another. We show the arrival time you should actually plan around.
+                The arrival time to plan around, not the one on the timetable.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-amber-600 flex items-center gap-1">
@@ -176,7 +165,7 @@
               </div>
               <h4 class="text-lg font-extrabold text-rail-900 mb-2">3. Where is my train right now?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Follow your train live on the map, and see what its current delay means for when you will actually arrive.
+                Follow it live, and see what the delay means for your arrival.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-indigo-600 flex items-center gap-1">
@@ -192,7 +181,7 @@
               </div>
               <h4 class="text-lg font-extrabold text-rail-900 mb-2">4. What if I miss my train?</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Missed it, or about to? Tell us which train and we work out how you still get there, and whether you can claim a refund.
+                Tell us the train you missed and we work out how you still get there.
               </p>
             </div>
             <div class="mt-6 pt-3 border-t border-slate-100 text-xs font-bold text-emerald-600 flex items-center gap-1">

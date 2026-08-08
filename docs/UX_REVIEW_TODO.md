@@ -19,7 +19,7 @@ when the underlying feeling is fixed, not merely when something was changed.
 
 ## Home page
 
-- [ ] **4. Too much text.** The home page carries more copy than a first-time visitor will read.
+- [x] **4. Too much text.** The home page carries more copy than a first-time visitor will read.
 
 - [x] **5. "Comfort" is undefined.** When trains are ranked by Comfort, it is not clear what that is measured on.
   *(Currently derived from crowd level and whether the train type is premium, but this is never stated on screen.)*
