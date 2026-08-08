@@ -80,6 +80,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/train-intelligence',
+    name: 'train-intelligence',
+    component: AuthenticatedSearchTrainsView,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }
@@ -96,16 +102,6 @@ const router = createRouter({
 // Dynamic Navigation Guard
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
-
-  if (to.name === 'search-trains') {
-    if (authStore.isAuthenticated) {
-      // Authenticated users get the Dashboard Search layout with 7-Day Delay Telemetry
-      to.matched[0].components.default = AuthenticatedSearchTrainsView
-    } else {
-      // Guest users get the public IRCTC information search view
-      to.matched[0].components.default = SearchTrainsView
-    }
-  }
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     console.warn('[RailEase Router Guard] Blocked protected route:', to.path, '-> redirecting to landing')

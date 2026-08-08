@@ -104,127 +104,166 @@
     <!-- ==================== MAIN CONTENT AREA (SIDEBAR + TRAIN RESULTS) ==================== -->
     <div class="max-w-[1700px] mx-auto px-4 sm:px-8 lg:px-12 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- ==================== LEFT SIDEBAR PANEL: REFINE RESULTS ==================== -->
-      <aside class="lg:col-span-3 space-y-5">
-        <div class="bg-white rounded-card border border-slate-200 shadow-sm p-4 space-y-6">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-wide">Refine Results</h3>
-            <button @click="resetFilters" class="text-[11px] font-bold text-orange-600 hover:underline cursor-pointer">
-              Remove Filter
-            </button>
-          </div>
+      <!-- ==================== LEFT SIDEBAR PANEL: REFINE RESULTS (TOGGLEABLE WITH SMOOTH ANIMATION) ==================== -->
+      <transition
+        enter-active-class="transition-all duration-300 ease-out transform"
+        enter-from-class="opacity-0 -translate-x-6 scale-95"
+        enter-to-class="opacity-100 translate-x-0 scale-100"
+        leave-active-class="transition-all duration-200 ease-in transform"
+        leave-from-class="opacity-100 translate-x-0 scale-100"
+        leave-to-class="opacity-0 -translate-x-6 scale-95"
+      >
+        <aside v-if="isFilterOpen" class="lg:col-span-3 space-y-5">
+          <div class="bg-white rounded-card border border-slate-200 shadow-sm p-4 space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-wide flex items-center gap-1.5">
+                <SlidersHorizontal class="w-4 h-4 text-rail-600" />
+                <span>Refine Results</span>
+              </h3>
+              <div class="flex items-center gap-2">
+                <button @click="resetFilters" class="text-[11px] font-bold text-orange-600 hover:underline cursor-pointer">
+                  Reset
+                </button>
+                <button @click="isFilterOpen = false" class="text-[11px] font-bold text-slate-400 hover:text-slate-700 cursor-pointer">
+                  ✕ Hide
+                </button>
+              </div>
+            </div>
 
-          <!-- JOURNEY CLASS FILTER -->
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">JOURNEY CLASS</span>
-              <button @click="selectAllClasses" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
+            <!-- JOURNEY CLASS FILTER -->
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">JOURNEY CLASS</span>
+                <button @click="selectAllClasses" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 font-semibold">
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" value="1A" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
+                  <span>AC First Class (1A)</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" value="2A" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
+                  <span>AC 2 Tier (2A)</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" value="3A" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
+                  <span>AC 3 Tier (3A)</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" value="3E" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
+                  <span>AC 3 Economy (3E)</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" value="SL" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
+                  <span>Sleeper (SL)</span>
+                </label>
+              </div>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 font-semibold">
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" value="1A" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
-                <span>AC First Class (1A)</span>
-              </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" value="2A" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
-                <span>AC 2 Tier (2A)</span>
-              </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" value="3A" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
-                <span>AC 3 Tier (3A)</span>
-              </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" value="3E" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
-                <span>AC 3 Economy (3E)</span>
-              </label>
-              <label class="flex items-center gap-1.5 cursor-pointer">
-                <input type="checkbox" value="SL" v-model="searchStore.selectedJourneyClasses" class="rounded text-rail-600" />
-                <span>Sleeper (SL)</span>
-              </label>
-            </div>
-          </div>
 
-          <!-- TRAIN TYPE FILTER -->
-          <div class="space-y-2.5 border-t border-slate-100 pt-4">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">TRAIN TYPE</span>
-              <button @click="selectAllTrainTypes" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
+            <!-- TRAIN TYPE FILTER -->
+            <div class="space-y-2.5 border-t border-slate-100 pt-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">TRAIN TYPE</span>
+                <button @click="selectAllTrainTypes" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
+              </div>
+              <div class="space-y-2 text-xs text-slate-700 font-semibold">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" value="OTHER" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
+                  <span class="w-3 h-3 rounded-sm bg-purple-500 inline-block"></span>
+                  <span>OTHER</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" value="RAJDHANI" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
+                  <span class="w-3 h-3 rounded-sm bg-pink-500 inline-block"></span>
+                  <span>RAJDHANI</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" value="VANDE BHARAT" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
+                  <span class="w-3 h-3 rounded-sm bg-blue-500 inline-block"></span>
+                  <span>VANDE BHARAT</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" value="SHATABDI" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
+                  <span class="w-3 h-3 rounded-sm bg-amber-500 inline-block"></span>
+                  <span>SHATABDI</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" value="DURONTO" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
+                  <span class="w-3 h-3 rounded-sm bg-emerald-500 inline-block"></span>
+                  <span>DURONTO</span>
+                </label>
+              </div>
             </div>
-            <div class="space-y-2 text-xs text-slate-700 font-semibold">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" value="OTHER" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
-                <span class="w-3 h-3 rounded-sm bg-purple-500 inline-block"></span>
-                <span>OTHER</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" value="RAJDHANI" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
-                <span class="w-3 h-3 rounded-sm bg-pink-500 inline-block"></span>
-                <span>RAJDHANI</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" value="VANDE BHARAT" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
-                <span class="w-3 h-3 rounded-sm bg-blue-500 inline-block"></span>
-                <span>VANDE BHARAT</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" value="SHATABDI" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
-                <span class="w-3 h-3 rounded-sm bg-amber-500 inline-block"></span>
-                <span>SHATABDI</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" value="DURONTO" v-model="searchStore.selectedTrainTypes" class="rounded text-rail-600" />
-                <span class="w-3 h-3 rounded-sm bg-emerald-500 inline-block"></span>
-                <span>DURONTO</span>
-              </label>
-            </div>
-          </div>
 
-          <!-- DEPARTURE TIME FILTER -->
-          <div class="space-y-2.5 border-t border-slate-100 pt-4">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">DEPARTURE TIME</span>
-              <button @click="searchStore.selectedTimeSlot = 'all'" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-[11px] font-bold text-center">
-              <button
-                @click="searchStore.selectedTimeSlot = 'early'"
-                :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'early' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
-              >
-                00:00 - 06:00<br /><span class="font-normal text-[10px]">Early Morning</span>
-              </button>
-              <button
-                @click="searchStore.selectedTimeSlot = 'morning'"
-                :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'morning' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
-              >
-                06:00 - 12:00<br /><span class="font-normal text-[10px]">Morning</span>
-              </button>
-              <button
-                @click="searchStore.selectedTimeSlot = 'midday'"
-                :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'midday' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
-              >
-                12:00 - 18:00<br /><span class="font-normal text-[10px]">Mid Day</span>
-              </button>
-              <button
-                @click="searchStore.selectedTimeSlot = 'night'"
-                :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'night' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
-              >
-                18:00 - 24:00<br /><span class="font-normal text-[10px]">Night</span>
-              </button>
+            <!-- DEPARTURE TIME FILTER -->
+            <div class="space-y-2.5 border-t border-slate-100 pt-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">DEPARTURE TIME</span>
+                <button @click="searchStore.selectedTimeSlot = 'all'" class="text-[10px] font-bold text-rail-600 hover:underline cursor-pointer">Select All</button>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[11px] font-bold text-center">
+                <button
+                  @click="searchStore.selectedTimeSlot = 'early'"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'early' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                >
+                  00:00 - 06:00<br /><span class="font-normal text-[10px]">Early Morning</span>
+                </button>
+                <button
+                  @click="searchStore.selectedTimeSlot = 'morning'"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'morning' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                >
+                  06:00 - 12:00<br /><span class="font-normal text-[10px]">Morning</span>
+                </button>
+                <button
+                  @click="searchStore.selectedTimeSlot = 'midday'"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'midday' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                >
+                  12:00 - 18:00<br /><span class="font-normal text-[10px]">Mid Day</span>
+                </button>
+                <button
+                  @click="searchStore.selectedTimeSlot = 'night'"
+                  :class="['p-2 rounded border transition-colors cursor-pointer', searchStore.selectedTimeSlot === 'night' ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100']"
+                >
+                  18:00 - 24:00<br /><span class="font-normal text-[10px]">Night</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </aside>
+        </aside>
+      </transition>
 
       <!-- ==================== RIGHT RESULTS PANEL ==================== -->
-      <main class="lg:col-span-9 space-y-4">
+      <main :class="[isFilterOpen ? 'lg:col-span-9' : 'lg:col-span-12', 'space-y-4 transition-all']">
         
         <!-- Summary Header Banner Bar -->
         <div class="bg-white border border-slate-300 rounded-lg p-3 flex flex-wrap items-center justify-between gap-3 text-xs font-bold text-slate-900 shadow-sm">
-          <div>
-            <span class="text-slate-900 text-sm font-black">{{ searchStore.filteredTrains.length }} Results</span> for
-            <span class="text-[#1E3A8A] uppercase font-black px-1.5">{{ searchStore.fromStation?.name }} ➔ {{ searchStore.toStation?.name }}</span> |
-            <span class="text-slate-600"> {{ formattedDate }}</span> For Quota |
-            <span class="text-slate-900 px-1">{{ searchStore.selectedQuota }}</span>
+          <div class="flex items-center gap-3">
+            <!-- Toggle Filter Button -->
+            <button
+              @click="isFilterOpen = !isFilterOpen"
+              :class="[
+                'px-3.5 py-1.5 rounded-lg text-xs font-black border transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs',
+                isFilterOpen
+                  ? 'bg-blue-900 text-white border-blue-900'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+              ]"
+              title="Toggle Filter Options"
+            >
+              <SlidersHorizontal class="w-3.5 h-3.5" />
+              <span>{{ isFilterOpen ? 'Hide Filters' : 'Filter Results' }}</span>
+              <span v-if="activeFilterCount > 0" class="px-1.5 py-0.2 bg-orange-500 text-white rounded text-[10px] font-extrabold">
+                {{ activeFilterCount }}
+              </span>
+              <ChevronDown v-if="!isFilterOpen" class="w-3.5 h-3.5 opacity-60" />
+              <ChevronUp v-else class="w-3.5 h-3.5 opacity-60" />
+            </button>
+
+            <div>
+              <span class="text-slate-900 text-sm font-black">{{ searchStore.filteredTrains.length }} Results</span> for
+              <span class="text-[#1E3A8A] uppercase font-black px-1.5">{{ searchStore.fromStation?.name }} ➔ {{ searchStore.toStation?.name }}</span> |
+              <span class="text-slate-600"> {{ formattedDate }}</span> | Quota:
+              <span class="text-slate-900 px-1">{{ searchStore.selectedQuota }}</span>
+            </div>
           </div>
 
           <!-- Day Navigation & Sorting Buttons -->
@@ -284,7 +323,7 @@
                   @click="requireAuthAction('schedule', train)"
                   class="text-blue-700 hover:underline flex items-center gap-1 font-bold cursor-pointer"
                 >
-                  Train Schedule 🔒
+                  Train Schedule <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400" />
                 </button>
               </div>
             </div>
@@ -354,7 +393,25 @@
                   * Please check NTES website or NTES app for actual time before boarding.
                 </p>
 
-                <div class="flex items-center gap-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <!-- + Add to Bookings Calendar Button with Auth Lock Check -->
+                  <button
+                    @click="handleAddToBookings(train)"
+                    :class="[
+                      'px-4 py-2.5 rounded font-extrabold text-xs shadow-sm transition-all flex items-center gap-1.5 cursor-pointer uppercase tracking-wider',
+                      isTrainInBookings(train)
+                        ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                        : 'bg-slate-900 hover:bg-slate-800 text-white'
+                    ]"
+                    :title="authStore.isAuthenticated ? 'Add Train to My Bookings' : 'Sign in required to add train to bookings'"
+                  >
+                    <Lock v-if="!authStore.isAuthenticated" class="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                    <Plus v-else-if="!isTrainInBookings(train)" class="w-3.5 h-3.5 text-white shrink-0" />
+                    <Check v-else class="w-3.5 h-3.5 text-white shrink-0" />
+
+                    <span>{{ isTrainInBookings(train) ? 'Added to Bookings ✅' : '+ Add to Bookings' }}</span>
+                  </button>
+
                   <button
                     @click="requireAuthAction('book', train)"
                     class="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer uppercase tracking-wider"
@@ -402,7 +459,7 @@
             Sign In or Register to Access Feature
           </h4>
           <p class="text-[11px] text-indigo-200 leading-tight">
-            Create a free RailEase account to unlock 7-day past delay telemetry, AI punctuality scores, and complete train booking.
+            Create a free RailEase account to add trains to your bookings, track live PNR telemetry, and lock live safeguards.
           </p>
         </div>
 
@@ -421,6 +478,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSearchStore } from '@/stores/useSearchStore'
 import { useAuthStore } from '@/stores/useAuthStore'
+import { useJourneyStore } from '@/stores/useJourneyStore'
 import { POPULAR_STATIONS } from '@/data/stations'
 import Navbar from '@/components/navbar/Navbar.vue'
 import Footer from '@/components/footer/Footer.vue'
@@ -431,20 +489,35 @@ import {
   ArrowLeftRight,
   RefreshCw,
   ArrowRight,
-  Lock
+  Lock,
+  SlidersHorizontal,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+  Check
 } from 'lucide-vue-next'
 
 const router = useRouter()
 const searchStore = useSearchStore()
 const authStore = useAuthStore()
+const journeyStore = useJourneyStore()
 
 const showAuthModal = ref(false)
+const isFilterOpen = ref(false)
 const flexibleDate = ref(false)
 const disabilityConcession = ref(false)
 const railwayPass = ref(false)
 
 onMounted(() => {
-  console.log('[RailEase Public Search] Public Search Trains View Mounted!')
+  console.log('[RailEase Public Search] Search Trains View Mounted!')
+})
+
+const activeFilterCount = computed(() => {
+  let count = 0
+  if (searchStore.selectedJourneyClasses.length < 7) count++
+  if (searchStore.selectedTrainTypes.length < 5) count++
+  if (searchStore.selectedTimeSlot !== 'all') count++
+  return count
 })
 
 const stationOptions = computed(() =>
@@ -491,6 +564,20 @@ const formattedDate = computed(() => {
   return d.toLocaleDateString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })
 })
 
+function isTrainInBookings(train) {
+  if (!authStore.isAuthenticated || !journeyStore.activeTrip) return false
+  return journeyStore.activeTrip.trainNumber === train.number
+}
+
+function handleAddToBookings(train) {
+  if (!authStore.isAuthenticated) {
+    showAuthModal.value = true
+  } else {
+    journeyStore.setActiveTripFromTrain(train, formattedDate.value)
+    console.log('[RailEase Bookings] Added train to bookings calendar:', train.name, '(', train.number, ')')
+  }
+}
+
 function openAuthDialog() {
   showAuthModal.value = true
 }
@@ -499,7 +586,14 @@ function requireAuthAction(actionType, train) {
   if (!authStore.isAuthenticated) {
     showAuthModal.value = true
   } else {
-    router.push('/dashboard')
+    if (actionType === 'schedule') {
+      router.push('/live-status')
+    } else {
+      if (train) {
+        journeyStore.setActiveTripFromTrain(train, formattedDate.value)
+      }
+      router.push('/dashboard')
+    }
   }
 }
 

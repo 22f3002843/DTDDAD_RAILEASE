@@ -64,7 +64,7 @@ import {
 
 const navItems = [
   { label: 'Dashboard Overview', path: '/dashboard', icon: LayoutDashboard },
-  { label: 'Train Intelligence & Sync', path: '/search', icon: Train },
+  { label: 'Train Intelligence & Sync', path: '/train-intelligence', icon: Train },
   { label: 'My Bookings', path: '/bookings', icon: Calendar },
   { label: 'Journey Planner', path: '/journey-planner', icon: Compass },
   { label: 'Live Radar', path: '/live-status', icon: Clock },
