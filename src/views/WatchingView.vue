@@ -1,6 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-100 flex flex-col font-sans">
-    <Navbar @openLogin="showAuthModal = true" />
+  <AdaptiveLayout>
 
     <div class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
       <div>
@@ -108,9 +107,8 @@
       </div>
     </div>
 
-    <Footer />
     <AuthWidget v-if="showAuthModal" @close="showAuthModal = false" />
-  </div>
+  </AdaptiveLayout>
 </template>
 
 <script setup>
@@ -118,16 +116,15 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWatchStore } from '@/stores/useWatchStore'
 import { useSearchStore } from '@/stores/useSearchStore'
-import Navbar from '@/components/navbar/Navbar.vue'
-import Footer from '@/components/footer/Footer.vue'
+import AdaptiveLayout from '@/layouts/AdaptiveLayout.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
 import { Eye, X, Bell } from 'lucide-vue-next'
 
 const router = useRouter()
 const watchStore = useWatchStore()
-const searchStore = useSearchStore()
 const showAuthModal = ref(false)
+const searchStore = useSearchStore()
 
 /**
  * Find the full train object behind a saved watchlist entry.

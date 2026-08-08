@@ -1,20 +1,42 @@
 <template>
   <div :class="['rounded-xl border p-4 sm:p-5', containerClass]">
-    <div class="flex items-start gap-3">
+    <div class="flex items-start gap-3.5">
       <component :is="icon" :class="['w-5 h-5 shrink-0 mt-0.5', iconClass]" />
 
-      <div class="flex-1 min-w-0 space-y-1.5">
-        <!-- What: a headline a person could have said out loud. -->
-        <h3 class="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
-          {{ card.headline }}
-        </h3>
+      <div class="flex-1 min-w-0 space-y-2">
+        <!-- The headline, and the number that drives it pulled out large. A
+             stressed reader takes the figure in at a glance and only reads the
+             sentence if they want the reasoning. -->
+        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h3 class="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
+            {{ card.headline }}
+          </h3>
+        </div>
 
-        <!-- Why: the evidence, always carrying a denominator so it can be checked. -->
-        <p class="text-xs sm:text-[13px] text-slate-600 font-medium leading-relaxed">
+        <div v-if="card.figure" class="flex items-baseline gap-2">
+          <span :class="['text-2xl sm:text-3xl font-black leading-none', figureClass]">
+            {{ card.figure }}
+          </span>
+          <span v-if="card.figureLabel" class="text-xs font-bold text-slate-500">
+            {{ card.figureLabel }}
+          </span>
+        </div>
+
+        <!-- The evidence is collapsed by default. It is the proof, not the
+             message, and six cards of prose was more than anyone would read. -->
+        <button
+          type="button"
+          @click="showEvidence = !showEvidence"
+          class="text-[11px] font-extrabold text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer transition-colors"
+        >
+          <span>{{ showEvidence ? 'Hide detail' : 'Why' }}</span>
+          <ChevronDown :class="['w-3 h-3 transition-transform', showEvidence ? 'rotate-180' : '']" />
+        </button>
+
+        <p v-if="showEvidence" class="text-xs sm:text-[13px] text-slate-600 font-medium leading-relaxed">
           {{ card.evidence }}
         </p>
 
-        <!-- At most one action per card. Two would make it a form. -->
         <button
           v-if="card.action"
           type="button"
@@ -35,8 +57,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { AlertTriangle, AlertCircle, Info } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+import { AlertTriangle, AlertCircle, Info, ChevronDown } from 'lucide-vue-next'
 
 const props = defineProps({
   // Card object from services/predictions.js; see generateRiskCards for shape.
@@ -44,6 +66,8 @@ const props = defineProps({
 })
 
 defineEmits(['action'])
+
+const showEvidence = ref(false)
 
 const severityLabel = computed(() => {
   if (props.card.severity === 'high') return 'Important'
@@ -67,6 +91,12 @@ const iconClass = computed(() => {
   if (props.card.severity === 'high') return 'text-red-600'
   if (props.card.severity === 'medium') return 'text-amber-600'
   return 'text-slate-500'
+})
+
+const figureClass = computed(() => {
+  if (props.card.severity === 'high') return 'text-red-700'
+  if (props.card.severity === 'medium') return 'text-amber-700'
+  return 'text-slate-700'
 })
 
 const labelClass = computed(() => {

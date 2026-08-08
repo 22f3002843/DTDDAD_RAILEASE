@@ -51,7 +51,6 @@ import Logo from '@/components/common/Logo.vue'
 import {
   LayoutDashboard,
   Train,
-  Calendar,
   Compass,
   Eye,
   Clock,
@@ -66,7 +65,6 @@ import {
 const navItems = [
   { label: 'Dashboard Overview', path: '/dashboard', icon: LayoutDashboard },
   { label: 'Train Intelligence & Sync', path: '/train-intelligence', icon: Train },
-  { label: 'My Bookings', path: '/bookings', icon: Calendar },
   { label: 'I missed my train', path: '/journey-planner', icon: Compass },
   { label: 'Watching', path: '/watching', icon: Eye },
   { label: 'Live Radar', path: '/live-status', icon: Clock },

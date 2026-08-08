@@ -54,6 +54,8 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    // Kept reachable so existing links and the month calendar still work, but
+    // no longer in the sidebar: the dashboard now carries the same trips.
     path: '/bookings',
     name: 'my-bookings',
     component: BookingsView,

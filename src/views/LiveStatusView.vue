@@ -237,6 +237,29 @@
           </table>
         </div>
       </div>
+
+      <!-- Moved here from the dashboard. Corridor health is about the network,
+           not about one passenger's trip, so it belongs on the page where the
+           network is the subject. -->
+      <div class="bg-white rounded-card border border-slate-200 shadow-sm p-5 space-y-3">
+        <div class="flex items-center justify-between gap-3">
+          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Live Network Rail Telemetry</h3>
+          <span class="text-[11px] font-bold text-emerald-600">99.2% Corridor Operational Health</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div
+            v-for="corridor in journeyStore.networkStatus"
+            :key="corridor.corridor"
+            class="border border-slate-200 rounded-xl p-3"
+          >
+            <p class="text-[11px] font-extrabold text-slate-900">{{ corridor.corridor }}</p>
+            <div class="flex items-center justify-between mt-1">
+              <span class="text-[11px] text-slate-500 font-semibold">Signal: <strong class="text-slate-700">{{ corridor.status }}</strong></span>
+              <span class="text-[11px] font-black text-slate-600">{{ corridor.load }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </AppLayout>
 </template>

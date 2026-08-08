@@ -75,22 +75,28 @@
           RailEase evaluates <strong>historical train telemetry</strong>, signal box history, and seasonal corridor data to provide <strong>reliable delay forecasts</strong> — giving every traveler realistic travel foresight without blind guesswork.
         </p>
 
-        <!-- CTA Buttons -->
+        <!-- One primary action, and it changes with sign-in state. Previously
+             the hero offered "Sign In to Dashboard" while the navbar offered
+             "Go to Dashboard" - two differently worded buttons for the same
+             destination, on screen at the same time. -->
         <div class="flex flex-wrap items-center gap-4 pt-2">
           <button
+            v-if="!authStore.isAuthenticated"
             @click="showAuthModal = true"
-            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group relative cursor-pointer"
+            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group cursor-pointer"
           >
-            <span>Sign In to Dashboard</span>
+            <span>Sign in</span>
             <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
 
-          <a
-            href="#features"
-            class="px-7 py-4 bg-white/90 backdrop-blur-md border border-slate-300 hover:border-rail-400 text-slate-700 font-semibold text-sm rounded-btn shadow-sm hover:shadow transition-all"
+          <button
+            v-else
+            @click="router.push('/dashboard')"
+            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group cursor-pointer"
           >
-            Explore 4 Pillars
-          </a>
+            <span>Go to dashboard</span>
+            <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
 
         <!-- Trust Stat Cards -->
@@ -371,6 +377,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/useAuthStore'
 import Navbar from '@/components/navbar/Navbar.vue'
 import QuickBookWidget from '@/components/common/QuickBookWidget.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
@@ -379,6 +387,8 @@ import Footer from '@/components/footer/Footer.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
 import { Sparkles, ArrowRight, BarChart3, Clock, Navigation, ShieldCheck, CheckCircle2 } from 'lucide-vue-next'
 
+const router = useRouter()
+const authStore = useAuthStore()
 const showAuthModal = ref(false)
 
 // Activate scroll reveal animations

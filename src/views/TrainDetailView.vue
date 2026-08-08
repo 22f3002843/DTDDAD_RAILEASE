@@ -1,6 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-100 flex flex-col font-sans">
-    <Navbar @openLogin="showAuthModal = true" />
+  <AdaptiveLayout>
 
     <div v-if="!train" class="flex-1 flex items-center justify-center p-8">
       <div class="text-center space-y-3">
@@ -56,6 +55,32 @@
         </div>
       </div>
 
+      <!-- The high-stakes selector lives here rather than on the dashboard,
+           because this is the only place its effect is visible: change it and
+           the warnings below rewrite themselves. A setting whose consequence
+           appears on a different page is a setting in the wrong place. -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+        <p class="text-sm font-extrabold text-slate-900">What is this trip for?</p>
+        <p class="text-xs text-slate-600 font-medium mt-1 mb-3">
+          We weigh the risks differently when being late would cost you something fixed.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="option in journeyStore.highStakesTypes"
+            :key="option.id"
+            @click="journeyStore.setStakesType(option.id)"
+            :class="[
+              'px-3.5 py-2 rounded-lg text-xs font-bold border transition-all cursor-pointer',
+              journeyStore.selectedStakesType === option.id
+                ? 'bg-slate-900 text-white border-slate-900'
+                : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
+            ]"
+          >
+            {{ option.label }}
+          </button>
+        </div>
+      </div>
+
       <!-- ============ LAYER 2: WHAT COULD GO WRONG ============
            Named in the words a passenger would use, not "predictive analytics".
            Cards that do not apply are absent, so the length of this list is
@@ -90,8 +115,14 @@
         </button>
 
         <div v-if="showEvidence" class="border-t border-slate-200">
-          <!-- Summary figures first, so the table is interpretable before it is read. -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-slate-200 border-b border-slate-200">
+          <!-- Plain sentence first. Someone in a hurry needs the conclusion,
+               not a chart to interpret; the chart is for whoever wants to check
+               the working. -->
+          <p class="px-5 sm:px-6 pt-5 text-sm text-slate-800 font-semibold leading-relaxed">
+            {{ plainSummary }}
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-slate-200 border-y border-slate-200 mt-5">
             <div v-for="figure in summaryFigures" :key="figure.label" class="p-4 text-center">
               <div class="text-lg font-black text-slate-900">{{ figure.value }}</div>
               <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
@@ -100,25 +131,53 @@
             </div>
           </div>
 
-          <!-- Simple bar chart. Height encodes delay; colour encodes severity. -->
-          <div class="p-5">
-            <div class="flex items-end gap-[3px] h-24">
-              <div
-                v-for="(entry, index) in history"
-                :key="index"
-                :class="['flex-1 rounded-t-sm', barClass(entry)]"
-                :style="{ height: barHeight(entry) }"
-                :title="`${entry.day}: ${entry.cancelled ? 'Cancelled' : entry.delayMinutes + ' min late'}`"
-              ></div>
+          <!-- The chart now carries a scale, a labelled on-time line and the
+               worst day called out, so the bars mean something. Previously it
+               was bars with no axis and no numbers, which could not be read. -->
+          <div class="p-5 sm:p-6">
+            <div class="flex items-stretch gap-2">
+              <!-- Y axis in minutes -->
+              <div class="flex flex-col justify-between text-[9px] font-bold text-slate-400 h-28 py-0.5 shrink-0">
+                <span>{{ chartCeiling }}m</span>
+                <span>{{ Math.round(chartCeiling / 2) }}m</span>
+                <span>0</span>
+              </div>
+
+              <div class="flex-1 relative h-28">
+                <!-- The line below which a day counts as on time -->
+                <div
+                  class="absolute left-0 right-0 border-t border-dashed border-emerald-400/70"
+                  :style="{ bottom: `${(15 / chartCeiling) * 100}%` }"
+                >
+                  <span class="absolute -top-4 right-0 text-[9px] font-black text-emerald-600 uppercase tracking-wider">
+                    on time
+                  </span>
+                </div>
+
+                <div class="absolute inset-0 flex items-end gap-[3px]">
+                  <div
+                    v-for="(entry, index) in history"
+                    :key="index"
+                    :class="['flex-1 rounded-t-sm min-h-[2px]', barClass(entry)]"
+                    :style="{ height: barHeight(entry) }"
+                    :title="`${entry.day}: ${entry.cancelled ? 'Cancelled' : entry.delayMinutes + ' min late'}`"
+                  ></div>
+                </div>
+              </div>
             </div>
-            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase mt-2">
+
+            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase mt-2 pl-8">
               <span>{{ historyDays }} days ago</span>
               <span>Most recent</span>
             </div>
+
+            <p v-if="worstDay" class="text-[11px] font-bold text-slate-500 mt-3">
+              Worst day: {{ worstDay.day }}, {{ worstDay.delayMinutes }} minutes late.
+            </p>
           </div>
 
           <!-- Honest limits, stated plainly rather than buried. -->
-          <p class="px-5 pb-5 text-[11px] text-slate-500 font-medium leading-relaxed">
+          <p class="px-5 sm:px-6 pb-5 text-[11px] text-slate-500 font-medium leading-relaxed">
             Predictions are estimates based on past performance. Actual running depends on
             live conditions on the day.
           </p>
@@ -157,9 +216,7 @@
       </p>
     </div>
 
-    <Footer />
-    <AuthWidget v-if="showAuthModal" @close="showAuthModal = false" />
-  </div>
+  </AdaptiveLayout>
 </template>
 
 <script setup>
@@ -168,9 +225,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useSearchStore } from '@/stores/useSearchStore'
 import { useJourneyStore } from '@/stores/useJourneyStore'
 import { useWatchStore } from '@/stores/useWatchStore'
-import Navbar from '@/components/navbar/Navbar.vue'
-import Footer from '@/components/footer/Footer.vue'
-import AuthWidget from '@/components/common/AuthWidget.vue'
+import AdaptiveLayout from '@/layouts/AdaptiveLayout.vue'
 import RiskCard from '@/components/common/RiskCard.vue'
 import { generateRiskCards } from '@/services/predictions'
 import { computeBaseConfidence, getVerdict, analyseHistory } from '@/services/scoring'
@@ -184,7 +239,6 @@ const searchStore = useSearchStore()
 const journeyStore = useJourneyStore()
 const watchStore = useWatchStore()
 
-const showAuthModal = ref(false)
 const showEvidence = ref(false)
 
 // Resolved from the current result set so the detail page always reflects the
@@ -230,6 +284,34 @@ const summaryFigures = computed(() => {
   ]
 })
 
+// The chart scale adapts to the train: a dependable train plotted against a
+// three hour ceiling would show a flat line of nothing.
+const chartCeiling = computed(() => {
+  const worst = stats.value?.worstDelay || 0
+  return Math.max(30, Math.ceil(worst / 30) * 30)
+})
+
+const worstDay = computed(() => {
+  if (!history.value.length) return null
+  return [...history.value].sort((a, b) => (b.delayMinutes || 0) - (a.delayMinutes || 0))[0]
+})
+
+/**
+ * The record stated as a sentence, for a reader who will not read a chart.
+ *
+ * @returns {String} e.g. '27 of the last 30 days arrived on time...'
+ */
+const plainSummary = computed(() => {
+  if (!stats.value) return ''
+  const { onTimeDays, totalDays, worstDelay, medianDelay } = stats.value
+  const lateDays = totalDays - onTimeDays
+
+  if (lateDays === 0) {
+    return `All ${totalDays} of the last ${totalDays} days arrived on time.`
+  }
+  return `${onTimeDays} of the last ${totalDays} days arrived on time. When it runs late it is typically ${medianDelay} minutes behind, and the worst day in this window was ${worstDelay} minutes.`
+})
+
 const scoreBoxClass = computed(() => {
   if (verdict.value.level === 'green') return 'bg-emerald-50 border-emerald-300 text-emerald-700'
   if (verdict.value.level === 'amber') return 'bg-amber-50 border-amber-300 text-amber-700'
@@ -248,8 +330,8 @@ const scoreBoxClass = computed(() => {
  * @returns {String} a CSS height percentage
  */
 function barHeight(entry) {
-  const share = Math.min(1, (entry.delayMinutes || 0) / 180)
-  return `${Math.max(6, share * 100)}%`
+  const share = Math.min(1, (entry.delayMinutes || 0) / chartCeiling.value)
+  return `${Math.max(3, share * 100)}%`
 }
 
 /**

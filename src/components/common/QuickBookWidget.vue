@@ -120,6 +120,9 @@
               {{ option.label }}
             </button>
           </div>
+          <!-- States what the chosen ranking is based on, so the buttons stop
+               being three unexplained words. -->
+          <p class="text-[11px] text-slate-500 font-medium mt-1.5 leading-snug">{{ activeHint }}</p>
         </div>
 
         <!-- Primary CTA. The verb is "check", not "book", because checking is
@@ -171,11 +174,19 @@ const classOptions = [
 
 // Maps to the three ways a passenger can weigh a journey. Deliberately three,
 // not five: this is a one-tap hint, not a preferences form.
+// Labels name what is actually measured. "Comfort" was doing hidden work -
+// it ranked on crowd level and train class - so a traveller choosing it had no
+// idea what they were asking for. Each option now also carries a one-line
+// explanation shown beneath the row.
 const priorityOptions = [
-  { label: 'On time', value: 'reliability' },
-  { label: 'Cheapest', value: 'price' },
-  { label: 'Comfort', value: 'comfort' }
+  { label: 'On time', value: 'reliability', hint: 'Ranked by how often the train actually arrives on schedule.' },
+  { label: 'Cheapest', value: 'price', hint: 'Ranked by lowest fare, with reliability breaking ties.' },
+  { label: 'Less crowded', value: 'comfort', hint: 'Ranked by how busy the train usually is, and its seating class.' }
 ]
+
+const activeHint = computed(
+  () => priorityOptions.find((option) => option.value === searchStore.travelPriority)?.hint || ''
+)
 
 const fromCode = computed({
   get: () => searchStore.fromStation?.code || 'NDLS',

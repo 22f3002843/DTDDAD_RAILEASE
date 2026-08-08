@@ -109,8 +109,13 @@
                 <button @click="resetFilters" class="text-[11px] font-bold text-rail-600 hover:underline cursor-pointer">
                   Reset
                 </button>
-                <button @click="isFilterOpen = false" class="text-[11px] font-bold text-slate-400 hover:text-slate-700 cursor-pointer">
-                  ✕ Hide
+                <button
+                  @click="isFilterOpen = false"
+                  class="px-2.5 py-1 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-[11px] font-extrabold text-slate-700 flex items-center gap-1 cursor-pointer transition-colors"
+                  title="Hide the filter panel"
+                >
+                  <PanelLeftClose class="w-3.5 h-3.5" />
+                  <span>Hide</span>
                 </button>
               </div>
             </div>
@@ -229,14 +234,14 @@
               :class="[
                 'px-3.5 py-1.5 rounded-lg text-xs font-black border transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs',
                 isFilterOpen
-                  ? 'bg-blue-900 text-white border-blue-900'
+                  ? 'bg-slate-900 text-white border-slate-900'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
               ]"
               title="Toggle Filter Options"
             >
               <SlidersHorizontal class="w-3.5 h-3.5" />
               <span>{{ isFilterOpen ? 'Hide Filters' : 'Filter Results' }}</span>
-              <span v-if="activeFilterCount > 0" class="px-1.5 py-0.2 bg-slate-900 text-white rounded text-[10px] font-extrabold">
+              <span v-if="activeFilterCount > 0" :class="['px-1.5 py-0.5 rounded text-[10px] font-extrabold leading-none', isFilterOpen ? 'bg-white text-slate-900' : 'bg-slate-900 text-white']">
                 {{ activeFilterCount }}
               </span>
               <ChevronDown v-if="!isFilterOpen" class="w-3.5 h-3.5 opacity-60" />
@@ -509,6 +514,7 @@ import {
   SlidersHorizontal,
   ChevronDown,
   ChevronUp,
+  PanelLeftClose,
   Plus,
   Check,
   Star,
@@ -535,7 +541,7 @@ const bestTrain = computed(() =>
 const priorityLabel = computed(() => ({
   reliability: 'most likely to arrive on time',
   price: 'best value that is still dependable',
-  comfort: 'most comfortable that is still dependable'
+  comfort: 'least crowded that is still dependable'
 }[searchStore.travelPriority] || 'recommended'))
 
 /**

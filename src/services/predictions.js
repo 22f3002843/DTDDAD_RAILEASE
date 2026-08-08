@@ -55,7 +55,9 @@ function realisticArrivalCard(train, stats) {
   return {
     id: 'realistic_arrival',
     severity: stats.medianDelay >= 60 ? 'high' : 'medium',
-    headline: `You will probably arrive around ${realistic}, not ${String(train.arrTime).replace(/\s*\(.*\)/, '')}`,
+    headline: `You will probably arrive around ${realistic}`,
+    figure: realistic,
+    figureLabel: `instead of ${String(train.arrTime).replace(/\s*\(.*\)/, '')}`,
     evidence: `This train ran late on ${lateDays} of the last ${stats.totalDays} days. A typical late day adds about ${stats.medianDelay} minutes, and a bad one adds ${stats.p90Delay}.`,
     confidence: 'likely',
     sampleSize: stats.totalDays
@@ -91,6 +93,8 @@ function lateNightArrivalCard(train, stats) {
     id: 'late_night_arrival',
     severity: 'high',
     headline: 'You will likely arrive in the middle of the night',
+    figure: formatMinutesAsTime(realisticMinutes),
+    figureLabel: 'realistic arrival',
     evidence: `Scheduled for ${formatMinutesAsTime(scheduled)}, but delays typically push arrival to around ${formatMinutesAsTime(realisticMinutes)}. Taxis are scarce at that hour and usually cost more.`,
     action: { label: 'Watch this train', type: 'watch' },
     confidence: 'likely',
@@ -138,6 +142,8 @@ function waitlistCard(train, stats) {
         : outlook === 'uncertain'
           ? 'Your waitlist may not clear'
           : 'Your waitlist is unlikely to clear',
+    figure: `${chance} in 100`,
+    figureLabel: `chance ${waitlisted.status} confirms`,
     evidence: `${waitlisted.status} in ${waitlisted.name || waitlisted.code}. Based on queue length and how steadily this train runs, roughly a ${chance} in 100 chance of confirming before the chart is prepared.`,
     confidence: 'possible',
     sampleSize: stats.totalDays
@@ -164,6 +170,8 @@ function unpredictabilityCard(train, stats) {
     id: 'unpredictable',
     severity: 'high',
     headline: 'This train is unpredictable, not just late',
+    figure: `${stats.medianDelay}m to ${stats.p90Delay}m`,
+    figureLabel: 'typical day vs bad day',
     evidence: `A typical day runs ${stats.medianDelay} minutes behind, but a bad day runs ${stats.p90Delay}. The gap makes it hard to plan a buffer, so avoid this train if you have a fixed commitment.`,
     confidence: 'confirmed',
     sampleSize: stats.totalDays
@@ -203,6 +211,8 @@ function highStakesCard(train, stats, highStakesType) {
     id: 'high_stakes_risk',
     severity: stats.majorDays >= 3 ? 'high' : 'medium',
     headline: `Risky for ${label}`,
+    figure: `${stats.majorDays} of ${stats.totalDays}`,
+    figureLabel: 'days over an hour late',
     evidence: `This train was more than an hour late on ${stats.majorDays} of the last ${stats.totalDays} days. For a fixed commitment, consider an earlier train or a more dependable one.`,
     confidence: 'confirmed',
     sampleSize: stats.totalDays
@@ -225,6 +235,8 @@ function platformChangeCard(train, stats) {
     id: 'platform_change',
     severity: 'medium',
     headline: 'Platform changes are common on this train',
+    figure: `${changes} of ${history.length}`,
+    figureLabel: 'days changed platform',
     evidence: `The boarding platform differed from the announced one on ${changes} of the last ${history.length} days. Check the board again shortly before departure.`,
     confidence: 'confirmed',
     sampleSize: history.length
@@ -253,6 +265,8 @@ function dependableCard(train, stats) {
     id: 'dependable',
     severity: 'info',
     headline: 'Nothing to worry about here',
+    figure: `${stats.onTimeDays} of ${stats.totalDays}`,
+    figureLabel: 'days on time',
     evidence: `Arrived on time on ${stats.onTimeDays} of the last ${stats.totalDays} days, ${tail}.`,
     confidence: 'confirmed',
     sampleSize: stats.totalDays
@@ -273,6 +287,8 @@ function valueCard(train, cheapestPrice) {
     id: 'cheapest_option',
     severity: 'info',
     headline: 'Cheapest option on this route',
+    figure: `${train.price}`,
+    figureLabel: 'rupees, lowest today',
     evidence: `At ${train.price} rupees this is the lowest fare available today. Weigh that against the reliability above before deciding.`,
     confidence: 'confirmed',
     sampleSize: 0
