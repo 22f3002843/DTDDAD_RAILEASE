@@ -136,4 +136,14 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+// Auto-reveal elements after navigation to prevent white screens
+router.afterEach(() => {
+  setTimeout(() => {
+    const elements = document.querySelectorAll(
+      '.reveal-on-scroll, .reveal-left, .reveal-right, .reveal-scale'
+    )
+    elements.forEach((el) => el.classList.add('revealed'))
+  }, 60)
+})
+
 export default router

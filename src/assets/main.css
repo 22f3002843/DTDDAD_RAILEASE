@@ -7,7 +7,7 @@
     color-scheme: light;
   }
   body {
-    background-color: #F8FAFC;
+    background-color: #F1F5F9;
     color: #0F172A;
   }
 }
@@ -46,24 +46,69 @@
   box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
 }
 
-/* --- Staggered Scroll Reveal Animations --- */
-.reveal-on-scroll {
+/* --- Subtle, Lightweight Scroll Reveal Animations --- */
+.reveal-on-scroll,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
   opacity: 0;
-  transform: translateY(28px);
   transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.reveal-on-scroll.revealed {
-  opacity: 1;
-  transform: translateY(0);
+.reveal-on-scroll {
+  transform: translateY(28px);
 }
 
+.reveal-left {
+  transform: translateX(-30px);
+}
+
+.reveal-right {
+  transform: translateX(30px);
+}
+
+.reveal-scale {
+  transform: scale(0.95) translateY(16px);
+}
+
+.reveal-on-scroll.revealed,
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-scale.revealed,
+.revealed {
+  opacity: 1 !important;
+  transform: translateY(0) translateX(0) scale(1) !important;
+}
+
+.delay-75 { transition-delay: 75ms; }
 .delay-100 { transition-delay: 100ms; }
+.delay-150 { transition-delay: 150ms; }
 .delay-200 { transition-delay: 200ms; }
+.delay-250 { transition-delay: 250ms; }
 .delay-300 { transition-delay: 300ms; }
+.delay-350 { transition-delay: 350ms; }
 .delay-400 { transition-delay: 400ms; }
 .delay-500 { transition-delay: 500ms; }
+.delay-600 { transition-delay: 600ms; }
+.delay-700 { transition-delay: 700ms; }
+.delay-800 { transition-delay: 800ms; }
+
+/* --- Smooth Page Transition Animation --- */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
 /* --- Ambient Light Background Glow Animations --- */
 @keyframes ambientGlow {

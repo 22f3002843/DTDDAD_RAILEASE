@@ -19,6 +19,7 @@ export const useSearchStore = defineStore('search', () => {
   const selectedJourneyClasses = ref(['1A', '2A', '3A', '3E', 'SL', 'EC', 'CC'])
   const selectedTrainTypes = ref(['RAJDHANI', 'VANDE BHARAT', 'SHATABDI', 'DURONTO', 'OTHER'])
   const selectedTimeSlot = ref('all') // 'early', 'morning', 'midday', 'night', 'all'
+  const trainNumberQuery = ref('')
 
   const availableTrains = ref([...MOCK_TRAINS])
 
@@ -30,8 +31,20 @@ export const useSearchStore = defineStore('search', () => {
 
   // Bi-directional & Multi-category search algorithm
   const filteredTrains = computed(() => {
+    const query = (trainNumberQuery.value || '').trim().toLowerCase()
+    if (query.length > 0) {
+      return availableTrains.value.filter(t =>
+        (t.number || '').toLowerCase().includes(query) ||
+        (t.name || '').toLowerCase().includes(query) ||
+        (t.type || '').toLowerCase().includes(query)
+      )
+    }
+
     const fromCode = fromStation.value?.code || 'NDLS'
-    const toCode = toStation.value?.code || 'MMCT'
+    let toCode = toStation.value?.code || 'MMCT'
+    if (fromCode === toCode) {
+      toCode = fromCode === 'MMCT' ? 'NDLS' : 'MMCT'
+    }
     const fromName = fromStation.value?.name || 'Origin Station'
     const toName = toStation.value?.name || 'Destination Station'
     const fromCity = fromStation.value?.city || 'Origin'
@@ -247,6 +260,7 @@ export const useSearchStore = defineStore('search', () => {
     selectedJourneyClasses,
     selectedTrainTypes,
     selectedTimeSlot,
+    trainNumberQuery,
     availableTrains,
     filteredTrains,
     swapStations

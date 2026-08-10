@@ -18,7 +18,7 @@ export default {
           700: '#1E40AF',
           800: '#1E3A8A',
           900: '#0F172A', // Text Dark
-          bg: '#F8FAFC',  // Light background
+          bg: '#F1F5F9',  // Cool grey canvas background
           card: '#FFFFFF',
         }
       },

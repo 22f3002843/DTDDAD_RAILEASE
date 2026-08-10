@@ -1,65 +1,81 @@
 <template>
   <AppLayout>
-    <div class="max-w-5xl mx-auto space-y-6">
-      <!-- Header (Matching Image 2 Top) -->
-      <div class="flex items-center gap-3">
-        <button
-          @click="router.back()"
-          class="p-2 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
-        >
-          <ArrowLeft class="w-5 h-5" />
-        </button>
-        <h1 class="text-2xl font-extrabold text-rail-900 tracking-tight">
-          Alerts
-        </h1>
+    <div class="w-full space-y-6 font-sans pb-10">
+      <!-- CLEAN HEADER BAR WITH SUBTLE GRADIENT -->
+      <div class="bg-gradient-to-r from-rail-50 via-sky-50/90 to-indigo-50/70 p-6 rounded-2xl border border-rail-200/80 shadow-soft flex items-center justify-between gap-4 relative overflow-hidden">
+        <!-- Ambient Glowing Wave Auras -->
+        <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rail-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute left-1/3 top-0 w-64 h-64 bg-sky-400/15 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="h-1 bg-gradient-to-r from-rail-600 via-sky-500 to-indigo-600 absolute top-0 left-0 right-0"></div>
+
+        <div class="flex items-center gap-3 relative z-10">
+          <button
+            @click="router.back()"
+            class="p-2.5 rounded-xl bg-white/90 hover:bg-white text-slate-700 border border-rail-200/80 transition-colors cursor-pointer shadow-2xs"
+            title="Go Back"
+          >
+            <ArrowLeft class="w-4 h-4" />
+          </button>
+          <div>
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+              <Bell class="w-6 h-6 text-rail-600" />
+              <span>Real-Time PNR &amp; Trip Alerts</span>
+            </h1>
+            <p class="text-xs text-slate-600 font-semibold mt-0.5">
+              Live updates on chart preparation, platform assignments, delay risk telemetry, and trip safeguards.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <!-- Filter Tabs Row (Matching Image 2 Tabs: All Alerts | Delay | Platform | Offers | Info) -->
-      <div class="flex items-center gap-8 border-b border-slate-200 text-sm font-bold text-slate-500 overflow-x-auto pb-1">
-        <button
-          v-for="tab in tabs"
-          :key="tab"
-          @click="activeTab = tab"
-          :class="[
-            'pb-3 border-b-2 transition-all whitespace-nowrap',
-            activeTab === tab ? 'text-rail-900 border-slate-900 font-extrabold' : 'border-transparent hover:text-slate-700'
-          ]"
-        >
-          {{ tab }}
-        </button>
+      <!-- Filter Tabs Row (Edge-to-Edge Card Container) -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
+        <div class="flex items-center gap-8 border-b border-slate-100 text-sm font-bold text-slate-500 overflow-x-auto pb-1">
+          <button
+            v-for="tab in tabs"
+            :key="tab"
+            @click="activeTab = tab"
+            :class="[
+              'pb-3 border-b-2 transition-all whitespace-nowrap cursor-pointer',
+              activeTab === tab ? 'text-rail-600 border-rail-600 font-extrabold' : 'border-transparent hover:text-slate-700'
+            ]"
+          >
+            {{ tab }}
+          </button>
+        </div>
       </div>
 
-      <!-- Alerts List Cards (Matching Image 2) -->
+      <!-- Alerts List Cards (Edge-to-Edge Full Width) -->
       <div class="space-y-3">
         <div
           v-for="alert in filteredAlerts"
           :key="alert.id"
-          class="bg-white p-5 rounded-card border border-slate-200/80 shadow-soft hover:shadow-md transition-all flex items-center justify-between cursor-pointer group"
+          class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-soft hover:shadow-md hover:border-rail-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer group"
         >
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 group-hover:bg-rail-500 group-hover:text-white transition-colors">
+          <div class="flex items-start sm:items-center gap-4">
+            <div class="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 group-hover:bg-rail-600 group-hover:text-white transition-all shrink-0 mt-0.5 sm:mt-0">
               <Bell class="w-5 h-5" />
             </div>
             <div>
-              <h3 class="text-sm font-extrabold text-slate-900">{{ alert.title }}</h3>
-              <p class="text-xs text-slate-500 font-medium mt-0.5">{{ alert.message }}</p>
+              <h3 class="text-base font-extrabold text-slate-900 group-hover:text-rail-700 transition-colors">{{ alert.title }}</h3>
+              <p class="text-xs text-slate-600 font-semibold mt-0.5 leading-relaxed">{{ alert.message }}</p>
             </div>
           </div>
 
-          <div class="flex items-center gap-4">
+          <div class="flex items-center justify-between sm:justify-end gap-4 shrink-0">
             <span
               :class="[
-                'px-3 py-1 rounded-full text-xs font-bold border',
-                alert.category === 'Delay' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                'px-3.5 py-1.5 rounded-full text-xs font-extrabold border shadow-2xs',
+                alert.category === 'Delay' ? 'bg-amber-50 text-amber-800 border-amber-200' :
                 alert.category === 'Platform' ? 'bg-blue-50 text-rail-700 border-rail-200' :
-                alert.category === 'Offers' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                alert.category === 'Offers' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
                 'bg-slate-100 text-slate-700 border-slate-200'
               ]"
             >
               {{ alert.category }}
             </span>
-            <span class="text-xs text-slate-400 font-medium min-w-[70px] text-right">{{ alert.time }}</span>
-            <ChevronRight class="w-5 h-5 text-slate-400 group-hover:translate-x-1 group-hover:text-slate-900 transition-all" />
+            <span class="text-xs text-slate-500 font-extrabold min-w-[70px] text-right">{{ alert.time }}</span>
+            <ChevronRight class="w-5 h-5 text-slate-400 group-hover:translate-x-1 group-hover:text-rail-600 transition-all" />
           </div>
         </div>
       </div>

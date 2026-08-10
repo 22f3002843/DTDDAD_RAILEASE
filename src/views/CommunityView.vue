@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="max-w-4xl mx-auto space-y-6">
+    <div class="w-full space-y-6">
       <!-- Header (Matching Image 4 Top) -->
       <div class="flex items-center gap-3">
         <button
@@ -21,15 +21,15 @@
           :key="tab"
           @click="activeTopTab = tab"
           :class="[
-            'pb-3 border-b-2 transition-all',
-            activeTopTab === tab ? 'text-rail-900 border-slate-900 font-extrabold' : 'border-transparent hover:text-slate-700'
+            'pb-3 border-b-2 transition-all cursor-pointer',
+            activeTopTab === tab ? 'text-rail-600 border-rail-500 font-extrabold' : 'border-transparent hover:text-slate-700'
           ]"
         >
           {{ tab }}
         </button>
       </div>
 
-      <!-- Post Creation Card (Matching Image 4: "Share an update...") -->
+      <!-- Post Creation Card -->
       <div class="bg-white p-5 rounded-card border border-slate-200/80 shadow-soft flex items-center gap-3">
         <input
           v-model="newPostText"
@@ -37,26 +37,26 @@
           placeholder="Share an update..."
           class="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-btn text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-rail-500/20 focus:border-rail-500"
         />
-        <button class="p-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-btn transition-colors" title="Attach Photo">
+        <button class="p-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-btn transition-colors cursor-pointer" title="Attach Photo">
           <Camera class="w-5 h-5" />
         </button>
         <button
           @click="publishPost"
-          class="px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-xs transition-all flex items-center gap-2"
+          class="px-5 py-3 bg-rail-500 hover:bg-rail-600 text-white rounded-btn font-semibold text-xs transition-all flex items-center gap-2 shadow-md cursor-pointer"
         >
           <Send class="w-4 h-4" />
         </button>
       </div>
 
-      <!-- Filter Chips Row (Matching Image 4: All | Delay | Platform | Crowd | Cleanliness | Other) -->
+      <!-- Filter Chips Row -->
       <div class="flex items-center gap-3 overflow-x-auto pb-1">
         <button
           v-for="filter in filters"
           :key="filter"
           @click="activeFilter = filter"
           :class="[
-            'px-5 py-2 rounded-btn text-xs font-semibold border transition-all',
-            activeFilter === filter ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            'px-5 py-2 rounded-btn text-xs font-semibold border transition-all cursor-pointer',
+            activeFilter === filter ? 'bg-rail-500 text-white border-rail-500 shadow-glow font-bold' : 'bg-white text-slate-700 border-slate-200 hover:bg-rail-50 hover:text-rail-600'
           ]"
         >
           {{ filter }}

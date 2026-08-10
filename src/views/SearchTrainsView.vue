@@ -318,15 +318,18 @@
                 <h4 class="text-base font-black text-slate-900 uppercase">
                   {{ train.name }} ({{ train.number }})
                 </h4>
-                <!-- The full scorecard rather than a single pill: punctuality,
-                     seat chance, predictability and realistic arrival, since a
-                     booking is decided on more than whether it runs on time. -->
                 <TrainScorecard :train="train" />
               </div>
-              <div class="flex items-center gap-4 text-xs font-bold text-slate-600">
+              <div class="flex items-center gap-3 text-xs font-bold text-slate-600">
+                <!-- Dynamic Speedometer Gauge Meter on the Right -->
+                <ReliabilityGaugeMeter
+                  :score="confidenceOf(train)"
+                  :width="90"
+                  :height="45"
+                  :showLabels="true"
+                />
+
                 <span>Runs On: <strong class="text-slate-900 font-extrabold">{{ train.runsOn.join(' ') }}</strong></span>
-                <!-- The route into the depth layer. Public, and phrased as a
-                     question a passenger would actually ask. -->
                 <button
                   @click="router.push(`/train/${train.number}`)"
                   class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white flex items-center gap-1.5 font-extrabold cursor-pointer transition-colors"
@@ -354,9 +357,6 @@
                   <span class="w-2 h-2 rounded-full bg-slate-400"></span>
                   <div class="flex-1 h-0.5 bg-slate-300 relative"></div>
                   <span class="w-2 h-2 rounded-full bg-slate-900"></span>
-                </div>
-                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                  {{ confidenceOf(train) }}/100 Confidence
                 </div>
               </div>
 
@@ -504,6 +504,7 @@ import Footer from '@/components/footer/Footer.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
 import TrainScorecard from '@/components/common/TrainScorecard.vue'
+import ReliabilityGaugeMeter from '@/components/common/ReliabilityGaugeMeter.vue'
 import { getRealisticArrival } from '@/services/reliability'
 import { pickBestTrain, computeBaseConfidence } from '@/services/scoring'
 import {

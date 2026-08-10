@@ -38,7 +38,7 @@
     >
       <div
         v-if="isOpen"
-        class="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-xl border border-slate-200 shadow-xl z-50 p-1.5 max-h-60 overflow-y-auto space-y-1"
+        class="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-xl border border-slate-200 shadow-xl z-[100] p-1.5 max-h-60 overflow-y-auto space-y-1"
       >
         <div
           v-for="opt in options"

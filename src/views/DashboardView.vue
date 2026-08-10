@@ -20,7 +20,7 @@
            historical reliability score: once the ticket is booked the question
            has changed from "should I take this train" to "is it late right now". -->
       <div v-if="activeTrip" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="bg-gradient-to-r from-[#1E3A8A] to-slate-900 text-white px-5 py-3 flex items-center justify-between gap-3">
+        <div class="bg-gradient-to-r from-rail-600 via-rail-500 to-indigo-600 text-white px-5 py-3 flex items-center justify-between gap-3">
           <span class="text-[11px] font-black uppercase tracking-wider">Your next trip</span>
           <span class="text-[11px] font-bold text-blue-100">PNR {{ activeTrip.pnr }}</span>
         </div>
@@ -65,11 +65,11 @@
           <div v-if="progress" class="space-y-2">
             <div class="relative h-2 rounded-full bg-slate-200 overflow-hidden">
               <div
-                class="absolute inset-y-0 left-0 rounded-full bg-[#1E3A8A] transition-all duration-500"
+                class="absolute inset-y-0 left-0 rounded-full bg-rail-500 transition-all duration-500"
                 :style="{ width: `${progress.percent}%` }"
               ></div>
               <span
-                class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#1E3A8A] shadow"
+                class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-rail-500 shadow"
                 :style="{ left: `${progress.percent}%` }"
               ></span>
             </div>
@@ -97,15 +97,11 @@
             </div>
           </div>
 
-          <!-- Actions as tiles rather than a row of pills. Each carries an icon
-               and a line saying what it gives you, so the row reads as four
-               things you can do rather than four words. The risk tile shows a
-               live count, which is the useful part: it tells you whether the
-               page behind it is worth opening before you open it. -->
+          <!-- Actions as tiles rather than a row of pills. -->
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
             <button
               @click="router.push('/live-status')"
-              class="group text-left p-3.5 rounded-xl bg-gradient-to-br from-[#1E3A8A] to-slate-900 hover:from-[#1e40af] hover:to-slate-800 transition-all cursor-pointer"
+              class="group text-left p-3.5 rounded-xl bg-gradient-to-br from-rail-600 to-indigo-700 hover:from-rail-700 hover:to-indigo-800 transition-all cursor-pointer shadow-sm hover:shadow-md"
             >
               <div class="flex items-center gap-2">
                 <span class="relative flex w-2.5 h-2.5">
@@ -114,13 +110,13 @@
                 </span>
                 <span class="text-xs font-black text-white">Track live</span>
               </div>
-              <p class="text-[11px] text-blue-200 font-semibold mt-1">See where it is now</p>
+              <p class="text-[11px] text-blue-100 font-semibold mt-1">See where it is now</p>
             </button>
 
             <button
               v-if="matchedTrain"
               @click="router.push(`/train/${activeTrip.trainNumber}`)"
-              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-sm transition-all cursor-pointer"
+              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-rail-400 hover:shadow-sm transition-all cursor-pointer"
             >
               <div class="flex items-center gap-2">
                 <AlertTriangle :class="['w-4 h-4', riskCount ? 'text-amber-500' : 'text-slate-400']" />
@@ -133,7 +129,7 @@
 
             <button
               @click="selectedTrip = activeTrip"
-              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-sm transition-all cursor-pointer"
+              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-rail-400 hover:shadow-sm transition-all cursor-pointer"
             >
               <div class="flex items-center gap-2">
                 <Ticket class="w-4 h-4 text-slate-400" />
@@ -144,7 +140,7 @@
 
             <button
               @click="router.push('/journey-planner')"
-              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-sm transition-all cursor-pointer"
+              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-rail-400 hover:shadow-sm transition-all cursor-pointer"
             >
               <div class="flex items-center gap-2">
                 <Compass class="w-4 h-4 text-slate-400" />
@@ -156,9 +152,7 @@
         </div>
       </div>
 
-      <!-- ============ NEEDS YOUR ATTENTION ============
-           Absent when nothing is wrong. The presence of this block is itself the
-           signal, which is only true if it never appears for reassurance. -->
+      <!-- ============ NEEDS YOUR ATTENTION ============ -->
       <div v-if="attentionCards.length" class="space-y-3">
         <h2 class="text-base font-black text-slate-900">Needs your attention</h2>
         <RiskCard v-for="card in attentionCards" :key="card.id" :card="card" />
@@ -167,10 +161,7 @@
       </div>
 
       <div class="space-y-6">
-      <!-- ============ WATCHING ============
-           Merged in from its own page. Watching and "your travel" were two
-           screens describing the same thing: trains this person cares about.
-           Keeping them apart meant a user had to know which one to open. -->
+      <!-- ============ WATCHING ============ -->
       <div v-if="watchStore.watchCount" class="space-y-3">
         <h2 class="text-base font-black text-slate-900">Watching</h2>
 
@@ -205,7 +196,7 @@
           <div v-if="resolveWatched(entry)" class="flex flex-wrap gap-2">
             <button
               @click="router.push(`/train/${entry.number}`)"
-              class="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold cursor-pointer transition-colors"
+              class="px-3.5 py-2 rounded-lg bg-rail-500 hover:bg-rail-600 text-white text-xs font-extrabold cursor-pointer transition-colors shadow-sm"
             >
               What could go wrong?
             </button>
@@ -218,21 +209,19 @@
           </div>
         </div>
 
-        <!-- The one place an account is ever asked for, and only as an upgrade
-             to something the traveller has already chosen to do. -->
-        <div class="bg-slate-900 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div class="bg-gradient-to-r from-rail-600 via-blue-600 to-indigo-700 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-md text-white">
           <div class="min-w-0">
             <p class="text-sm font-extrabold text-white flex items-center gap-2">
-              <Bell class="w-4 h-4 text-emerald-400" />
+              <Bell class="w-4 h-4 text-sky-300" />
               Get alerts on your phone
             </p>
-            <p class="text-xs text-slate-300 font-medium mt-1">
+            <p class="text-xs text-blue-100 font-medium mt-1">
               We will tell you if one of these trains is running late before you leave for the station.
             </p>
           </div>
           <button
             @click="showAuthModal = true"
-            class="px-4 py-2.5 rounded-xl bg-white text-slate-900 text-xs font-extrabold cursor-pointer hover:bg-slate-100 transition-colors shrink-0"
+            class="px-4 py-2.5 rounded-xl bg-white text-rail-700 hover:bg-slate-50 text-xs font-extrabold cursor-pointer transition-colors shrink-0 shadow-sm"
           >
             Set up alerts
           </button>
@@ -291,7 +280,7 @@
         <div class="flex flex-wrap gap-2.5 justify-center">
           <button
             @click="router.push('/search')"
-            class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-extrabold cursor-pointer transition-colors"
+            class="px-5 py-2.5 rounded-xl bg-rail-500 hover:bg-rail-600 text-white text-sm font-extrabold cursor-pointer transition-all duration-200 shadow-md hover:shadow-glow hover:scale-[1.03] active:scale-95"
           >
             Check a train
           </button>

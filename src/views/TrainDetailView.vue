@@ -36,10 +36,13 @@
         </p>
 
         <div class="flex items-center gap-5 mt-6">
-          <div :class="['w-24 h-24 rounded-2xl flex flex-col items-center justify-center shrink-0 border-2', scoreBoxClass]">
-            <span class="text-3xl font-black leading-none">{{ confidence }}</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider opacity-70 mt-1">out of 100</span>
-          </div>
+          <ReliabilityGaugeMeter
+            :score="confidence"
+            :width="130"
+            :height="70"
+            :showLabels="true"
+            size="large"
+          />
 
           <div class="min-w-0">
             <p class="text-lg sm:text-xl font-black text-slate-900 leading-tight">
@@ -227,6 +230,7 @@ import { useJourneyStore } from '@/stores/useJourneyStore'
 import { useWatchStore } from '@/stores/useWatchStore'
 import AdaptiveLayout from '@/layouts/AdaptiveLayout.vue'
 import RiskCard from '@/components/common/RiskCard.vue'
+import ReliabilityGaugeMeter from '@/components/common/ReliabilityGaugeMeter.vue'
 import { generateRiskCards } from '@/services/predictions'
 import { computeBaseConfidence, getVerdict, analyseHistory } from '@/services/scoring'
 import { getReliabilityReason } from '@/services/reliability'

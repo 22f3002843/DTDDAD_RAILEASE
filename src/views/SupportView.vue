@@ -1,27 +1,32 @@
 <template>
   <AppLayout>
     <div class="max-w-[1700px] mx-auto space-y-6 font-sans">
-      <!-- CLEAN HEADER BAR & FAQ SEARCH -->
-      <div class="bg-white p-6 rounded-card border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
+      <!-- CLEAN HEADER BAR & FAQ SEARCH WITH SUBTLE GRADIENT -->
+      <div class="bg-gradient-to-r from-rail-50 via-sky-50/90 to-indigo-50/70 p-6 rounded-2xl border border-rail-200/80 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden">
+        <!-- Ambient Glowing Wave Auras -->
+        <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rail-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute left-1/3 top-0 w-64 h-64 bg-sky-400/15 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="h-1 bg-gradient-to-r from-rail-600 via-sky-500 to-indigo-600 absolute top-0 left-0 right-0"></div>
+
+        <div class="relative z-10">
           <h1 class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
             <HelpCircle class="w-6 h-6 text-rail-600" />
             <span>Support &amp; Knowledgebase</span>
           </h1>
-          <p class="text-xs text-slate-500 font-medium mt-1">
+          <p class="text-xs text-slate-600 font-semibold mt-1">
             Frequently asked questions, system guides, and direct passenger contact channels.
           </p>
         </div>
 
         <!-- Quick FAQ Search Bar -->
-        <div class="relative w-full md:w-96">
+        <div class="relative w-full md:w-96 z-10">
           <input
             v-model="searchQuery"
             type="text"
             placeholder="Search FAQs (e.g. PNR, telemetry, refund)..."
-            class="w-full pl-9 pr-4 py-2 bg-slate-50 text-slate-900 border border-slate-300 rounded-xl text-xs font-bold focus:outline-none focus:border-rail-600"
+            class="w-full pl-9 pr-4 py-2.5 bg-white/90 text-slate-900 border border-rail-200 rounded-xl text-xs font-extrabold shadow-2xs focus:outline-none focus:border-rail-600"
           />
-          <Search class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
         </div>
       </div>
 

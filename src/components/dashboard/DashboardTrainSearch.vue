@@ -1,108 +1,134 @@
 <template>
-  <div class="space-y-5 font-sans">
-    <!-- UNIFIED HERO CARD: LIGHT MODE TRAIN INTELLIGENCE & SYNC -->
-    <div class="bg-white text-slate-900 rounded-card shadow-sm p-6 space-y-5 border border-slate-200">
-      <!-- Top Row: Active Trip Indicator & Quick PNR Sync -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-        <!-- Header -->
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-rail-50 border border-rail-200 flex items-center justify-center shrink-0">
-            <Train class="w-5 h-5 text-rail-600" />
+  <div class="space-y-4 font-sans">
+    <!-- COMPACT HIGH-DENSITY HERO SEARCH CARD WITH SUBTLE GRADIENT -->
+    <div class="bg-gradient-to-r from-rail-50 via-sky-50/90 to-indigo-50/70 text-slate-900 rounded-2xl shadow-soft border border-rail-200/80 relative z-20 overflow-hidden">
+      <!-- Ambient Glowing Wave Auras -->
+      <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rail-500/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute left-1/3 top-0 w-64 h-64 bg-sky-400/15 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Top Decorative Accent Bar -->
+      <div class="h-1 bg-gradient-to-r from-rail-600 via-sky-500 to-indigo-600"></div>
+
+      <!-- Integrated Header Strip: Description + Train # Quick Search + Compact PNR Sync -->
+      <div class="px-4 sm:px-5 py-2.5 bg-white/70 backdrop-blur-xs border-b border-rail-200/60 flex flex-col lg:flex-row lg:items-center justify-between gap-3 relative z-10">
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-700">
+          <div class="w-6 h-6 rounded-lg bg-rail-100/80 border border-rail-200 flex items-center justify-center shrink-0">
+            <Train class="w-3.5 h-3.5 text-rail-700" />
           </div>
-          <div>
-            <h2 class="text-base font-black uppercase tracking-wider text-slate-900">Train Intelligence &amp; Sync</h2>
-            <p class="text-xs text-slate-500 font-medium">
-              Search trains between any stations, analyze historical 7-day delay telemetry, or enter your 10-digit IRCTC PNR.
-            </p>
-          </div>
+          <span>Search trains between any stations, analyze 30-day delay telemetry, or search by train number / PNR.</span>
         </div>
 
-        <!-- Right Side: Compact PNR Sync -->
-        <div class="flex items-center gap-2">
-          <div class="relative">
-            <input
-              v-model="pnrSearchInput"
-              type="text"
-              placeholder="Enter 10-digit PNR"
-              class="w-48 pl-8 pr-3 py-1.5 bg-slate-50 text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg text-xs font-bold focus:outline-none focus:border-rail-600"
-              @keyup.enter="handlePnrSync"
-            />
-            <Search class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <!-- Quick Search by Train # or Name Pill -->
+          <div class="flex items-center gap-1.5 bg-white border border-slate-200/90 hover:border-rail-400 focus-within:border-rail-500 focus-within:ring-2 focus-within:ring-rail-500/20 rounded-lg p-0.5 shadow-2xs transition-all">
+            <div class="relative">
+              <Search class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <input
+                v-model="searchStore.trainNumberQuery"
+                type="text"
+                placeholder="Train # / Name (12952...)"
+                class="w-36 sm:w-44 pl-7 pr-6 py-1 bg-transparent text-slate-900 placeholder:text-slate-400 text-xs font-bold focus:outline-none"
+              />
+              <button
+                v-if="searchStore.trainNumberQuery"
+                @click="searchStore.trainNumberQuery = ''"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-bold"
+                title="Clear train number search"
+              >
+                ✕
+              </button>
+            </div>
           </div>
-          <button
-            @click="handlePnrSync"
-            class="px-3.5 py-1.5 bg-rail-600 hover:bg-rail-700 text-white rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1 shrink-0 shadow-2xs"
-          >
-            <CheckCircle2 class="w-3.5 h-3.5" />
-            <span>Sync</span>
-          </button>
+
+          <!-- Compact PNR Pill -->
+          <div class="flex items-center gap-1.5 bg-white border border-slate-200/90 hover:border-rail-400 focus-within:border-rail-500 focus-within:ring-2 focus-within:ring-rail-500/20 rounded-lg p-0.5 shadow-2xs transition-all">
+            <div class="relative">
+              <Search class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <input
+                v-model="pnrSearchInput"
+                type="text"
+                placeholder="Enter 10-digit PNR"
+                class="w-32 sm:w-36 pl-7 pr-2 py-1 bg-transparent text-slate-900 placeholder:text-slate-400 text-xs font-bold focus:outline-none"
+                @keyup.enter="handlePnrSync"
+              />
+            </div>
+            <button
+              @click="handlePnrSync"
+              class="px-3 py-1 bg-rail-600 hover:bg-gradient-to-r hover:from-rail-600 hover:to-emerald-500 text-white rounded text-xs font-bold transition-all duration-300 cursor-pointer flex items-center gap-1 shadow-2xs hover:shadow-emerald-500/20 shrink-0"
+            >
+              <CheckCircle2 class="w-3 h-3" />
+              <span>Sync</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Main Station & Date Search Row -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
-        <!-- From Station -->
-        <div class="lg:col-span-3">
-          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">From</label>
-          <CustomSelect
-            v-model="fromCode"
-            :options="stationOptions"
-            size="small"
-            rounded="medium"
-            fillMode="solid"
-            :icon="MapPin"
-          />
-        </div>
-
-        <!-- Swap Button -->
-        <div class="lg:col-span-1 flex justify-center pt-3 lg:pt-4">
-          <button
-            type="button"
-            @click="searchStore.swapStations()"
-            class="w-8 h-8 rounded-full border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center shadow-2xs cursor-pointer hover:scale-105 transition-transform"
-            title="Swap Stations"
-          >
-            <ArrowLeftRight class="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        <!-- To Station -->
-        <div class="lg:col-span-3">
-          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">To</label>
-          <CustomSelect
-            v-model="toCode"
-            :options="stationOptions"
-            size="small"
-            rounded="medium"
-            fillMode="solid"
-            :icon="MapPin"
-          />
-        </div>
-
-        <!-- Travel Date -->
-        <div class="lg:col-span-2">
-          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Travel Date</label>
-          <ModernDatePicker v-model="searchStore.travelDate" />
-        </div>
-
-        <!-- Class & Quota Dropdowns -->
-        <div class="lg:col-span-3">
-          <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Class &amp; Quota</label>
-          <div class="grid grid-cols-2 gap-2">
+      <!-- Main Original Station Controls Padding -->
+      <div class="p-4 sm:p-5">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 items-end">
+          <!-- From Station -->
+          <div class="lg:col-span-3">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">FROM</label>
             <CustomSelect
-              v-model="searchStore.selectedClass"
-              :options="classOptions"
+              v-model="fromCode"
+              :options="stationOptions"
               size="small"
               rounded="medium"
               fillMode="solid"
+              :icon="MapPin"
             />
+          </div>
+
+          <!-- Swap Button -->
+          <div class="lg:col-span-1 flex justify-center pb-0.5">
+            <button
+              type="button"
+              @click="searchStore.swapStations()"
+              class="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 hover:bg-rail-50 hover:text-rail-600 text-slate-600 flex items-center justify-center shadow-2xs cursor-pointer hover:rotate-180 transition-all duration-300"
+              title="Swap Origin and Destination"
+            >
+              <ArrowLeftRight class="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <!-- To Station -->
+          <div class="lg:col-span-3">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">TO</label>
             <CustomSelect
-              v-model="searchStore.selectedQuota"
-              :options="quotaOptions"
+              v-model="toCode"
+              :options="stationOptions"
               size="small"
               rounded="medium"
               fillMode="solid"
+              :icon="MapPin"
             />
+          </div>
+
+          <!-- Travel Date -->
+          <div class="lg:col-span-2">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">DATE</label>
+            <ModernDatePicker v-model="searchStore.travelDate" />
+          </div>
+
+          <!-- Class & Quota Dropdowns -->
+          <div class="lg:col-span-3">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">CLASS &amp; QUOTA</label>
+            <div class="grid grid-cols-2 gap-1.5">
+              <CustomSelect
+                v-model="searchStore.selectedClass"
+                :options="classOptions"
+                size="small"
+                rounded="medium"
+                fillMode="solid"
+              />
+              <CustomSelect
+                v-model="searchStore.selectedQuota"
+                :options="quotaOptions"
+                size="small"
+                rounded="medium"
+                fillMode="solid"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -142,45 +168,60 @@
         ]"
       >
         <!-- Card Header -->
-        <div class="bg-slate-50/80 border-b border-slate-200/80 px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <span
-              :class="['w-2.5 h-2.5 rounded-full shrink-0', getReliabilityDotClass(train)]"
-            ></span>
-            <h3 class="text-base font-black text-slate-900 uppercase">
-              {{ train.name }} <span class="text-slate-500 font-bold">({{ train.number }})</span>
-            </h3>
+        <div class="bg-slate-50/80 border-b border-slate-200/80 px-5 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <!-- Left Info Section -->
+          <div class="space-y-2 min-w-0">
+            <!-- Train Name, Number & Historical Reason -->
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span :class="['w-2.5 h-2.5 rounded-full shrink-0', getReliabilityDotClass(train)]"></span>
+              <h3 class="text-base font-black text-slate-900 uppercase hover:text-rail-600 transition-colors flex items-center gap-2">
+                <span>{{ train.name }}</span>
+                <span class="text-xs font-extrabold bg-rail-50 text-rail-700 border border-rail-200 px-2 py-0.5 rounded-md">({{ train.number }})</span>
+              </h3>
 
-            <!-- Clean Reliability Badge -->
-            <span :class="['px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border', getReliabilityBadgeClass(train)]">
-              {{ getReliabilityLabel(train) }}
-            </span>
+              <!-- Layer 2: why the score is what it is, stated in plain English. -->
+              <span class="text-[11px] text-slate-500 font-semibold hidden lg:inline">
+                {{ getReliabilityReason(train) }}
+              </span>
+            </div>
 
-            <!-- Layer 2: why the score is what it is, stated in plain English. -->
-            <span class="text-[11px] text-slate-500 font-semibold">
-              {{ getReliabilityReason(train) }}
-            </span>
+            <!-- Sub-row: Days Running -->
+            <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
+              <span class="bg-slate-100/90 border border-slate-200/90 px-2.5 py-0.5 rounded-md text-slate-600 text-[11px]">
+                Runs: <strong class="text-slate-900 font-black">{{ train.runsOn.join(' ') }}</strong>
+              </span>
+              <span class="text-[11px] text-slate-500 font-semibold lg:hidden">
+                {{ getReliabilityReason(train) }}
+              </span>
+            </div>
           </div>
 
-          <div class="flex items-center gap-3 text-xs font-bold text-slate-600">
-            <span>Runs: <strong class="text-slate-800">{{ train.runsOn.join(' ') }}</strong></span>
-            
+          <!-- Right Actions Section: Shifted cleanly to the right side with Gauge Meter -->
+          <div class="flex items-center gap-3 shrink-0 self-start md:self-center">
+            <!-- Dynamic Speedometer Gauge Meter placed cleanly on the Right -->
+            <ReliabilityGaugeMeter
+              :score="confidenceOf(train)"
+              :width="90"
+              :height="45"
+              :showLabels="true"
+            />
+
+            <!-- 30-Day Telemetry Button -->
             <button
               @click="openTelemetryModal(train, 'trend')"
-              class="px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-colors cursor-pointer"
+              class="group inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 border-rail-500/30 bg-white text-rail-600 hover:bg-gradient-to-r hover:from-rail-600 hover:to-emerald-500 hover:text-white hover:border-transparent text-xs font-black transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-lg hover:shadow-emerald-500/20 hover:scale-[1.04] active:scale-95"
             >
-              <TrendingUp class="w-3.5 h-3.5 text-rail-600" />
+              <TrendingUp class="w-4 h-4 text-rail-600 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
               <span>30-Day Telemetry</span>
             </button>
 
-            <!-- The same route into the risk breakdown that public search offers.
-                 Without this a signed-in user had no way to reach the detail page. -->
+            <!-- What Could Go Wrong Button -->
             <button
               @click="router.push(`/train/${train.number}`)"
-              class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-colors cursor-pointer"
+              class="group inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 border-indigo-500/40 bg-indigo-50/80 text-indigo-700 hover:bg-gradient-to-r hover:from-rail-600 hover:to-emerald-500 hover:text-white hover:border-transparent text-xs font-black transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-lg hover:shadow-emerald-500/20 hover:scale-[1.04] active:scale-95"
             >
               <span>What could go wrong?</span>
-              <ChevronRight class="w-3.5 h-3.5" />
+              <ChevronRight class="w-4 h-4 text-indigo-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
             </button>
           </div>
         </div>
@@ -188,27 +229,28 @@
         <!-- Schedule & Timing Line -->
         <div class="p-5 flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-100">
           <div class="text-left">
-            <div class="text-xl font-black text-slate-900">{{ train.deptTime }}</div>
-            <div class="text-xs font-bold text-slate-600 uppercase mt-0.5">
+            <div class="text-2xl font-black text-slate-900 tracking-tight">{{ train.deptTime }}</div>
+            <div class="text-xs font-black text-rail-600 uppercase mt-0.5">
               {{ train.fromName }} ({{ train.fromCode }})
             </div>
           </div>
 
-          <div class="flex flex-col items-center justify-center flex-1 max-w-xs">
-            <div class="text-xs font-extrabold text-slate-500">{{ train.duration }}</div>
-            <div class="w-full flex items-center gap-2 my-1">
-              <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-              <div class="flex-1 h-0.5 bg-slate-200 relative"></div>
-              <span class="w-2 h-2 rounded-full bg-slate-900"></span>
+          <div class="flex flex-col items-center justify-center flex-1 max-w-xs px-2">
+            <div class="text-[11px] font-extrabold text-slate-600 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-200 shadow-2xs mb-1">
+              {{ train.duration }}
             </div>
-            <div class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
-              Confidence: <strong :class="getReliabilityTextClass(train)">{{ confidenceOf(train) }}/100</strong>
+            <div class="w-full flex items-center gap-2 my-1">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+              <div class="flex-1 h-1 bg-slate-200 rounded-full relative">
+                <div class="absolute left-0 top-0 bottom-0 bg-rail-500 rounded-full" style="width: 50%;"></div>
+              </div>
+              <span class="w-2.5 h-2.5 rounded-full bg-rail-600"></span>
             </div>
           </div>
 
           <div class="text-right">
-            <div class="text-xl font-black text-slate-900">{{ train.arrTime }}</div>
-            <div class="text-xs font-bold text-slate-600 uppercase mt-0.5">
+            <div class="text-2xl font-black text-slate-900 tracking-tight">{{ train.arrTime }}</div>
+            <div class="text-xs font-black text-rail-600 uppercase mt-0.5">
               {{ train.toName }} ({{ train.toCode }})
             </div>
           </div>
@@ -221,15 +263,15 @@
             <div
               v-for="cls in train.classes"
               :key="cls.code"
-              class="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 shadow-2xs"
+              class="bg-white border border-slate-200/90 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-2xs hover:border-rail-300 transition-colors"
             >
-              <span class="text-slate-900 font-extrabold">{{ cls.code }}</span>
+              <span class="text-slate-900 font-black">{{ cls.code }}</span>
               <span :class="[
-                'text-[11px] font-black px-1.5 py-0.5 rounded',
-                cls.statusType === 'available' ? 'text-emerald-700 bg-emerald-50' :
-                cls.statusType === 'rac' ? 'text-amber-700 bg-amber-50' : 'text-slate-700 bg-slate-100'
+                'text-[11px] font-black px-2 py-0.5 rounded-md',
+                cls.statusType === 'available' ? 'text-emerald-700 bg-emerald-50 border border-emerald-200' :
+                cls.statusType === 'rac' ? 'text-amber-700 bg-amber-50 border border-amber-200' : 'text-slate-700 bg-slate-100 border border-slate-200'
               ]">{{ cls.status }}</span>
-              <span class="text-slate-400 font-normal">₹{{ cls.price }}</span>
+              <span class="text-slate-500 font-extrabold">₹{{ cls.price }}</span>
             </div>
           </div>
 
@@ -237,14 +279,14 @@
           <button
             @click="handleSelectActiveJourney(train)"
             :class="[
-              'px-5 py-2 rounded-xl font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer shrink-0 uppercase tracking-wider',
+              'group px-5 py-2.5 rounded-xl font-black text-xs flex items-center gap-2 transition-all duration-300 cursor-pointer shrink-0 uppercase tracking-wider shadow-md hover:scale-[1.04] active:scale-95 border-2',
               isTrainSelectedAsActive(train)
-                ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm'
-                : 'bg-slate-900 hover:bg-slate-800 text-white shadow-sm'
+                ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-500 shadow-emerald-100'
+                : 'bg-white text-rail-600 border-rail-500 hover:bg-gradient-to-r hover:from-rail-600 hover:to-emerald-500 hover:text-white hover:border-transparent hover:shadow-lg hover:shadow-emerald-500/20'
             ]"
           >
-            <CheckCircle2 v-if="isTrainSelectedAsActive(train)" class="w-4 h-4 text-white" />
-            <Star v-else class="w-4 h-4 text-amber-300" />
+            <CheckCircle2 v-if="isTrainSelectedAsActive(train)" class="w-4 h-4 text-emerald-600" />
+            <Star v-else class="w-4 h-4 text-amber-500 group-hover:text-white group-hover:rotate-12 transition-all duration-300" />
             <span>{{ isTrainSelectedAsActive(train) ? 'Active Journey Synced ✅' : 'Sync Active Journey' }}</span>
           </button>
         </div>
@@ -265,7 +307,7 @@
         class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
         @click.self="selectedTrainForTelemetry = null"
       >
-        <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col my-auto overflow-hidden animate-fade-in">
+        <div class="relative w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col my-auto overflow-hidden animate-fade-in">
           <!-- Header -->
           <div class="p-5 border-b border-slate-100 flex items-center justify-between relative">
             <div>
@@ -304,12 +346,15 @@
           <!-- Body -->
           <div class="p-6 space-y-4">
             <!-- Score Summary -->
-            <div class="grid grid-cols-3 gap-3 text-center bg-slate-50 p-4 rounded-xl border border-slate-200">
-              <div>
-                <div class="text-[11px] text-slate-500 font-bold uppercase">Punctuality Score</div>
-                <div :class="['text-xl font-black mt-0.5', getReliabilityTextClass(selectedTrainForTelemetry)]">
-                  {{ confidenceOf(selectedTrainForTelemetry) }}/100
-                </div>
+            <div class="grid grid-cols-3 gap-3 items-center text-center bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <div class="flex flex-col items-center justify-center">
+                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Punctuality Rating</div>
+                <ReliabilityGaugeMeter
+                  :score="confidenceOf(selectedTrainForTelemetry)"
+                  :width="90"
+                  :height="48"
+                  :showLabels="true"
+                />
               </div>
               <div>
                 <div class="text-[11px] text-slate-500 font-bold uppercase">Average Delay</div>
@@ -411,6 +456,7 @@ import { useJourneyStore } from '@/stores/useJourneyStore'
 import { POPULAR_STATIONS } from '@/data/stations'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
 import ModernDatePicker from '@/components/ui/ModernDatePicker.vue'
+import ReliabilityGaugeMeter from '@/components/common/ReliabilityGaugeMeter.vue'
 import { getHistory } from '@/services/history'
 import { computeBaseConfidence } from '@/services/scoring'
 import {

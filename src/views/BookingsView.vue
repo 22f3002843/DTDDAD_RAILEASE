@@ -56,7 +56,7 @@
               @click="calendarViewMode = 'month'"
               :class="[
                 'px-3 py-1 rounded text-[11px] font-extrabold transition-all cursor-pointer',
-                calendarViewMode === 'month' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                calendarViewMode === 'month' ? 'bg-rail-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
               ]"
             >
               Month View
@@ -65,7 +65,7 @@
               @click="calendarViewMode = 'list'"
               :class="[
                 'px-3 py-1 rounded text-[11px] font-extrabold transition-all cursor-pointer',
-                calendarViewMode === 'list' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                calendarViewMode === 'list' ? 'bg-rail-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
               ]"
             >
               List View
@@ -74,7 +74,7 @@
 
           <button
             @click="router.push('/search')"
-            class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-extrabold rounded-lg shadow transition-all cursor-pointer flex items-center gap-1"
+            class="px-3.5 py-1.5 bg-rail-500 hover:bg-rail-600 text-white text-[11px] font-extrabold rounded-lg shadow transition-all cursor-pointer flex items-center gap-1"
           >
             <Plus class="w-3.5 h-3.5" />
             <span>+ Add Train</span>
@@ -113,13 +113,13 @@
               <span
                 :class="[
                   'w-5 h-5 rounded-full flex items-center justify-center font-black text-[10px]',
-                  isToday(dayNum) ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-300' : 'text-slate-700 group-hover:text-slate-900'
+                  isToday(dayNum) ? 'bg-rail-500 text-white shadow-sm ring-2 ring-blue-300' : 'text-slate-700 group-hover:text-slate-900'
                 ]"
               >
                 {{ dayNum }}
               </span>
 
-              <span v-if="isToday(dayNum)" class="text-[9px] font-black text-blue-700 bg-blue-100 px-1.5 py-0.2 rounded">
+              <span v-if="isToday(dayNum)" class="text-[9px] font-black text-rail-700 bg-blue-100 px-1.5 py-0.2 rounded">
                 TODAY
               </span>
               <span v-else-if="getTripsForDay(dayNum).length" class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
@@ -134,7 +134,7 @@
                 :class="[
                   'p-1 rounded text-[9px] font-black border shadow-xs transition-all hover:scale-105 cursor-pointer truncate',
                   trip.statusType === 'success' ? 'bg-emerald-600 text-white border-emerald-700' :
-                  trip.statusType === 'primary' ? 'bg-blue-600 text-white border-blue-700' : 'bg-amber-600 text-white border-amber-700'
+                  trip.statusType === 'primary' ? 'bg-rail-500 text-white border-rail-600' : 'bg-amber-600 text-white border-amber-700'
                 ]"
               >
                 <div class="flex items-center gap-1 truncate">
@@ -155,7 +155,7 @@
           class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3 hover:border-slate-300 transition-all"
         >
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 text-rail-600 flex items-center justify-center shrink-0">
               <Train class="w-5 h-5" />
             </div>
             <div>
@@ -180,7 +180,7 @@
             </span>
             <button
               @click="openTripDetails(trip)"
-              class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-lg shadow cursor-pointer transition-colors"
+              class="px-3.5 py-1.5 bg-rail-500 hover:bg-rail-600 text-white font-bold text-xs rounded-lg shadow cursor-pointer transition-colors"
             >
               Inspect Telemetry &rarr;
             </button>
