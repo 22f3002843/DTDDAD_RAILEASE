@@ -3,8 +3,9 @@ import { ref, computed } from 'vue'
 import { STATIC_CREDENTIALS, MOCK_USER_PROFILE } from '@/data/auth'
 
 export const useAuthStore = defineStore('auth', () => {
-  const isAuthenticated = ref(localStorage.getItem('railease_auth') !== 'false')
-  const user = ref(MOCK_USER_PROFILE)
+  const isStoredAuth = localStorage.getItem('railease_auth') === 'true'
+  const isAuthenticated = ref(isStoredAuth)
+  const user = ref(isStoredAuth ? MOCK_USER_PROFILE : null)
   const loginError = ref('')
   const isLoading = ref(false)
 
@@ -32,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
   function logout() {
     isAuthenticated.value = false
     user.value = null
-    localStorage.removeItem('railease_auth')
+    localStorage.setItem('railease_auth', 'false')
   }
 
   return {
