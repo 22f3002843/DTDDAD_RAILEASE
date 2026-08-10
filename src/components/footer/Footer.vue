@@ -89,7 +89,7 @@
         </div>
 
         <p class="text-slate-500 text-center md:text-left">
-          © 2026 RailEase Technologies Inc. Plan better, Travel smarter.
+          © 2026 RailEase Technologies Inc. Plan better, know before you go.
         </p>
 
         <!-- Country & Currency Badge -->

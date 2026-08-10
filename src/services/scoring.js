@@ -262,3 +262,118 @@ if (typeof process !== 'undefined' && process.argv && process.argv[1] && process
   console.log('best for on-time :', pickBestTrain(samples, { priority: 'reliability' })?.number)
   console.log('best for cheapest:', pickBestTrain(samples, { priority: 'price' })?.number)
 }
+
+/**
+ * How likely the traveller is to get a seat, and how confident we are saying so.
+ *
+ * Honesty note:
+ *   We hold no waitlist clearance history, so this cannot be a learned figure.
+ *   An earlier version multiplied queue position by the train's punctuality,
+ *   which implied a relationship that does not exist and dressed a guess as a
+ *   derived number. This version uses queue length alone, which is the only
+ *   signal actually present, and the interface states that basis rather than
+ *   letting the percentage imply more than it knows.
+ *
+ * Algorithm in plain English:
+ *   Take the best class situation on the train. Open seats are certain, so
+ *   nothing needs estimating. RAC means the traveller boards regardless, so it
+ *   is near certain. For a waitlist, read the queue position and map it onto a
+ *   confirmation chance that falls as the queue lengthens: short queues usually
+ *   clear by chart preparation, long ones usually do not. A regret means the
+ *   class is closed.
+ *
+ * @param {Object} train - train object with a classes array
+ * @returns {{percent: Number|null, label: String, detail: String, level: 'green'|'amber'|'red'}}
+ */
+export function getSeatOutlook(train) {
+  const classes = train.classes || []
+
+  const available = classes.find((cls) => cls.statusType === 'available')
+  if (available) {
+    return {
+      percent: 100,
+      label: 'Seat available',
+      detail: `Open now in ${available.name}`,
+      level: 'green'
+    }
+  }
+
+  const rac = classes.find((cls) => cls.statusType === 'rac')
+  if (rac) {
+    return {
+      percent: 95,
+      label: 'You will board',
+      detail: `${rac.status} in ${rac.name} - seat shared until confirmed`,
+      level: 'green'
+    }
+  }
+
+  const waitlisted = classes.find((cls) => cls.statusType === 'wl')
+  if (waitlisted) {
+    const position = parseInt(/(\d+)/.exec(waitlisted.status || '')?.[1] || '99', 10)
+
+    // Queue length is the only signal we hold. Bands rather than a smooth curve,
+    // because a smooth curve would imply precision this estimate does not have.
+    let percent
+    if (position <= 10) percent = 85
+    else if (position <= 25) percent = 60
+    else if (position <= 50) percent = 35
+    else if (position <= 80) percent = 15
+    else percent = 5
+
+    return {
+      percent,
+      label: percent >= 60 ? 'Likely to confirm' : percent >= 35 ? 'May not confirm' : 'Unlikely to confirm',
+      detail: `${waitlisted.status} in ${waitlisted.name}. Estimated from queue length only.`,
+      level: percent >= 60 ? 'green' : percent >= 35 ? 'amber' : 'red'
+    }
+  }
+
+  return { percent: 0, label: 'No seats', detail: 'Every class is closed today', level: 'red' }
+}
+
+/**
+ * How predictable the train is, as distinct from how punctual it is.
+ *
+ * Algorithm in plain English:
+ *   Compare an ordinary day against a bad day. When those are close the train
+ *   can be planned around even if it is habitually late; when they are far
+ *   apart no buffer is safe. Returns the gap in minutes alongside a plain word,
+ *   because "steady" and "erratic" are the distinction a traveller acts on.
+ *
+ * @param {Object} train - train object
+ * @returns {{label: String, detail: String, level: 'green'|'amber'|'red'}}
+ */
+export function getPredictability(train) {
+  const stats = analyseHistory(train)
+  if (!stats) return { label: 'Unknown', detail: 'No running history', level: 'amber' }
+
+  const spread = stats.p90Delay - stats.medianDelay
+
+  if (spread <= 20) {
+    return { label: 'Steady', detail: `Bad days add only ${stats.p90Delay} min`, level: 'green' }
+  }
+  if (spread <= 60) {
+    return { label: 'Variable', detail: `Typical ${stats.medianDelay} min, bad day ${stats.p90Delay} min`, level: 'amber' }
+  }
+  return { label: 'Erratic', detail: `Typical ${stats.medianDelay} min, bad day ${stats.p90Delay} min`, level: 'red' }
+}
+
+/**
+ * How much spare time to leave, so the score turns into an instruction.
+ *
+ * Algorithm in plain English:
+ *   Use the ninetieth-percentile delay, rounded up to a friendly five or ten
+ *   minutes, so the advice covers all but the worst one day in ten. Returns
+ *   nothing when the train is dependable enough that no buffer is worth naming.
+ *
+ * @param {Object} train - train object
+ * @returns {String|null} e.g. 'Leave 45 min spare'
+ */
+export function getSuggestedBuffer(train) {
+  const stats = analyseHistory(train)
+  if (!stats || stats.p90Delay < 15) return null
+
+  const rounded = Math.ceil(stats.p90Delay / 15) * 15
+  return `Leave ${rounded} min spare`
+}

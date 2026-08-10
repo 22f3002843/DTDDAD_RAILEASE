@@ -318,9 +318,10 @@
                 <h4 class="text-base font-black text-slate-900 uppercase">
                   {{ train.name }} ({{ train.number }})
                 </h4>
-                <!-- Reliability verdict + reason, shown to everyone. This is the
-                     differentiator, so it must not sit behind the login. -->
-                <ReliabilityBadge :train="train" />
+                <!-- The full scorecard rather than a single pill: punctuality,
+                     seat chance, predictability and realistic arrival, since a
+                     booking is decided on more than whether it runs on time. -->
+                <TrainScorecard :train="train" />
               </div>
               <div class="flex items-center gap-4 text-xs font-bold text-slate-600">
                 <span>Runs On: <strong class="text-slate-900 font-extrabold">{{ train.runsOn.join(' ') }}</strong></span>
@@ -502,7 +503,7 @@ import Navbar from '@/components/navbar/Navbar.vue'
 import Footer from '@/components/footer/Footer.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import CustomSelect from '@/components/ui/CustomSelect.vue'
-import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
+import TrainScorecard from '@/components/common/TrainScorecard.vue'
 import { getRealisticArrival } from '@/services/reliability'
 import { pickBestTrain, computeBaseConfidence } from '@/services/scoring'
 import {

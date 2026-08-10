@@ -21,7 +21,7 @@
  * at the top.
  */
 
-import { analyseHistory } from './scoring'
+import { analyseHistory, getSeatOutlook } from './scoring'
 import { getHistory } from './history'
 import { parseTimeToMinutes, formatMinutesAsTime, getRealisticArrival } from './reliability'
 
@@ -118,33 +118,23 @@ function lateNightArrivalCard(train, stats) {
  * @returns {Object|null} a risk card, or null when nothing is waitlisted
  */
 function waitlistCard(train, stats) {
-  const waitlisted = (train.classes || []).find((cls) => cls.statusType === 'wl')
-  if (!waitlisted) return null
+  const outlook = getSeatOutlook(train)
+  if (outlook.percent === null || outlook.percent >= 95) return null
 
-  const positionMatch = /(\d+)/.exec(waitlisted.status || '')
-  if (!positionMatch) return null
-
-  const position = parseInt(positionMatch[1], 10)
-
-  // Shorter queues clear more often; steadier trains turn over more predictably.
-  const positionFactor = Math.max(0, 1 - position / 80)
-  const chance = Math.round(Math.max(5, Math.min(95, positionFactor * 100 * (0.6 + stats.onTimeRate * 0.4))))
-
-  const outlook = chance >= 70 ? 'good' : chance >= 35 ? 'uncertain' : 'poor'
-  const severity = chance >= 70 ? 'info' : chance >= 35 ? 'medium' : 'high'
+  const severity = outlook.percent >= 60 ? 'info' : outlook.percent >= 35 ? 'medium' : 'high'
 
   return {
     id: 'waitlist_outlook',
     severity,
     headline:
-      outlook === 'good'
+      outlook.percent >= 60
         ? 'Your waitlist will probably clear'
-        : outlook === 'uncertain'
+        : outlook.percent >= 35
           ? 'Your waitlist may not clear'
           : 'Your waitlist is unlikely to clear',
-    figure: `${chance} in 100`,
-    figureLabel: `chance ${waitlisted.status} confirms`,
-    evidence: `${waitlisted.status} in ${waitlisted.name || waitlisted.code}. Based on queue length and how steadily this train runs, roughly a ${chance} in 100 chance of confirming before the chart is prepared.`,
+    figure: `${outlook.percent}%`,
+    figureLabel: 'chance of confirming',
+    evidence: `${outlook.detail} We hold no waitlist clearance history, so this is a rule of thumb based on how long the queue is, not a measured figure.`,
     confidence: 'possible',
     sampleSize: stats.totalDays
   }

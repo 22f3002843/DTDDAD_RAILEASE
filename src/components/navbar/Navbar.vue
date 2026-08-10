@@ -14,7 +14,7 @@
           @click="router.push('/search')"
           class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer"
         >
-          Will my train be on time?
+          Reliability score of your train
         </button>
 
         <button
@@ -32,18 +32,19 @@
           <Lock v-if="!authStore.isAuthenticated" class="w-3 h-3 text-slate-400 group-hover:text-rail-500 transition-colors" />
         </button>
 
-        <!-- Watching carries a live count so the user can see they have saved
-             trains. Without this the watchlist was unreachable by clicking. -->
+        <!-- Only shown to a signed-out visitor who has actually watched
+             something. Signed in, the watchlist lives inside Your travel, so a
+             second entry point here would be another duplicate destination.
+             With nothing watched it would lead to an empty page, so it is
+             absent rather than present-and-useless. -->
         <button
-          @click="router.push(authStore.isAuthenticated ? '/dashboard' : '/watching')"
+          v-if="!authStore.isAuthenticated && watchStore.watchCount"
+          @click="router.push('/watching')"
           class="text-sm font-medium text-slate-600 hover:text-rail-500 transition-colors cursor-pointer flex items-center gap-1.5"
         >
           <Eye class="w-4 h-4" />
           <span>Watching</span>
-          <span
-            v-if="watchStore.watchCount"
-            class="px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-black leading-none"
-          >{{ watchStore.watchCount }}</span>
+          <span class="px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-black leading-none">{{ watchStore.watchCount }}</span>
         </button>
       </nav>
 

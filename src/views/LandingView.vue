@@ -47,12 +47,12 @@
           </div>
         </div>
 
-        <!-- Main Headline: Plan better, Travel smarter. -->
+        <!-- Main Headline: Plan better, Know before you go. -->
         <div class="space-y-2">
           <h1 class="text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-black tracking-tight text-rail-900 leading-[1.10]">
             Plan better,<br />
             <span class="bg-gradient-to-r from-rail-500 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Travel smarter.
+              Know before you go.
             </span>
           </h1>
 
@@ -64,29 +64,10 @@
           running, before you book.
         </p>
 
-        <!-- One primary action, and it changes with sign-in state. Previously
-             the hero offered "Sign In to Dashboard" while the navbar offered
-             "Go to Dashboard" - two differently worded buttons for the same
-             destination, on screen at the same time. -->
-        <div class="flex flex-wrap items-center gap-4 pt-2">
-          <button
-            v-if="!authStore.isAuthenticated"
-            @click="showAuthModal = true"
-            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group cursor-pointer"
-          >
-            <span>Sign in</span>
-            <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-
-          <button
-            v-else
-            @click="router.push('/dashboard')"
-            class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-btn font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group cursor-pointer"
-          >
-            <span>Go to dashboard</span>
-            <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
+        <!-- No call to action here on purpose. The navbar already carries
+             Sign In / Register for a visitor and Your travel for a signed-in
+             user, and the reliability card beside this is the thing we actually
+             want clicked. A third button competed with both. -->
 
         <!-- Trust Stat Cards -->
         <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/80 text-left max-w-2xl">
@@ -131,7 +112,7 @@
               <div class="w-12 h-12 rounded-xl bg-blue-100/80 text-rail-600 flex items-center justify-center mb-5 shadow-sm">
                 <BarChart3 class="w-6 h-6" />
               </div>
-              <h4 class="text-lg font-extrabold text-rail-900 mb-2">1. Will my train be on time?</h4>
+              <h4 class="text-lg font-extrabold text-rail-900 mb-2">1. Reliability score of your train</h4>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 A confidence score from 30 days of real running, with the record behind it.
               </p>
@@ -367,17 +348,15 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/useAuthStore'
 import Navbar from '@/components/navbar/Navbar.vue'
 import QuickBookWidget from '@/components/common/QuickBookWidget.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import Logo from '@/components/common/Logo.vue'
 import Footer from '@/components/footer/Footer.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
-import { Sparkles, ArrowRight, BarChart3, Clock, Navigation, ShieldCheck, CheckCircle2 } from 'lucide-vue-next'
+import { Sparkles, BarChart3, Clock, Navigation, ShieldCheck, CheckCircle2 } from 'lucide-vue-next'
 
 const router = useRouter()
-const authStore = useAuthStore()
 const showAuthModal = ref(false)
 
 // Activate scroll reveal animations

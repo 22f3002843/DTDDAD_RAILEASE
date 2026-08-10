@@ -3,16 +3,16 @@
     <!-- Top bar states plainly what this tool does, and what it does not do.
          Booking links are still offered, but framed as a handoff rather than
          as our own function. -->
-    <div class="bg-slate-900 text-white px-5 py-3 flex items-center justify-between gap-3">
+    <div class="bg-[#1E3A8A] text-white px-5 py-3 flex items-center justify-between gap-3">
       <div class="flex items-center gap-2 text-[11px] font-bold text-slate-300">
         <ShieldCheck class="w-4 h-4 text-emerald-400" />
-        <span>We don't sell tickets</span>
+        <span class="text-blue-100">We don't sell tickets</span>
       </div>
       <a
         href="https://www.irctc.co.in/"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-[11px] font-bold text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+        class="text-[11px] font-bold text-blue-100 hover:text-white flex items-center gap-1.5 transition-colors"
         title="Official IRCTC booking portal"
       >
         <span>Book on IRCTC</span>
@@ -24,7 +24,7 @@
     <div class="p-6 sm:p-7 space-y-5">
       <!-- Title -->
       <div class="text-center pb-1">
-        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+        <h2 class="text-xl font-black text-[#1E3A8A] tracking-tight">
           Check your train's reliability
         </h2>
         <p class="text-[11px] text-slate-500 font-medium mt-1">
@@ -113,7 +113,7 @@
               :class="[
                 'py-2 px-2 rounded-lg text-[11px] font-bold border transition-all cursor-pointer',
                 searchStore.travelPriority === option.value
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  ? 'bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-sm'
                   : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400'
               ]"
             >
@@ -129,7 +129,7 @@
              what this product actually does. -->
         <button
           type="submit"
-          class="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-3 cursor-pointer select-none"
+          class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl font-extrabold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-3 cursor-pointer select-none"
         >
           <span>Check reliability</span>
           <ArrowRight class="w-4 h-4" />

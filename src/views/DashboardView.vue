@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="max-w-4xl mx-auto space-y-6 font-sans pb-10">
+    <div class="max-w-[1400px] mx-auto space-y-6 font-sans pb-10">
       <!-- Every block below is something happening to THIS passenger, and every
            block has something to do about it. Anything that was only a link to a
            page already in the sidebar has been removed rather than restyled: a
@@ -12,14 +12,17 @@
         </p>
       </div>
 
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+      <div class="xl:col-span-2 space-y-6">
+
       <!-- ============ NEXT TRIP ============
            The reason a passenger opens the app. Shows live running state, not a
            historical reliability score: once the ticket is booked the question
            has changed from "should I take this train" to "is it late right now". -->
       <div v-if="activeTrip" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="bg-slate-900 text-white px-5 py-2.5 flex items-center justify-between gap-3">
+        <div class="bg-gradient-to-r from-[#1E3A8A] to-slate-900 text-white px-5 py-3 flex items-center justify-between gap-3">
           <span class="text-[11px] font-black uppercase tracking-wider">Your next trip</span>
-          <span class="text-[11px] font-bold text-slate-300">PNR {{ activeTrip.pnr }}</span>
+          <span class="text-[11px] font-bold text-blue-100">PNR {{ activeTrip.pnr }}</span>
         </div>
 
         <div class="p-5 sm:p-6 space-y-5">
@@ -51,26 +54,22 @@
             </div>
           </div>
 
-          <!-- The live map, at dashboard size. Clicking it opens the full radar
-               rather than replacing it: the big map is a sustained-attention
-               page and deserves its own room. -->
-          <LiveRoutePreview
-            v-if="progress"
-            :percent="progress.percent"
-            :from-code="routeCodes.from"
-            :to-code="routeCodes.to"
-            :stage-label="progress.currentLabel"
+          <!-- The journey as a railway strip: named stations at their real
+               distances, with the train where it actually is. -->
+          <RouteStrip
+            v-if="waypoints.length > 1"
+            :waypoints="waypoints"
             @open="router.push('/live-status')"
           />
 
           <div v-if="progress" class="space-y-2">
             <div class="relative h-2 rounded-full bg-slate-200 overflow-hidden">
               <div
-                class="absolute inset-y-0 left-0 rounded-full bg-slate-900 transition-all duration-500"
+                class="absolute inset-y-0 left-0 rounded-full bg-[#1E3A8A] transition-all duration-500"
                 :style="{ width: `${progress.percent}%` }"
               ></div>
               <span
-                class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-slate-900 shadow"
+                class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#1E3A8A] shadow"
                 :style="{ left: `${progress.percent}%` }"
               ></span>
             </div>
@@ -98,31 +97,60 @@
             </div>
           </div>
 
-          <div class="flex flex-wrap gap-2.5">
+          <!-- Actions as tiles rather than a row of pills. Each carries an icon
+               and a line saying what it gives you, so the row reads as four
+               things you can do rather than four words. The risk tile shows a
+               live count, which is the useful part: it tells you whether the
+               page behind it is worth opening before you open it. -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
             <button
               @click="router.push('/live-status')"
-              class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold cursor-pointer transition-colors"
+              class="group text-left p-3.5 rounded-xl bg-gradient-to-br from-[#1E3A8A] to-slate-900 hover:from-[#1e40af] hover:to-slate-800 transition-all cursor-pointer"
             >
-              Track live
+              <div class="flex items-center gap-2">
+                <span class="relative flex w-2.5 h-2.5">
+                  <span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+                  <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                </span>
+                <span class="text-xs font-black text-white">Track live</span>
+              </div>
+              <p class="text-[11px] text-blue-200 font-semibold mt-1">See where it is now</p>
             </button>
+
             <button
               v-if="matchedTrain"
               @click="router.push(`/train/${activeTrip.trainNumber}`)"
-              class="px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
+              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-sm transition-all cursor-pointer"
             >
-              What could go wrong?
+              <div class="flex items-center gap-2">
+                <AlertTriangle :class="['w-4 h-4', riskCount ? 'text-amber-500' : 'text-slate-400']" />
+                <span class="text-xs font-black text-slate-900">What could go wrong?</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-semibold mt-1">
+                {{ riskCount ? `${riskCount} thing${riskCount === 1 ? '' : 's'} to know` : 'Nothing flagged' }}
+              </p>
             </button>
+
             <button
               @click="selectedTrip = activeTrip"
-              class="px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
+              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-sm transition-all cursor-pointer"
             >
-              Trip details
+              <div class="flex items-center gap-2">
+                <Ticket class="w-4 h-4 text-slate-400" />
+                <span class="text-xs font-black text-slate-900">Trip details</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-semibold mt-1">Seat, coach and timeline</p>
             </button>
+
             <button
               @click="router.push('/journey-planner')"
-              class="px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
+              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-sm transition-all cursor-pointer"
             >
-              I missed my train
+              <div class="flex items-center gap-2">
+                <Compass class="w-4 h-4 text-slate-400" />
+                <span class="text-xs font-black text-slate-900">I missed my train</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-semibold mt-1">Find another way there</p>
             </button>
           </div>
         </div>
@@ -136,6 +164,9 @@
         <RiskCard v-for="card in attentionCards" :key="card.id" :card="card" />
       </div>
 
+      </div>
+
+      <div class="space-y-6">
       <!-- ============ WATCHING ============
            Merged in from its own page. Watching and "your travel" were two
            screens describing the same thing: trains this person cares about.
@@ -239,6 +270,9 @@
         </button>
       </div>
 
+      </div>
+      </div>
+
       <!-- ============ EMPTY STATE ============
            A passenger with no trips should be helped to start one, not shown a
            control panel with nothing in it. -->
@@ -291,12 +325,13 @@ import RiskCard from '@/components/common/RiskCard.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import TripDetailsModal from '@/components/common/TripDetailsModal.vue'
 import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
-import LiveRoutePreview from '@/components/common/LiveRoutePreview.vue'
+import RouteStrip from '@/components/common/RouteStrip.vue'
 import { generateRiskCards } from '@/services/predictions'
+import { getRouteWaypoints } from '@/services/routes'
 import { getRealisticArrival } from '@/services/reliability'
 import { getHistory } from '@/services/history'
 import { minutesUntilDeparture, describeWait } from '@/services/recovery'
-import { Compass, X, Bell, ChevronRight } from 'lucide-vue-next'
+import { Compass, X, Bell, ChevronRight, AlertTriangle, Ticket } from 'lucide-vue-next'
 
 const router = useRouter()
 const journeyStore = useJourneyStore()
@@ -306,6 +341,7 @@ const showAuthModal = ref(false)
 const selectedTrip = ref(null)
 
 const activeTrip = computed(() => journeyStore.activeTrip)
+const waypoints = computed(() => getRouteWaypoints(activeTrip.value))
 
 // The full train record behind the synced trip, needed for anything derived.
 const matchedTrain = computed(() =>
@@ -453,6 +489,17 @@ const attentionCards = computed(() => {
   })
     .filter((card) => card.severity === 'high')
     .slice(0, 2)
+})
+
+// Every risk on the active trip, used only for the count on the action tile.
+// The attention block deliberately shows fewer; this tells the traveller how
+// much is waiting behind the tile before they tap it.
+const riskCount = computed(() => {
+  if (!matchedTrain.value) return 0
+  return generateRiskCards(matchedTrain.value, {
+    highStakesType: journeyStore.selectedStakesType,
+    cheapestPrice: 0
+  }).length
 })
 
 // Synced trips other than the active one, treated as history.
