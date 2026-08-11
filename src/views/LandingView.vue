@@ -117,92 +117,93 @@
 
         <!-- 3D Perspective Canvas Container -->
         <div class="perspective-[1200px] flex justify-center items-center py-4">
-          <!-- Main 3D Moving Showcase Frame -->
+          <!-- Main 3D Moving Showcase Frame (Sleek Light Theme UI) -->
           <div
-            class="w-full max-w-[1280px] bg-slate-900 rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden relative group transition-all duration-300"
+            class="w-full max-w-[1280px] bg-white rounded-2xl border border-slate-200/90 shadow-2xl overflow-hidden relative group transition-all duration-300"
             :style="heroFrameStyle"
           >
             <!-- Top App Chrome Header Bar (Browser/App Controls) -->
-            <div class="h-10 bg-slate-950/90 border-b border-slate-800 px-4 flex items-center justify-between">
+            <div class="h-10 bg-slate-100/90 border-b border-slate-200/80 px-4 flex items-center justify-between">
               <!-- Control Dots -->
               <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
-                <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
-                <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
               </div>
 
               <!-- Address / Status Bar Badge -->
-              <div class="px-4 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-2 shadow-2xs">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                <span class="text-slate-300 font-bold">railease.in/live-radar/12952</span>
+              <div class="px-4 py-1 rounded-md bg-white border border-slate-200/90 text-[11px] font-mono text-slate-600 flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-slate-800 font-extrabold">railease.in/live-radar/12952</span>
               </div>
 
               <!-- Right Status Pill -->
-              <div class="text-[10px] font-black text-sky-400 uppercase tracking-widest hidden sm:block">
+              <div class="text-[10px] font-black text-rail-600 uppercase tracking-widest hidden sm:block">
                 LIVE TELEMETRY ACTIVE
               </div>
             </div>
 
-            <!-- Frame Inner Visual Dashboard -->
-            <div class="p-6 sm:p-8 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white space-y-6 relative overflow-hidden">
+            <!-- Frame Inner Visual Dashboard (Subtle Blue/Purple/Sky Light Theme) -->
+            <div class="p-6 sm:p-8 bg-gradient-to-br from-indigo-50/80 via-white to-sky-50/60 text-slate-900 space-y-6 relative overflow-hidden">
               <!-- Ambient Subtle Light Wave Overlay -->
-              <div class="absolute -right-20 -top-20 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
+              <div class="absolute -right-20 -top-20 w-96 h-96 bg-sky-400/20 rounded-full blur-3xl pointer-events-none"></div>
 
               <!-- Top Metrics Bar inside 3D Frame -->
               <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                <div class="p-4 rounded-xl bg-white/90 border border-slate-200/90 shadow-soft backdrop-blur-md">
                   <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Active Train</div>
-                  <div class="text-base sm:text-lg font-black text-white mt-0.5">12952 Rajdhani</div>
+                  <div class="text-base sm:text-lg font-black text-rail-900 mt-0.5">12952 Rajdhani</div>
                 </div>
-                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                <div class="p-4 rounded-xl bg-white/90 border border-slate-200/90 shadow-soft backdrop-blur-md">
                   <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Current Speed</div>
-                  <div class="text-base sm:text-lg font-black text-sky-400 mt-0.5 flex items-center gap-1">
+                  <div class="text-base sm:text-lg font-black text-sky-600 mt-0.5 flex items-center gap-1">
                     ⚡ 130 km/h
                   </div>
                 </div>
-                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                <div class="p-4 rounded-xl bg-white/90 border border-slate-200/90 shadow-soft backdrop-blur-md">
                   <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Next Station</div>
-                  <div class="text-base sm:text-lg font-black text-emerald-400 mt-0.5">Chennai</div>
+                  <div class="text-base sm:text-lg font-black text-emerald-600 mt-0.5">Chennai</div>
                 </div>
-                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                <div class="p-4 rounded-xl bg-white/90 border border-slate-200/90 shadow-soft backdrop-blur-md">
                   <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Punctuality Score</div>
-                  <div class="text-base sm:text-lg font-black text-amber-400 mt-0.5">88.4% On Time</div>
+                  <div class="text-base sm:text-lg font-black text-amber-600 mt-0.5">88.4% On Time</div>
                 </div>
               </div>
 
               <!-- Simulated Track Path SVG with Glowing Vector Train -->
-              <div class="h-32 sm:h-40 rounded-xl bg-slate-950/80 border border-slate-800 relative flex items-center px-6 overflow-hidden">
+              <div class="h-32 sm:h-40 rounded-xl bg-white border border-slate-200/90 relative flex items-center px-6 overflow-hidden shadow-soft">
                 <!-- Track Line -->
-                <div class="w-full h-2 bg-slate-800 rounded-full relative">
-                  <div class="h-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 rounded-full w-[65%] shadow-glow"></div>
+                <div class="w-full h-2 bg-slate-200 rounded-full relative">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 via-sky-500 to-rail-600 rounded-full w-[65%] shadow-sm"></div>
                   
                   <!-- Glowing Bullet Train Marker Pin -->
                   <div class="absolute top-1/2 left-[65%] -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center font-black shadow-lg ring-4 ring-sky-500/30 animate-pulse">
+                    <div class="w-8 h-8 rounded-full bg-rail-600 text-white flex items-center justify-center font-black shadow-lg ring-4 ring-rail-500/20 animate-pulse">
                       <Train class="w-4 h-4 text-white" />
                     </div>
-                    <span class="px-2.5 py-1 rounded-md bg-sky-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-md">
+                    <span class="px-2.5 py-1 rounded-md bg-rail-600 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                       Kota &rarr; Kanpur
                     </span>
                   </div>
                 </div>
               </div>
 
-              <!-- Floating Micro Glass Badges Overlay inside Frame -->
-              <div class="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs font-bold text-slate-400 border-t border-slate-800/80">
-                <span class="flex items-center gap-1.5 text-slate-300">
-                  <ShieldCheck class="w-4 h-4 text-emerald-400" />
+              <!-- Floating Micro Badges Overlay inside Frame -->
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs font-bold text-slate-500 border-t border-slate-200/80">
+                <span class="flex items-center gap-1.5 text-slate-700 font-extrabold">
+                  <ShieldCheck class="w-4 h-4 text-emerald-600" />
                   <span>Verified 30-Day Pattern Engine</span>
                 </span>
-                <span class="flex items-center gap-1.5 text-slate-300">
-                  <Navigation class="w-4 h-4 text-sky-400" />
+                <span class="flex items-center gap-1.5 text-slate-700 font-extrabold">
+                  <Navigation class="w-4 h-4 text-sky-600" />
                   <span>Real-Time GPS Signals</span>
                 </span>
                 <button
                   @click="router.push('/live-status')"
-                  class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs transition-all shadow-md cursor-pointer ml-auto"
+                  class="px-4 py-2 rounded-xl bg-rail-600 hover:bg-rail-700 text-white font-black text-xs transition-all shadow-md cursor-pointer ml-auto flex items-center gap-1"
                 >
-                  Explore Full Radar &rarr;
+                  <span>Explore Full Radar</span>
+                  <ArrowRight class="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
