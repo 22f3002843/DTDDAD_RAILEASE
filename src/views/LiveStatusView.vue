@@ -215,7 +215,7 @@
               <circle v-if="sig.pulse" cx="0" cy="-16" r="8" :fill="sig.color" fill-opacity="0.4" class="animate-pulse" />
             </g>
 
-            <!-- Station Nodes & Straight Clean Floating Callout Badges (Alternating Top/Bottom for Zero Clutter) -->
+            <!-- Station Nodes & Straight Clean Floating Callout Badges (Subtle Light Theme) -->
             <g
               v-for="(st, stIdx) in currentWaypoints"
               :key="stIdx"
@@ -258,17 +258,17 @@
                   :width="st.name.length * 6.5 + 46"
                   height="20"
                   rx="7"
-                  :fill="st.status === 'passed' ? '#065f46' : st.status === 'approaching' ? '#9a3412' : '#0f172a'"
-                  fill-opacity="0.95"
-                  :stroke="st.status === 'passed' ? '#34d399' : st.status === 'approaching' ? '#fbbf24' : '#60a5fa'"
-                  stroke-width="1.5"
+                  :fill="st.status === 'passed' ? '#065f46' : st.status === 'approaching' ? '#9a3412' : '#ffffff'"
+                  fill-opacity="0.98"
+                  :stroke="st.status === 'passed' ? '#34d399' : st.status === 'approaching' ? '#fbbf24' : '#3b82f6'"
+                  stroke-width="1.6"
                   class="shadow-sm"
                 />
                 <text
                   x="0"
                   :y="stIdx % 2 === 0 ? -4 : 16"
                   text-anchor="middle"
-                  fill="#ffffff"
+                  :fill="st.status === 'passed' ? '#ffffff' : st.status === 'approaching' ? '#ffffff' : '#1e40af'"
                   font-size="10"
                   font-weight="800"
                   class="select-none font-sans tracking-wide"
@@ -300,35 +300,35 @@
               <title>{{ poi.name }} — {{ poi.desc }} ({{ poi.side }})</title>
             </g>
 
-            <!-- Sleek Modern Circular Vector Train Target Badge -->
+            <!-- Sleek Modern Circular Vector Train Target Badge (Subtle Rail-Blue Theme) -->
             <g :transform="`translate(${trainPositionX}, ${trainPositionY}) rotate(${trainRotationAngle})`">
               <!-- Glowing Sonar Ripple Rings -->
               <circle cx="0" cy="0" r="28" fill="#0284c7" opacity="0.12" />
               <circle cx="0" cy="0" r="18" fill="#0284c7" opacity="0.25" class="animate-ping" />
 
-              <!-- Main Circular Engine Disc (Dark Navy & Electric Blue Border) -->
-              <g class="drop-shadow-[0_4px_12px_rgba(2,132,199,0.45)] cursor-pointer">
+              <!-- Main Circular Engine Disc (Vibrant Rail Blue & Pure White Border) -->
+              <g class="drop-shadow-[0_4px_12px_rgba(2,132,199,0.4)] cursor-pointer">
                 <!-- Disc Background -->
-                <circle cx="0" cy="0" r="17" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" />
+                <circle cx="0" cy="0" r="17" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" />
                 
-                <!-- Vector Bullet Train Silhouette -->
+                <!-- Vector Bullet Train Silhouette in Pure White -->
                 <g transform="translate(-1, 0) scale(0.95)">
                   <!-- Aerodynamic Train Nose & Body -->
-                  <path d="M -10 -6 L 2 -6 C 8 -6 12 -2 12 0 C 12 2 8 6 2 6 L -10 6 Z" fill="#38bdf8" />
+                  <path d="M -10 -6 L 2 -6 C 8 -6 12 -2 12 0 C 12 2 8 6 2 6 L -10 6 Z" fill="#ffffff" />
                   <!-- Windshield -->
-                  <path d="M 3 -4 L 8 -4 C 10 -4 11 -2 11 0 C 11 2 10 4 8 4 L 3 4 Z" fill="#0f172a" />
+                  <path d="M 3 -4 L 8 -4 C 10 -4 11 -2 11 0 C 11 2 10 4 8 4 L 3 4 Z" fill="#0284c7" />
                   <!-- Side Stripe -->
-                  <line x1="-8" y1="0" x2="3" y2="0" stroke="#0f172a" stroke-width="1.5" />
+                  <line x1="-8" y1="0" x2="3" y2="0" stroke="#0284c7" stroke-width="1.5" />
                   <!-- Headlight Glow -->
-                  <polygon points="12,-2 18,-6 18,6 12,2" fill="#fef08a" opacity="0.85" />
+                  <polygon points="12,-2 18,-6 18,6 12,2" fill="#fef08a" opacity="0.9" />
                 </g>
               </g>
 
-              <!-- Upright Floating Speed Callout Badge -->
+              <!-- Upright Floating Speed Callout Badge (Rail-Blue Theme) -->
               <g :transform="`translate(0, -32) rotate(${-trainRotationAngle})`">
                 <line x1="0" y1="6" x2="0" y2="18" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2 2" />
-                <rect x="-34" y="-11" width="68" height="22" rx="7" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" class="shadow-md" />
-                <text x="0" y="3" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-weight="900" class="font-sans tracking-wide">
+                <rect x="-34" y="-11" width="68" height="22" rx="7" fill="#0284c7" stroke="#ffffff" stroke-width="1.8" class="shadow-md" />
+                <text x="0" y="3" text-anchor="middle" fill="#ffffff" font-size="9.5" font-weight="900" class="font-sans tracking-wide">
                   ⚡ {{ currentLiveSpeed }} km/h
                 </text>
               </g>
