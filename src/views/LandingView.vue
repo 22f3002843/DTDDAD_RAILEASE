@@ -182,7 +182,7 @@
                       <Train class="w-4 h-4 text-white" />
                     </div>
                     <span class="px-2.5 py-1 rounded-md bg-rail-600 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
-                      Kota &rarr; Kanpur
+                      Kota &rarr; Chennai
                     </span>
                   </div>
                 </div>
