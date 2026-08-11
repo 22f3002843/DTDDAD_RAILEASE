@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-100 flex flex-col font-sans selection:bg-rail-500 selection:text-white">
+  <div class="min-h-screen bg-rail-bg flex flex-col font-sans selection:bg-rail-500 selection:text-white">
     <!-- Clean Navbar -->
     <Navbar @openLogin="openAuthDialog('general')" />
 
@@ -299,8 +299,8 @@
             v-for="train in searchStore.filteredTrains"
             :key="train.id"
             :class="[
-              'bg-white rounded-xl border shadow-sm hover:shadow-md transition-all overflow-hidden',
-              isBestTrain(train) ? 'border-emerald-500 ring-1 ring-emerald-500' : 'border-slate-200'
+              'bg-white rounded-2xl border shadow-soft hover:shadow-md transition-all overflow-hidden',
+              isBestTrain(train) ? 'border-emerald-500 ring-1 ring-emerald-500' : 'border-slate-200/90'
             ]"
           >
             <!-- One recommendation only. Three recommendations is a shrug;
@@ -313,7 +313,7 @@
               <span>Best for you &middot; {{ priorityLabel }}</span>
             </div>
             <!-- Card Header -->
-            <div class="bg-slate-50/80 border-b border-slate-200/80 px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+            <div class="border-b border-slate-100 px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
               <div class="flex flex-col gap-1.5">
                 <h4 class="text-base font-black text-slate-900 uppercase">
                   {{ train.name }} ({{ train.number }})
@@ -329,14 +329,7 @@
                   :showLabels="true"
                 />
 
-                <span>Runs On: <strong class="text-slate-900 font-extrabold">{{ train.runsOn.join(' ') }}</strong></span>
-                <button
-                  @click="router.push(`/train/${train.number}`)"
-                  class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white flex items-center gap-1.5 font-extrabold cursor-pointer transition-colors"
-                >
-                  <span>What could go wrong?</span>
-                  <ChevronRight class="w-3.5 h-3.5" />
-                </button>
+                <span class="bg-slate-50 border border-slate-200/90 px-2.5 py-1 rounded-md text-[11px]">Runs On: <strong class="text-slate-900 font-extrabold">{{ train.runsOn.join(' ') }}</strong></span>
               </div>
             </div>
 
@@ -350,13 +343,10 @@
                 </div>
               </div>
 
-              <!-- Duration Line -->
+              <!-- Duration Badge -->
               <div class="flex flex-col items-center justify-center flex-1 max-w-xs">
-                <div class="text-xs font-extrabold text-slate-500">{{ train.duration }}</div>
-                <div class="w-full flex items-center gap-2 my-1">
-                  <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                  <div class="flex-1 h-0.5 bg-slate-300 relative"></div>
-                  <span class="w-2 h-2 rounded-full bg-slate-900"></span>
+                <div class="px-3.5 py-1 rounded-full bg-slate-50 border border-slate-200 shadow-2xs text-xs font-black text-slate-700">
+                  Total Duration: {{ train.duration }}
                 </div>
               </div>
 
@@ -378,7 +368,7 @@
             </div>
 
             <!-- Class Availability Grid Cards -->
-            <div class="p-4 bg-slate-50/50 space-y-3">
+            <div class="p-4 space-y-3">
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                 <div
                   v-for="cls in train.classes"

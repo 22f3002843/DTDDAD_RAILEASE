@@ -103,173 +103,103 @@
           <div class="flex items-center gap-2">
             <Radio class="w-4 h-4 text-emerald-500 animate-pulse" />
             <h2 class="text-sm font-black text-slate-900 uppercase tracking-wider">
-              Live Satellite Corridor Map
+              Live Railway Corridor Map
             </h2>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-extrabold border border-emerald-200 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              LIVE TRACKING
+            </span>
           </div>
-          <button @click="resetTrainAnimation" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center gap-1 cursor-pointer">
+          <button @click="resetTrainAnimation" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors shadow-2xs">
             <RotateCcw class="w-3.5 h-3.5" />
             <span>Reset Marker</span>
           </button>
         </div>
 
-        <!-- Dynamic Animated SVG Railway Map Canvas (TACTICAL CYBERPUNK DARK MODE) -->
-        <div class="relative w-full h-[420px] rounded-2xl bg-slate-950 border border-slate-800/90 overflow-hidden shadow-2xl shadow-emerald-950/20 flex items-center justify-center">
-          <!-- Dark Slate Precision Grid Overlays -->
-          <div class="absolute inset-0 bg-[radial-gradient(#334155_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-60"></div>
-          <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] [background-size:96px_96px] opacity-40"></div>
-
-          <!-- Tactical Top-Left Telemetry HUD Card -->
-          <div class="absolute top-3.5 left-4 text-[10px] font-mono font-black text-slate-200 flex items-center gap-2.5 z-20 select-none bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-md">
-            <span class="flex items-center gap-1.5 text-emerald-400 font-extrabold bg-emerald-950/80 px-2 py-0.5 rounded-md border border-emerald-500/40">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              RADAR ACTIVE
-            </span>
-            <span class="text-slate-300 font-bold">28.6139° N, 77.2090° E</span>
-            <span class="text-slate-600 hidden md:inline">|</span>
-            <span class="text-slate-400 font-bold hidden md:inline">216m MSL</span>
-          </div>
-
-          <!-- Tactical Top-Right Satellite Pill -->
-          <div class="absolute top-3.5 right-4 text-[10px] font-mono font-black text-sky-400 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-md z-20 select-none hidden sm:flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-            <span>ISRO NAVIC SATELLITE LOCK • 9.4 GHz</span>
-          </div>
-
-          <!-- Tactical Bottom Navigation Overlays: Scale Bar & Compass Rose -->
-          <div class="absolute bottom-3.5 left-4 text-[10px] font-mono font-black text-slate-300 flex items-center gap-2.5 z-20 select-none bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-md">
-            <span>SCALE 1:5,000,000</span>
-            <span class="text-slate-600">|</span>
-            <div class="flex items-center gap-1.5">
-              <div class="w-8 h-1 bg-sky-500 rounded-xs"></div>
-              <span>100 km</span>
-            </div>
-          </div>
-
-          <div class="absolute bottom-3.5 right-4 z-20 select-none bg-slate-900/90 backdrop-blur-md p-2 rounded-full border border-slate-800 shadow-md text-emerald-400 flex items-center justify-center font-black text-xs w-9 h-9 hover:bg-slate-800 transition-colors" title="True North Alignment">
-            <span class="text-[11px] font-mono font-black text-emerald-400">N ⇧</span>
-          </div>
+        <!-- Dynamic Animated SVG Railway Map Canvas (ULTRA-CLEAN LIGHT GREY THEME) -->
+        <div class="relative w-full h-[430px] rounded-2xl bg-gradient-to-br from-slate-100 via-slate-150 to-slate-100 border border-slate-200 overflow-hidden shadow-sm flex items-center justify-center">
+          <!-- Ultra-Subtle Light Precision Grid Overlays -->
+          <div class="absolute inset-0 bg-[radial-gradient(#94a3b8_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-20"></div>
+          <div class="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:96px_96px] opacity-20"></div>
 
           <svg class="w-full h-full object-cover relative z-10" viewBox="0 0 900 420" fill="none">
             <defs>
               <linearGradient id="activeTrackGlow" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stop-color="#10b981" />
-                <stop offset="40%" stop-color="#38bdf8" />
-                <stop offset="80%" stop-color="#6366f1" />
-                <stop offset="100%" stop-color="#a855f7" />
+                <stop offset="0%" stop-color="#059669" />
+                <stop offset="35%" stop-color="#0284c7" />
+                <stop offset="70%" stop-color="#4f46e5" />
+                <stop offset="100%" stop-color="#7c3aed" />
               </linearGradient>
 
               <radialGradient id="trainHalo" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
-                <stop offset="50%" stop-color="#0284c7" stop-opacity="0.3" />
+                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.7" />
+                <stop offset="50%" stop-color="#0284c7" stop-opacity="0.2" />
                 <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0" />
               </radialGradient>
 
               <!-- Radar Sonar Ring Pulse -->
               <radialGradient id="radarScan" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
+                <stop offset="0%" stop-color="#10b981" stop-opacity="0.25" />
                 <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
               </radialGradient>
             </defs>
 
-            <!-- MAP BACKGROUND GEOGRAPHY: MOUNTAIN CONTOURS & TERRAIN -->
-            <path d="M 0 170 Q 180 90 340 150 T 700 100 T 900 130 L 900 420 L 0 420 Z" fill="#1e293b" opacity="0.35" />
-            <path d="M 0 250 Q 220 190 440 240 T 800 170 T 900 200 L 900 420 L 0 420 Z" fill="#0f172a" opacity="0.45" />
+            <!-- DYNAMIC ROUTE-SPECIFIC TERRAIN CONTOURS -->
+            <path v-for="(tp, tpIdx) in routeGeography.terrain" :key="'t-'+tpIdx" :d="tp.d" :fill="tp.fill" :opacity="tp.opacity" />
 
-            <!-- Urban Zone City Footprints -->
-            <circle cx="50" cy="325" r="38" fill="#334155" opacity="0.25" />
-            <circle cx="315" cy="215" r="30" fill="#334155" opacity="0.25" />
-            <circle cx="585" cy="165" r="34" fill="#334155" opacity="0.25" />
-            <circle cx="850" cy="75" r="42" fill="#334155" opacity="0.25" />
+            <!-- Dynamic Urban Zone Footprints -->
+            <circle v-for="(uz, uzIdx) in routeGeography.urbanZones" :key="'u-'+uzIdx" :cx="uz.cx" :cy="uz.cy" :r="uz.r" fill="#94a3b8" opacity="0.15" />
 
-            <!-- MAP BACKGROUND GEOGRAPHY: YAMUNA / CHAMBAL RIVER CURVE -->
-            <path
-              d="M 430 0 C 460 110 420 210 480 300 C 510 350 470 390 490 420"
-              stroke="#0284c7"
-              stroke-width="26"
-              fill="none"
-              opacity="0.2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M 430 0 C 460 110 420 210 480 300 C 510 350 470 390 490 420"
-              stroke="#38bdf8"
-              stroke-width="9"
-              fill="none"
-              opacity="0.4"
-            />
-            <text x="450" y="115" fill="#38bdf8" font-size="9.5" font-weight="900" font-family="sans-serif" opacity="0.8">
-              Chambal River
-            </text>
+            <!-- DYNAMIC ROUTE-SPECIFIC RIVER -->
+            <template v-if="routeGeography.river">
+              <path :d="routeGeography.river.d" stroke="#2563eb" stroke-width="26" fill="none" opacity="0.15" stroke-linecap="round" />
+              <path :d="routeGeography.river.d" stroke="#3b82f6" stroke-width="8" fill="none" opacity="0.7" />
+              <text :x="routeGeography.river.labelX" :y="routeGeography.river.labelY" fill="#1d4ed8" font-size="10" font-weight="900" font-family="sans-serif" opacity="0.9">
+                {{ routeGeography.river.name }}
+              </text>
+            </template>
 
-            <!-- Station Loop Sidings & Yard Lines (Edge-to-Edge Realistic Junctions) -->
-            <!-- Kota Yard Siding -->
-            <path d="M 250 235 C 300 200 400 200 480 180" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
-            <path d="M 250 235 C 300 200 400 200 480 180" stroke="#334155" stroke-width="8" stroke-dasharray="2 4" stroke-linecap="round" />
-            <path d="M 250 234 C 300 199 400 199 480 179" stroke="#64748b" stroke-width="1.5" />
-            <path d="M 250 236 C 300 201 400 201 480 181" stroke="#64748b" stroke-width="1.5" />
-
-            <!-- Vadodara Junction Yard Siding -->
-            <path d="M 540 180 C 600 140 680 120 770 95" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
-            <path d="M 540 180 C 600 140 680 120 770 95" stroke="#334155" stroke-width="8" stroke-dasharray="2 4" stroke-linecap="round" />
-            <path d="M 540 179 C 600 139 680 119 770 94" stroke="#64748b" stroke-width="1.5" />
-            <path d="M 540 181 C 600 141 680 121 770 96" stroke="#64748b" stroke-width="1.5" />
-
-            <!-- MAIN EDGE-TO-EDGE RAILWAY TRACK LAYERS (X: 40 to 860) -->
+            <!-- MAIN EDGE-TO-EDGE RAILWAY TRACK LAYERS -->
             <!-- Layer 1: Crushed Stone Ballast Bed -->
             <path
               ref="railTrackRef"
               id="live-rail-track"
-              d="M 40 330 C 220 210 440 260 620 160 C 740 70 820 100 860 70"
-              stroke="#0f172a"
-              stroke-width="22"
+              :d="computedTrackPath"
+              stroke="#334155"
+              stroke-width="20"
               fill="none"
               stroke-linecap="round"
             />
             <path
-              d="M 40 330 C 220 210 440 260 620 160 C 740 70 820 100 860 70"
-              stroke="#1e293b"
-              stroke-width="16"
+              :d="computedTrackPath"
+              stroke="#475569"
+              stroke-width="14"
               fill="none"
               stroke-linecap="round"
             />
 
             <!-- Layer 2: Concrete Sleepers / Perpendicular Cross-Ties -->
             <path
-              d="M 40 330 C 220 210 440 260 620 160 C 740 70 820 100 860 70"
-              stroke="#475569"
-              stroke-width="14"
+              :d="computedTrackPath"
+              stroke="#cbd5e1"
+              stroke-width="12"
               stroke-dasharray="2 6"
               fill="none"
               stroke-linecap="round"
             />
-
-            <!-- Layer 3: Left Steel Rail -->
-            <path
-              d="M 40 327 C 220 207 440 257 620 157 C 740 67 820 97 860 67"
-              stroke="#94a3b8"
-              stroke-width="2.5"
-              fill="none"
-            />
-
-            <!-- Layer 4: Right Steel Rail -->
-            <path
-              d="M 40 333 C 220 213 440 263 620 163 C 740 73 820 103 860 73"
-              stroke="#94a3b8"
-              stroke-width="2.5"
-              fill="none"
-            />
-
-            <!-- STEEL GIRDER RAILWAY BRIDGE TRUSS (RIVER CROSSING AT KM 420) -->
-            <g transform="translate(460, 222) rotate(-22)">
-              <rect x="-18" y="-12" width="36" height="24" fill="#1e293b" stroke="#64748b" stroke-width="2" rx="3" />
-              <line x1="-18" y1="-12" x2="18" y2="12" stroke="#64748b" stroke-width="1.5" />
-              <line x1="-18" y1="12" x2="18" y2="-12" stroke="#64748b" stroke-width="1.5" />
-              <text x="0" y="-15" text-anchor="middle" fill="#f8fafc" font-size="7.5" font-weight="900">BRIDGE #42</text>
+            
+            <!-- DYNAMIC BRIDGE TRUSSES -->
+            <g v-for="(br, brIdx) in routeGeography.bridges" :key="'b-'+brIdx"
+              :transform="`translate(${br.x}, ${br.y}) rotate(${br.rot})`">
+              <rect x="-22" y="-14" width="44" height="28" rx="4" fill="#334155" stroke="#0f172a" stroke-width="2" />
+              <line x1="-22" y1="-14" x2="22" y2="14" stroke="#0f172a" stroke-width="1.5" />
+              <line x1="-22" y1="14" x2="22" y2="-14" stroke="#0f172a" stroke-width="1.5" />
+              <text x="0" y="-18" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="900" font-family="sans-serif">{{ br.label }}</text>
             </g>
 
-            <!-- Layer 5: Active Electrified Overhead (OHE) Glowing Line -->
+            <!-- Layer 3: Active Electrified Overhead Glowing Line -->
             <path
-              d="M 40 330 C 220 210 440 260 620 160 C 740 70 820 100 860 70"
+              :d="computedTrackPath"
               stroke="url(#activeTrackGlow)"
               stroke-width="4"
               fill="none"
@@ -277,116 +207,176 @@
               opacity="0.95"
             />
 
-            <!-- Railway Signal Lights & Automatic Block Posts -->
-            <g transform="translate(200, 215)">
+            <!-- Dynamic Railway Signal Lights -->
+            <g v-for="(sig, sigIdx) in routeGeography.signals" :key="'s-'+sigIdx"
+              :transform="`translate(${sig.x}, ${sig.y})`">
               <line x1="0" y1="0" x2="0" y2="-16" stroke="#475569" stroke-width="2" />
-              <circle cx="0" cy="-16" r="4" fill="#10b981" />
-              <circle cx="0" cy="-16" r="8" fill="#10b981" fill-opacity="0.3" class="animate-pulse" />
-            </g>
-            <g transform="translate(430, 210)">
-              <line x1="0" y1="0" x2="0" y2="-16" stroke="#475569" stroke-width="2" />
-              <circle cx="0" cy="-16" r="4" fill="#f59e0b" />
-            </g>
-            <g transform="translate(660, 130)">
-              <line x1="0" y1="0" x2="0" y2="-16" stroke="#475569" stroke-width="2" />
-              <circle cx="0" cy="-16" r="4" fill="#10b981" />
+              <circle cx="0" cy="-16" r="4" :fill="sig.color" />
+              <circle v-if="sig.pulse" cx="0" cy="-16" r="8" :fill="sig.color" fill-opacity="0.4" class="animate-pulse" />
             </g>
 
-            <!-- Station Nodes & Telemetry Rings with High-Contrast Dark Mode Badges -->
+            <!-- Station Nodes & Straight Clean Floating Callout Badges (Alternating Top/Bottom for Zero Clutter) -->
             <g
               v-for="(st, stIdx) in currentWaypoints"
               :key="stIdx"
               :transform="`translate(${st.x}, ${st.y})`"
               class="group cursor-pointer"
             >
-              <!-- Outer Distance Radar Ring -->
+              <!-- Outer Distance Ring -->
               <circle
                 cx="0"
                 cy="0"
-                :r="st.isMajor ? '16' : '11'"
+                :r="st.isMajor ? '15' : '11'"
                 fill="none"
-                :stroke="st.status === 'passed' ? '#10b981' : st.status === 'approaching' ? '#f59e0b' : '#38bdf8'"
-                stroke-width="1.5"
+                :stroke="st.status === 'passed' ? '#059669' : st.status === 'approaching' ? '#d97706' : '#2563eb'"
+                stroke-width="2"
                 stroke-dasharray="3 3"
-                class="opacity-80"
+                class="opacity-90"
               />
 
-              <!-- Inner Node Point -->
+              <!-- Inner Station Circle -->
               <circle
                 cx="0"
                 cy="0"
                 :r="st.isMajor ? '8' : '5.5'"
-                :fill="st.status === 'passed' ? '#10b981' : st.status === 'approaching' ? '#f59e0b' : '#0f172a'"
-                :stroke="st.status === 'passed' ? '#059669' : st.status === 'approaching' ? '#fbbf24' : '#38bdf8'"
+                :fill="st.status === 'passed' ? '#059669' : st.status === 'approaching' ? '#d97706' : '#ffffff'"
+                :stroke="st.status === 'passed' ? '#047857' : st.status === 'approaching' ? '#b45309' : '#2563eb'"
                 stroke-width="2.5"
                 class="transition-transform group-hover:scale-125"
               />
               <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
 
-              <!-- Sideways Angled Station Callout Badge (-35 Deg Rotation in Cyberpunk Dark Mode) -->
-              <g transform="translate(10, -14)">
-                <!-- Pointer Leader Line from Node to Badge -->
-                <line x1="-10" y1="14" x2="0" y2="0" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2 2" />
+              <!-- Straight Clean Upright Badge (Top for Even Index, Bottom for Odd Index) -->
+              <g :transform="stIdx % 2 === 0 ? 'translate(0, -24)' : 'translate(0, 24)'">
+                <!-- Leader Line -->
+                <line x1="0" y1="0" :x2="0" :y2="stIdx % 2 === 0 ? 14 : -14" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2 2" />
 
-                <!-- Angled Sideways Dark Pill Badge -->
-                <g transform="rotate(-35)">
-                  <rect
-                    x="-4"
-                    y="-13"
-                    :width="st.name.length * 7 + 52"
-                    height="19"
-                    rx="5"
-                    :fill="st.status === 'passed' ? '#064e3b' : st.status === 'approaching' ? '#78350f' : '#0f172a'"
-                    fill-opacity="0.94"
-                    :stroke="st.status === 'passed' ? '#10b981' : st.status === 'approaching' ? '#f59e0b' : '#38bdf8'"
-                    stroke-width="1.5"
-                    class="shadow-md"
-                  />
-                  <text
-                    x="2"
-                    y="0"
-                    text-anchor="start"
-                    :fill="st.status === 'passed' ? '#a7f3d0' : st.status === 'approaching' ? '#fef3c7' : '#e0f2fe'"
-                    font-size="10"
-                    font-weight="900"
-                    class="select-none font-sans tracking-wide"
-                  >
-                    {{ st.name }} ({{ st.code }})
-                  </text>
-                </g>
+                <!-- Straight Upright Floating Pill Badge -->
+                <rect
+                  :x="-((st.name.length * 6.5 + 46) / 2)"
+                  :y="stIdx % 2 === 0 ? -18 : 2"
+                  :width="st.name.length * 6.5 + 46"
+                  height="20"
+                  rx="7"
+                  :fill="st.status === 'passed' ? '#065f46' : st.status === 'approaching' ? '#9a3412' : '#0f172a'"
+                  fill-opacity="0.95"
+                  :stroke="st.status === 'passed' ? '#34d399' : st.status === 'approaching' ? '#fbbf24' : '#60a5fa'"
+                  stroke-width="1.5"
+                  class="shadow-sm"
+                />
+                <text
+                  x="0"
+                  :y="stIdx % 2 === 0 ? -4 : 16"
+                  text-anchor="middle"
+                  fill="#ffffff"
+                  font-size="10"
+                  font-weight="800"
+                  class="select-none font-sans tracking-wide"
+                >
+                  {{ st.name }} ({{ st.code }})
+                </text>
               </g>
             </g>
 
-            <!-- Real Vande Bharat High-Speed Bullet Train Marker with Dynamic Heading Rotation -->
-            <g :transform="`translate(${trainPositionX}, ${trainPositionY}) rotate(${trainRotationAngle})`">
-              <!-- Radar Sonar Wave Pulse -->
-              <circle cx="0" cy="0" r="38" fill="url(#radarScan)" />
-              <circle cx="0" cy="0" r="24" fill="url(#trainHalo)" class="animate-pulse" />
-              <circle cx="0" cy="0" r="14" fill="#0284c7" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2" class="animate-ping" />
+            <!-- SCENIC BEAUTY POINTS OF INTEREST (Clean Floating Pin Icons) -->
+            <g v-for="(poi, poiIdx) in routeScenicPoints" :key="'poi-'+poiIdx"
+              :transform="`translate(${poi.x}, ${poi.y})`"
+              class="cursor-pointer group">
+              <!-- Glow -->
+              <circle cx="0" cy="0" r="15" fill="#f59e0b" opacity="0.15" />
+              <!-- Pin Circle -->
+              <circle cx="0" cy="0" r="11" fill="#fffbeb" stroke="#d97706" stroke-width="2" class="group-hover:scale-125 transition-transform shadow-sm" />
+              <!-- Emoji -->
+              <text x="0" y="4" text-anchor="middle" font-size="11" class="select-none">{{ poi.emoji }}</text>
 
-              <!-- Authentic 3D Vande Bharat High-Speed Train Image from /trainmap.png -->
-              <g transform="scale(-1, 1)">
-                <image
-                  href="/trainmap.png"
-                  x="-48"
-                  y="-26"
-                  width="96"
-                  height="52"
-                  preserveAspectRatio="xMidYMid meet"
-                  class="drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]"
-                />
+              <!-- Clean Mini Label Pill -->
+              <g transform="translate(15, -4)">
+                <rect x="-2" y="-9" :width="poi.name.length * 5.8 + 12" height="17" rx="5"
+                  fill="#ffffff" fill-opacity="0.95" stroke="#d97706" stroke-width="1" class="shadow-2xs" />
+                <text x="4" y="3" fill="#78350f" font-size="8.5" font-weight="800" font-family="sans-serif" class="select-none">
+                  {{ poi.name }}
+                </text>
+              </g>
+              <title>{{ poi.name }} — {{ poi.desc }} ({{ poi.side }})</title>
+            </g>
+
+            <!-- Sleek Modern Circular Vector Train Target Badge -->
+            <g :transform="`translate(${trainPositionX}, ${trainPositionY}) rotate(${trainRotationAngle})`">
+              <!-- Glowing Sonar Ripple Rings -->
+              <circle cx="0" cy="0" r="28" fill="#0284c7" opacity="0.12" />
+              <circle cx="0" cy="0" r="18" fill="#0284c7" opacity="0.25" class="animate-ping" />
+
+              <!-- Main Circular Engine Disc (Dark Navy & Electric Blue Border) -->
+              <g class="drop-shadow-[0_4px_12px_rgba(2,132,199,0.45)] cursor-pointer">
+                <!-- Disc Background -->
+                <circle cx="0" cy="0" r="17" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" />
+                
+                <!-- Vector Bullet Train Silhouette -->
+                <g transform="translate(-1, 0) scale(0.95)">
+                  <!-- Aerodynamic Train Nose & Body -->
+                  <path d="M -10 -6 L 2 -6 C 8 -6 12 -2 12 0 C 12 2 8 6 2 6 L -10 6 Z" fill="#38bdf8" />
+                  <!-- Windshield -->
+                  <path d="M 3 -4 L 8 -4 C 10 -4 11 -2 11 0 C 11 2 10 4 8 4 L 3 4 Z" fill="#0f172a" />
+                  <!-- Side Stripe -->
+                  <line x1="-8" y1="0" x2="3" y2="0" stroke="#0f172a" stroke-width="1.5" />
+                  <!-- Headlight Glow -->
+                  <polygon points="12,-2 18,-6 18,6 12,2" fill="#fef08a" opacity="0.85" />
+                </g>
               </g>
 
-              <!-- Elevated Upright Floating Speed Callout Tag (Stays Level & Upright in Dark Mode) -->
-              <g :transform="`translate(0, -38) rotate(${-trainRotationAngle})`">
-                <line x1="0" y1="8" x2="0" y2="24" stroke="#38bdf8" stroke-width="2" stroke-dasharray="2 2" />
-                <rect x="-38" y="-12" width="76" height="22" rx="7" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" class="shadow-lg shadow-sky-950/60" />
-                <text x="0" y="3" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="900" class="font-sans tracking-wide">
+              <!-- Upright Floating Speed Callout Badge -->
+              <g :transform="`translate(0, -32) rotate(${-trainRotationAngle})`">
+                <line x1="0" y1="6" x2="0" y2="18" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2 2" />
+                <rect x="-34" y="-11" width="68" height="22" rx="7" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" class="shadow-md" />
+                <text x="0" y="3" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-weight="900" class="font-sans tracking-wide">
                   ⚡ {{ currentLiveSpeed }} km/h
                 </text>
               </g>
             </g>
           </svg>
+        </div>
+      </div>
+
+      <!-- WINDOW VIEW SCENIC BEAUTY HIGHLIGHTS SECTION -->
+      <div class="bg-white p-5 rounded-card border border-slate-200 shadow-sm space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🌄</span>
+            <div>
+              <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">
+                Window View Scenic Beauty Highlights
+              </h3>
+              <p class="text-xs text-slate-500 font-semibold">
+                Mountains, rivers &amp; historic landmarks visible from your train window on this route
+              </p>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 rounded-full bg-amber-100/90 text-amber-900 text-xs font-black border border-amber-300 self-start sm:self-auto shadow-2xs">
+            {{ routeScenicPoints.length }} Scenic Spots Synced
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-1">
+          <div
+            v-for="(poi, idx) in routeScenicPoints"
+            :key="idx"
+            class="bg-gradient-to-br from-amber-50/70 via-slate-50 to-orange-50/50 border border-amber-200/80 rounded-xl p-3.5 flex items-start gap-3 hover:border-amber-400 hover:shadow-sm transition-all cursor-pointer group"
+          >
+            <div class="w-10 h-10 rounded-xl bg-white text-xl flex items-center justify-center border border-amber-200 shadow-2xs shrink-0 group-hover:scale-110 transition-transform">
+              {{ poi.emoji }}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1.5">
+                <h4 class="text-xs font-black text-slate-900 truncate">{{ poi.name }}</h4>
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300/80 shrink-0">
+                  {{ poi.side }}
+                </span>
+              </div>
+              <p class="text-[11px] font-medium text-slate-600 mt-1 leading-relaxed">
+                {{ poi.desc }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -442,29 +432,6 @@
           </table>
         </div>
       </div>
-
-      <!-- Moved here from the dashboard. Corridor health is about the network,
-           not about one passenger's trip, so it belongs on the page where the
-           network is the subject. -->
-      <div class="bg-white rounded-card border border-slate-200 shadow-sm p-5 space-y-3">
-        <div class="flex items-center justify-between gap-3">
-          <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Live Network Rail Telemetry</h3>
-          <span class="text-[11px] font-bold text-emerald-600">99.2% Corridor Operational Health</span>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          <div
-            v-for="corridor in journeyStore.networkStatus"
-            :key="corridor.corridor"
-            class="border border-slate-200 rounded-xl p-3"
-          >
-            <p class="text-[11px] font-extrabold text-slate-900">{{ corridor.corridor }}</p>
-            <div class="flex items-center justify-between mt-1">
-              <span class="text-[11px] text-slate-500 font-semibold">Signal: <strong class="text-slate-700">{{ corridor.status }}</strong></span>
-              <span class="text-[11px] font-black text-slate-600">{{ corridor.load }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </AppLayout>
 </template>
@@ -476,6 +443,7 @@ import { useJourneyStore } from '@/stores/useJourneyStore'
 import { MOCK_TRAINS } from '@/data/trains'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { ArrowLeft, Radio, RotateCcw, Train } from 'lucide-vue-next'
+import { ROUTE_MAP_DATA } from '@/data/routeMapData'
 
 const router = useRouter()
 const journeyStore = useJourneyStore()
@@ -555,60 +523,86 @@ const currentWaypoints = computed(() => {
 
   if (routeText.includes('MMCT') && routeText.includes('NDLS') || trainNum === '19020' || trainNum === '12952' || trainNum === '12954' || trainNum === '12925' || trainNum === '12903') {
     return [
-      { name: 'New Delhi', code: 'NDLS', x: 50, y: 325, platform: '16', arrTime: '04:55 PM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
-      { name: 'Mathura Jn', code: 'MTJ', x: 180, y: 245, platform: '3', arrTime: '06:40 PM', halt: '2 mins', dist: 141, status: 'passed', statusText: 'Passed', isMajor: false },
-      { name: 'Kota Jn', code: 'KOTA', x: 315, y: 215, platform: '1', arrTime: '09:00 PM', halt: '10 mins', dist: 465, status: 'passed', statusText: 'Passed 09:10 PM', isMajor: true },
+      { name: 'New Delhi', code: 'NDLS', x: 40, y: 220, platform: '16', arrTime: '04:55 PM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Mathura Jn', code: 'MTJ', x: 175, y: 195, platform: '3', arrTime: '06:40 PM', halt: '2 mins', dist: 141, status: 'passed', statusText: 'Passed', isMajor: false },
+      { name: 'Kota Jn', code: 'KOTA', x: 310, y: 235, platform: '1', arrTime: '09:00 PM', halt: '10 mins', dist: 465, status: 'passed', statusText: 'Passed 09:10 PM', isMajor: true },
       { name: 'Ratlam Jn', code: 'RTM', x: 450, y: 190, platform: '4', arrTime: '12:05 AM', halt: '5 mins', dist: 731, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
-      { name: 'Vadodara Jn', code: 'BRC', x: 585, y: 165, platform: '2', arrTime: '03:20 AM', halt: '10 mins', dist: 992, status: 'upcoming', statusText: 'Next Major Junction', isMajor: true },
-      { name: 'Surat', code: 'ST', x: 720, y: 110, platform: '1', arrTime: '04:45 AM', halt: '5 mins', dist: 1122, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: true },
-      { name: 'Mumbai Central', code: 'MMCT', x: 850, y: 75, platform: '1', arrTime: '08:35 AM', halt: 'Destination', dist: 1386, status: 'upcoming', statusText: 'Destination', isMajor: true }
+      { name: 'Vadodara Jn', code: 'BRC', x: 590, y: 230, platform: '2', arrTime: '03:20 AM', halt: '10 mins', dist: 992, status: 'upcoming', statusText: 'Next Major Junction', isMajor: true },
+      { name: 'Surat', code: 'ST', x: 725, y: 195, platform: '1', arrTime: '04:45 AM', halt: '5 mins', dist: 1122, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: true },
+      { name: 'Mumbai Central', code: 'MMCT', x: 860, y: 215, platform: '1', arrTime: '08:35 AM', halt: 'Destination', dist: 1386, status: 'upcoming', statusText: 'Destination', isMajor: true }
+    ]
+  }
+
+  // CHENNAI CENTRAL → KSR BENGALURU (South Corridor)
+  if ((routeText.includes('MAS') && routeText.includes('SBC')) || trainNum === '20607' || trainNum === '12027' || trainNum === '12639') {
+    return [
+      { name: 'Chennai Central', code: 'MAS', x: 40, y: 220, platform: '6', arrTime: '05:50 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Arakkonam Jn', code: 'AJJ', x: 175, y: 195, platform: '3', arrTime: '07:00 AM', halt: '2 mins', dist: 68, status: 'passed', statusText: 'Passed', isMajor: false },
+      { name: 'Katpadi Jn', code: 'KPD', x: 310, y: 235, platform: '1', arrTime: '07:45 AM', halt: '5 mins', dist: 130, status: 'passed', statusText: 'Passed', isMajor: true },
+      { name: 'Jolarpettai', code: 'JTJ', x: 450, y: 190, platform: '2', arrTime: '08:30 AM', halt: '3 mins', dist: 195, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
+      { name: 'Bangarpet', code: 'BWT', x: 590, y: 230, platform: '1', arrTime: '09:15 AM', halt: '2 mins', dist: 260, status: 'upcoming', statusText: 'Next Stop', isMajor: false },
+      { name: 'Whitefield', code: 'WFD', x: 725, y: 195, platform: '1', arrTime: '09:50 AM', halt: '2 mins', dist: 315, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: false },
+      { name: 'KSR Bengaluru', code: 'SBC', x: 860, y: 215, platform: '4', arrTime: '10:20 AM', halt: 'Destination', dist: 360, status: 'upcoming', statusText: 'Destination', isMajor: true }
+    ]
+  }
+
+  // NEW DELHI → HOWRAH (Eastern Railway Corridor)
+  if (routeText.includes('HWH') || trainNum === '12302' || trainNum === '12488' || trainNum === '15910' || trainNum === '12304') {
+    return [
+      { name: 'New Delhi', code: 'NDLS', x: 40, y: 220, platform: '5', arrTime: '04:55 PM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Kanpur Central', code: 'CNB', x: 175, y: 195, platform: '3', arrTime: '09:12 PM', halt: '5 mins', dist: 440, status: 'passed', statusText: 'Passed', isMajor: true },
+      { name: 'Prayagraj Jn', code: 'PRYJ', x: 310, y: 235, platform: '2', arrTime: '11:30 PM', halt: '5 mins', dist: 634, status: 'passed', statusText: 'Passed', isMajor: true },
+      { name: 'Gaya Jn', code: 'GAYA', x: 450, y: 190, platform: '1', arrTime: '02:10 AM', halt: '5 mins', dist: 900, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
+      { name: 'Dhanbad Jn', code: 'DHN', x: 590, y: 230, platform: '4', arrTime: '05:15 AM', halt: '3 mins', dist: 1040, status: 'upcoming', statusText: 'Next Stop', isMajor: true },
+      { name: 'Asansol Jn', code: 'ASN', x: 725, y: 195, platform: '2', arrTime: '06:45 AM', halt: '2 mins', dist: 1115, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: true },
+      { name: 'Howrah Jn', code: 'HWH', x: 860, y: 215, platform: '9', arrTime: '09:55 AM', halt: 'Destination', dist: 1445, status: 'upcoming', statusText: 'Destination', isMajor: true }
     ]
   }
 
   if (routeText.includes('SBC') || trainNum === '11301' || trainNum === '11013') {
     return [
-      { name: 'Mumbai Central', code: 'MMCT', x: 50, y: 325, platform: '1', arrTime: '08:10 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
-      { name: 'Kalyan Jn', code: 'KYN', x: 180, y: 245, platform: '5', arrTime: '09:12 AM', halt: '3 mins', dist: 54, status: 'passed', statusText: 'Passed', isMajor: false },
-      { name: 'Pune Jn', code: 'PUNE', x: 315, y: 215, platform: '2', arrTime: '11:45 AM', halt: '5 mins', dist: 192, status: 'passed', statusText: 'Passed', isMajor: true },
+      { name: 'Mumbai Central', code: 'MMCT', x: 40, y: 220, platform: '1', arrTime: '08:10 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Kalyan Jn', code: 'KYN', x: 175, y: 195, platform: '5', arrTime: '09:12 AM', halt: '3 mins', dist: 54, status: 'passed', statusText: 'Passed', isMajor: false },
+      { name: 'Pune Jn', code: 'PUNE', x: 310, y: 235, platform: '2', arrTime: '11:45 AM', halt: '5 mins', dist: 192, status: 'passed', statusText: 'Passed', isMajor: true },
       { name: 'Solapur Jn', code: 'SUR', x: 450, y: 190, platform: '1', arrTime: '04:00 PM', halt: '5 mins', dist: 454, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
-      { name: 'Kalaburagi', code: 'KLBG', x: 585, y: 165, platform: '2', arrTime: '06:15 PM', halt: '3 mins', dist: 567, status: 'upcoming', statusText: 'Next Stop', isMajor: false },
-      { name: 'Anantapur', code: 'ATP', x: 720, y: 110, platform: '1', arrTime: '01:30 AM', halt: '2 mins', dist: 940, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: false },
-      { name: 'KSR Bengaluru', code: 'SBC', x: 850, y: 75, platform: '4', arrTime: '06:00 AM', halt: 'Destination', dist: 1134, status: 'upcoming', statusText: 'Destination', isMajor: true }
+      { name: 'Kalaburagi', code: 'KLBG', x: 590, y: 230, platform: '2', arrTime: '06:15 PM', halt: '3 mins', dist: 567, status: 'upcoming', statusText: 'Next Stop', isMajor: false },
+      { name: 'Anantapur', code: 'ATP', x: 725, y: 195, platform: '1', arrTime: '01:30 AM', halt: '2 mins', dist: 940, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: false },
+      { name: 'KSR Bengaluru', code: 'SBC', x: 860, y: 215, platform: '4', arrTime: '06:00 AM', halt: 'Destination', dist: 1134, status: 'upcoming', statusText: 'Destination', isMajor: true }
     ]
   }
 
   if (routeText.includes('PUNE') || trainNum === '12123' || trainNum === '12125' || trainNum === '11007' || trainNum === '11009') {
     return [
-      { name: 'Mumbai Central', code: 'MMCT', x: 50, y: 325, platform: '1', arrTime: '05:10 PM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
-      { name: 'Dadar', code: 'DR', x: 180, y: 245, platform: '8', arrTime: '05:22 PM', halt: '3 mins', dist: 9, status: 'passed', statusText: 'Passed', isMajor: false },
-      { name: 'Thane', code: 'TNA', x: 315, y: 215, platform: '5', arrTime: '05:45 PM', halt: '2 mins', dist: 34, status: 'passed', statusText: 'Passed', isMajor: false },
+      { name: 'Mumbai Central', code: 'MMCT', x: 40, y: 220, platform: '1', arrTime: '05:10 PM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Dadar', code: 'DR', x: 175, y: 195, platform: '8', arrTime: '05:22 PM', halt: '3 mins', dist: 9, status: 'passed', statusText: 'Passed', isMajor: false },
+      { name: 'Thane', code: 'TNA', x: 310, y: 235, platform: '5', arrTime: '05:45 PM', halt: '2 mins', dist: 34, status: 'passed', statusText: 'Passed', isMajor: false },
       { name: 'Kalyan Jn', code: 'KYN', x: 450, y: 190, platform: '6', arrTime: '06:08 PM', halt: '2 mins', dist: 54, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
-      { name: 'Karjat', code: 'KJT', x: 585, y: 165, platform: '1', arrTime: '06:48 PM', halt: '2 mins', dist: 100, status: 'upcoming', statusText: 'Banker Engine Attachment', isMajor: false },
-      { name: 'Lonavala', code: 'LNL', x: 720, y: 110, platform: '1', arrTime: '07:33 PM', halt: '2 mins', dist: 128, status: 'upcoming', statusText: 'Ghat Peak Clearance', isMajor: true },
-      { name: 'Pune Jn', code: 'PUNE', x: 850, y: 75, platform: '1', arrTime: '08:25 PM', halt: 'Destination', dist: 192, status: 'upcoming', statusText: 'Destination', isMajor: true }
+      { name: 'Karjat', code: 'KJT', x: 590, y: 230, platform: '1', arrTime: '06:48 PM', halt: '2 mins', dist: 100, status: 'upcoming', statusText: 'Banker Engine Attachment', isMajor: false },
+      { name: 'Lonavala', code: 'LNL', x: 725, y: 195, platform: '1', arrTime: '07:33 PM', halt: '2 mins', dist: 128, status: 'upcoming', statusText: 'Ghat Peak Clearance', isMajor: true },
+      { name: 'Pune Jn', code: 'PUNE', x: 860, y: 215, platform: '1', arrTime: '08:25 PM', halt: 'Destination', dist: 192, status: 'upcoming', statusText: 'Destination', isMajor: true }
     ]
   }
 
   if (routeText.includes('ADI') || trainNum === '82902' || trainNum === '12934' || trainNum === '12902') {
     return [
-      { name: 'Ahmedabad Jn', code: 'ADI', x: 50, y: 325, platform: '5', arrTime: '06:40 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
-      { name: 'Nadiad Jn', code: 'ND', x: 210, y: 240, platform: '1', arrTime: '07:19 AM', halt: '2 mins', dist: 46, status: 'passed', statusText: 'Passed', isMajor: false },
-      { name: 'Vadodara Jn', code: 'BRC', x: 370, y: 200, platform: '2', arrTime: '08:03 AM', halt: '5 mins', dist: 100, status: 'passed', statusText: 'Passed', isMajor: true },
-      { name: 'Surat', code: 'ST', x: 530, y: 160, platform: '1', arrTime: '09:35 AM', halt: '5 mins', dist: 230, status: 'approaching', statusText: 'Approaching', isMajor: true },
-      { name: 'Vapi', code: 'VAPI', x: 690, y: 115, platform: '2', arrTime: '10:46 AM', halt: '2 mins', dist: 325, status: 'upcoming', statusText: 'Next Stop', isMajor: false },
-      { name: 'Mumbai Central', code: 'MMCT', x: 850, y: 75, platform: '1', arrTime: '01:05 PM', halt: 'Destination', dist: 493, status: 'upcoming', statusText: 'Destination', isMajor: true }
+      { name: 'Ahmedabad Jn', code: 'ADI', x: 40, y: 220, platform: '5', arrTime: '06:40 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Nadiad Jn', code: 'ND', x: 175, y: 195, platform: '1', arrTime: '07:19 AM', halt: '2 mins', dist: 46, status: 'passed', statusText: 'Passed', isMajor: false },
+      { name: 'Vadodara Jn', code: 'BRC', x: 310, y: 235, platform: '2', arrTime: '08:03 AM', halt: '5 mins', dist: 100, status: 'passed', statusText: 'Passed', isMajor: true },
+      { name: 'Surat', code: 'ST', x: 450, y: 190, platform: '1', arrTime: '09:35 AM', halt: '5 mins', dist: 230, status: 'approaching', statusText: 'Approaching', isMajor: true },
+      { name: 'Vapi', code: 'VAPI', x: 590, y: 230, platform: '2', arrTime: '10:46 AM', halt: '2 mins', dist: 325, status: 'upcoming', statusText: 'Next Stop', isMajor: false },
+      { name: 'Mumbai Central', code: 'MMCT', x: 860, y: 215, platform: '1', arrTime: '01:05 PM', halt: 'Destination', dist: 493, status: 'upcoming', statusText: 'Destination', isMajor: true }
     ]
   }
 
   if (routeText.includes('BSB') || trainNum === '22436' || trainNum === '14258' || trainNum === '12392') {
     return [
-      { name: 'New Delhi', code: 'NDLS', x: 50, y: 325, platform: '16', arrTime: '06:00 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
-      { name: 'Mathura Jn', code: 'MTJ', x: 180, y: 245, platform: '3', arrTime: '07:25 AM', halt: '2 mins', dist: 141, status: 'passed', statusText: 'Passed 07:27 AM', isMajor: false },
-      { name: 'Agra Cantt', code: 'AGC', x: 315, y: 215, platform: '1', arrTime: '08:05 AM', halt: '5 mins', dist: 195, status: 'passed', statusText: 'Passed 08:10 AM', isMajor: true },
+      { name: 'New Delhi', code: 'NDLS', x: 40, y: 220, platform: '16', arrTime: '06:00 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+      { name: 'Mathura Jn', code: 'MTJ', x: 175, y: 195, platform: '3', arrTime: '07:25 AM', halt: '2 mins', dist: 141, status: 'passed', statusText: 'Passed 07:27 AM', isMajor: false },
+      { name: 'Agra Cantt', code: 'AGC', x: 310, y: 235, platform: '1', arrTime: '08:05 AM', halt: '5 mins', dist: 195, status: 'passed', statusText: 'Passed 08:10 AM', isMajor: true },
       { name: 'Gwalior Jn', code: 'GWL', x: 450, y: 190, platform: '2', arrTime: '09:20 AM', halt: '3 mins', dist: 313, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
-      { name: 'Jhansi Jn', code: 'VGLJ', x: 585, y: 165, platform: '4', arrTime: '10:45 AM', halt: '8 mins', dist: 410, status: 'upcoming', statusText: 'Next Stop (ETA 10:45 AM)', isMajor: true },
-      { name: 'Kanpur Central', code: 'CNB', x: 720, y: 110, platform: '5', arrTime: '12:30 PM', halt: '10 mins', dist: 630, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: true },
-      { name: 'Varanasi Jn', code: 'BSB', x: 850, y: 75, platform: '1', arrTime: '02:00 PM', halt: 'Destination', dist: 780, status: 'upcoming', statusText: 'Destination', isMajor: true }
+      { name: 'Jhansi Jn', code: 'VGLJ', x: 590, y: 230, platform: '4', arrTime: '10:45 AM', halt: '8 mins', dist: 410, status: 'upcoming', statusText: 'Next Stop (ETA 10:45 AM)', isMajor: true },
+      { name: 'Kanpur Central', code: 'CNB', x: 725, y: 195, platform: '5', arrTime: '12:30 PM', halt: '10 mins', dist: 630, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: true },
+      { name: 'Varanasi Jn', code: 'BSB', x: 860, y: 215, platform: '1', arrTime: '02:00 PM', halt: 'Destination', dist: 780, status: 'upcoming', statusText: 'Destination', isMajor: true }
     ]
   }
 
@@ -618,19 +612,65 @@ const currentWaypoints = computed(() => {
   const toCodeStr = activeTripDetails.value.to.match(/\(([^)]+)\)/)?.[1] || 'ARR'
 
   return [
-    { name: fromNameStr, code: fromCodeStr, x: 50, y: 325, platform: '1', arrTime: '07:00 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
-    { name: 'Junction A', code: 'JNC-A', x: 180, y: 245, platform: '2', arrTime: '08:15 AM', halt: '2 mins', dist: 85, status: 'passed', statusText: 'Passed', isMajor: false },
-    { name: 'Intermediate Hub B', code: 'HUB-B', x: 315, y: 215, platform: '3', arrTime: '09:40 AM', halt: '5 mins', dist: 190, status: 'passed', statusText: 'Passed', isMajor: true },
+    { name: fromNameStr, code: fromCodeStr, x: 40, y: 220, platform: '1', arrTime: '07:00 AM', halt: 'Origin', dist: 0, status: 'passed', statusText: 'Departed On Time', isMajor: true },
+    { name: 'Junction A', code: 'JNC-A', x: 175, y: 195, platform: '2', arrTime: '08:15 AM', halt: '2 mins', dist: 85, status: 'passed', statusText: 'Passed', isMajor: false },
+    { name: 'Intermediate Hub B', code: 'HUB-B', x: 310, y: 235, platform: '3', arrTime: '09:40 AM', halt: '5 mins', dist: 190, status: 'passed', statusText: 'Passed', isMajor: true },
     { name: 'Mid Corridor C', code: 'MID-C', x: 450, y: 190, platform: '1', arrTime: '11:10 AM', halt: '3 mins', dist: 310, status: 'approaching', statusText: 'Approaching Platform', isMajor: true },
-    { name: 'Major Junction D', code: 'JNC-D', x: 585, y: 165, platform: '4', arrTime: '01:00 PM', halt: '8 mins', dist: 460, status: 'upcoming', statusText: 'Next Major Stop', isMajor: true },
-    { name: 'Sector Control E', code: 'SEC-E', x: 720, y: 110, platform: '2', arrTime: '02:45 PM', halt: '5 mins', dist: 610, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: false },
-    { name: toNameStr, code: toCodeStr, x: 850, y: 75, platform: '1', arrTime: '04:30 PM', halt: 'Destination', dist: 750, status: 'upcoming', statusText: 'Destination', isMajor: true }
+    { name: 'Major Junction D', code: 'JNC-D', x: 590, y: 230, platform: '4', arrTime: '01:00 PM', halt: '8 mins', dist: 460, status: 'upcoming', statusText: 'Next Major Stop', isMajor: true },
+    { name: 'Sector Control E', code: 'SEC-E', x: 725, y: 195, platform: '2', arrTime: '02:45 PM', halt: '5 mins', dist: 610, status: 'upcoming', statusText: 'Scheduled Stop', isMajor: false },
+    { name: toNameStr, code: toCodeStr, x: 860, y: 215, platform: '1', arrTime: '04:30 PM', halt: 'Destination', dist: 750, status: 'upcoming', statusText: 'Destination', isMajor: true }
   ]
 })
 
 const currentNextStationName = computed(() => {
   const upcoming = currentWaypoints.value.find(w => w.status === 'approaching' || w.status === 'upcoming')
   return upcoming ? `${upcoming.name} (${upcoming.code})` : 'Destination'
+})
+
+// Resolve current route key for map data lookup
+const currentRouteKey = computed(() => {
+  const rt = `${activeTripDetails.value.from} ${activeTripDetails.value.to} ${activeTripDetails.value.trainName}`.toUpperCase()
+  const tn = activeTripDetails.value.trainNumber || ''
+  if ((rt.includes('MAS') && rt.includes('SBC')) || tn === '20607' || tn === '12027' || tn === '12639') return 'MAS_SBC'
+  if (rt.includes('HWH') || tn === '12302' || tn === '12488' || tn === '15910' || tn === '12304') return 'NDLS_HWH'
+  if ((rt.includes('MMCT') && rt.includes('NDLS')) || tn === '19020' || tn === '12952' || tn === '12954' || tn === '12925' || tn === '12903' || tn === '12904' || tn === '12926' || tn === '11057') return 'NDLS_MMCT'
+  if (rt.includes('SBC') || tn === '11301' || tn === '11013') return 'MMCT_SBC'
+  if (rt.includes('PUNE') || tn === '12123' || tn === '12125' || tn === '11007' || tn === '11009') return 'MMCT_PUNE'
+  if (rt.includes('ADI') || tn === '82902' || tn === '12934' || tn === '12902' || tn === '20902') return 'ADI_MMCT'
+  if (rt.includes('BSB') || tn === '22436' || tn === '14258' || tn === '12392') return 'NDLS_BSB'
+  return 'FALLBACK'
+})
+
+const routeScenicPoints = computed(() => {
+  return (ROUTE_MAP_DATA[currentRouteKey.value] || ROUTE_MAP_DATA.FALLBACK).scenic
+})
+
+const routeGeography = computed(() => {
+  const data = ROUTE_MAP_DATA[currentRouteKey.value] || ROUTE_MAP_DATA.FALLBACK
+  return { terrain: data.terrain, river: data.river, bridges: data.bridges, signals: data.signals, urbanZones: data.urbanZones }
+})
+
+// Dynamic SVG track path — Catmull-Rom spline extending flush from edge to edge (0px to 900px)
+const computedTrackPath = computed(() => {
+  const pts = currentWaypoints.value
+  if (pts.length < 2) return ''
+  const first = pts[0]
+  const last = pts[pts.length - 1]
+  
+  let d = `M 0 ${first.y + 12} C 12 ${first.y + 6}, 24 ${first.y + 2}, ${first.x} ${first.y}`
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)]
+    const p1 = pts[i]
+    const p2 = pts[i + 1]
+    const p3 = pts[Math.min(pts.length - 1, i + 2)]
+    const cp1x = Math.round(p1.x + (p2.x - p0.x) / 6)
+    const cp1y = Math.round(p1.y + (p2.y - p0.y) / 6)
+    const cp2x = Math.round(p2.x - (p3.x - p1.x) / 6)
+    const cp2y = Math.round(p2.y - (p3.y - p1.y) / 6)
+    d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p2.x} ${p2.y}`
+  }
+  d += ` C ${last.x + 12} ${last.y - 6}, 888 ${last.y - 12}, 900 ${last.y - 15}`
+  return d
 })
 
 // Dynamic Live Speed Bounded Strictly Between 90 km/h and 130 km/h

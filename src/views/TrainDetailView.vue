@@ -48,9 +48,6 @@
             <p class="text-lg sm:text-xl font-black text-slate-900 leading-tight">
               {{ verdict.phrase }}
             </p>
-            <p class="text-xs sm:text-sm text-slate-600 font-semibold mt-1.5 leading-relaxed">
-              {{ reason }}
-            </p>
             <p class="text-[11px] text-slate-400 font-bold mt-2">
               Based on {{ historyDays }} days of running history on this route.
             </p>
@@ -58,31 +55,7 @@
         </div>
       </div>
 
-      <!-- The high-stakes selector lives here rather than on the dashboard,
-           because this is the only place its effect is visible: change it and
-           the warnings below rewrite themselves. A setting whose consequence
-           appears on a different page is a setting in the wrong place. -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
-        <p class="text-sm font-extrabold text-slate-900">What is this trip for?</p>
-        <p class="text-xs text-slate-600 font-medium mt-1 mb-3">
-          We weigh the risks differently when being late would cost you something fixed.
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <button
-            v-for="option in journeyStore.highStakesTypes"
-            :key="option.id"
-            @click="journeyStore.setStakesType(option.id)"
-            :class="[
-              'px-3.5 py-2 rounded-lg text-xs font-bold border transition-all cursor-pointer',
-              journeyStore.selectedStakesType === option.id
-                ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-            ]"
-          >
-            {{ option.label }}
-          </button>
-        </div>
-      </div>
+
 
       <!-- ============ LAYER 2: WHAT COULD GO WRONG ============
            Named in the words a passenger would use, not "predictive analytics".

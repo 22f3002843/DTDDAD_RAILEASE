@@ -9,7 +9,6 @@
       </div>
       <div class="min-w-0">
         <p :class="['text-sm font-black leading-tight', scoreTextClass]">{{ verdict.phrase }}</p>
-        <p class="text-[11px] text-slate-500 font-semibold mt-0.5 leading-snug">{{ reason }}</p>
         <p v-if="buffer" class="text-[11px] font-extrabold text-slate-700 mt-1">{{ buffer }}</p>
       </div>
     </div>

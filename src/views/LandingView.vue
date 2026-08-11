@@ -19,14 +19,8 @@
     <!-- Top Navbar with Clean RailEase Logo & Top-Right Sign In Button -->
     <Navbar @openLogin="showAuthModal = true" />
 
-    <!-- ==================== AMBIENT LIGHT & PROMINENT VANDE BHARAT HERO WATERMARK ==================== -->
+    <!-- ==================== AMBIENT LIGHT HERO BACKDROP ==================== -->
     <div class="absolute inset-x-0 top-0 h-[750px] overflow-hidden pointer-events-none z-0">
-      <!-- High-Speed Vande Bharat Train Background Image Layer (z-0 stacking index) -->
-      <img
-        src="/vande_bharat_bg.png"
-        alt="Vande Bharat Express Train Background"
-        class="w-full h-full object-cover object-center opacity-30 filter contrast-125 brightness-105 select-none"
-      />
 
       <!-- Soft Gradient Overlay to blend bottom into slate-50 -->
       <div class="absolute inset-0 bg-gradient-to-b from-slate-50/40 via-slate-50/60 to-slate-50"></div>

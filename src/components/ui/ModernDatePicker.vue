@@ -23,7 +23,7 @@
     >
       <div
         v-if="isOpen"
-        class="absolute left-0 mt-1.5 z-[100] w-64 bg-white rounded-xl shadow-xl border border-slate-200 p-3 space-y-2.5 animate-fade-in text-slate-900"
+        class="absolute left-0 mt-1.5 z-[999] w-64 bg-white rounded-xl shadow-2xl border border-slate-200 p-3 space-y-2.5 animate-fade-in text-slate-900"
       >
         <!-- Header Month Navigator -->
         <div class="flex items-center justify-between text-xs font-black text-slate-900 pb-1.5 border-b border-slate-100">

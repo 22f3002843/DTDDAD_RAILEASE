@@ -1,16 +1,16 @@
 <template>
   <div class="space-y-4 font-sans">
     <!-- COMPACT HIGH-DENSITY HERO SEARCH CARD WITH SUBTLE GRADIENT -->
-    <div class="bg-gradient-to-r from-rail-50 via-sky-50/90 to-indigo-50/70 text-slate-900 rounded-2xl shadow-soft border border-rail-200/80 relative z-20 overflow-hidden">
-      <!-- Ambient Glowing Wave Auras -->
-      <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rail-500/15 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute left-1/3 top-0 w-64 h-64 bg-sky-400/15 rounded-full blur-2xl pointer-events-none"></div>
-
-      <!-- Top Decorative Accent Bar -->
-      <div class="h-1 bg-gradient-to-r from-rail-600 via-sky-500 to-indigo-600"></div>
+    <div class="bg-gradient-to-r from-rail-50 via-sky-50/90 to-indigo-50/70 text-slate-900 rounded-2xl shadow-soft border border-rail-200/80 relative z-40">
+      <!-- Ambient Glowing Wave Auras & Decorative Accent Bar (Clipped safely inside background) -->
+      <div class="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+        <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rail-500/15 rounded-full blur-3xl"></div>
+        <div class="absolute left-1/3 top-0 w-64 h-64 bg-sky-400/15 rounded-full blur-2xl"></div>
+        <div class="h-1 bg-gradient-to-r from-rail-600 via-sky-500 to-indigo-600"></div>
+      </div>
 
       <!-- Integrated Header Strip: Description + Train # Quick Search + Compact PNR Sync -->
-      <div class="px-4 sm:px-5 py-2.5 bg-white/70 backdrop-blur-xs border-b border-rail-200/60 flex flex-col lg:flex-row lg:items-center justify-between gap-3 relative z-10">
+      <div class="px-4 sm:px-5 py-2.5 bg-white/70 backdrop-blur-xs border-b border-rail-200/60 flex flex-col lg:flex-row lg:items-center justify-between gap-3 relative z-10 rounded-t-2xl">
         <div class="flex items-center gap-2 text-xs font-semibold text-slate-700">
           <div class="w-6 h-6 rounded-lg bg-rail-100/80 border border-rail-200 flex items-center justify-center shrink-0">
             <Train class="w-3.5 h-3.5 text-rail-700" />
@@ -64,10 +64,10 @@
       </div>
 
       <!-- Main Original Station Controls Padding -->
-      <div class="p-4 sm:p-5">
+      <div class="p-4 sm:p-5 relative z-20">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 items-end">
           <!-- From Station -->
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-3 relative z-30">
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">FROM</label>
             <CustomSelect
               v-model="fromCode"
@@ -80,7 +80,7 @@
           </div>
 
           <!-- Swap Button -->
-          <div class="lg:col-span-1 flex justify-center pb-0.5">
+          <div class="lg:col-span-1 flex justify-center pb-0.5 relative z-20">
             <button
               type="button"
               @click="searchStore.swapStations()"
@@ -92,7 +92,7 @@
           </div>
 
           <!-- To Station -->
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-3 relative z-20">
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">TO</label>
             <CustomSelect
               v-model="toCode"
@@ -105,13 +105,13 @@
           </div>
 
           <!-- Travel Date -->
-          <div class="lg:col-span-2">
+          <div class="lg:col-span-2 relative z-20">
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">DATE</label>
             <ModernDatePicker v-model="searchStore.travelDate" />
           </div>
 
           <!-- Class & Quota Dropdowns -->
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-3 relative z-10">
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">CLASS &amp; QUOTA</label>
             <div class="grid grid-cols-2 gap-1.5">
               <CustomSelect
@@ -163,101 +163,150 @@
         v-for="train in searchStore.filteredTrains"
         :key="train.id"
         :class="[
-          'bg-white rounded-xl border transition-all overflow-hidden shadow-sm hover:shadow-md',
-          isTrainSelectedAsActive(train) ? 'ring-2 ring-emerald-500 border-emerald-500' : 'border-slate-200'
+          'bg-white rounded-2xl border transition-all shadow-soft hover:shadow-md',
+          isTrainSelectedAsActive(train) ? 'ring-2 ring-emerald-500 border-emerald-500' : 'border-slate-200/90'
         ]"
       >
-        <!-- Card Header -->
-        <div class="bg-slate-50/80 border-b border-slate-200/80 px-5 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <!-- Left Info Section -->
-          <div class="space-y-2 min-w-0">
-            <!-- Train Name, Number & Historical Reason -->
+        <!-- Row 1: Train Identity + Schedule + Gauge -->
+        <div class="px-5 py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100">
+          <!-- Left: Train Name, Number, Star Rating (with info i), Runs, Telemetry -->
+          <div class="flex flex-col gap-2 min-w-0">
             <div class="flex flex-wrap items-center gap-2.5">
-              <span :class="['w-2.5 h-2.5 rounded-full shrink-0', getReliabilityDotClass(train)]"></span>
-              <h3 class="text-base font-black text-slate-900 uppercase hover:text-rail-600 transition-colors flex items-center gap-2">
-                <span>{{ train.name }}</span>
-                <span class="text-xs font-extrabold bg-rail-50 text-rail-700 border border-rail-200 px-2 py-0.5 rounded-md">({{ train.number }})</span>
+              <span :class="['w-3 h-3 rounded-full shrink-0', getReliabilityDotClass(train)]"></span>
+              <h3 class="text-lg font-black text-slate-900 uppercase hover:text-rail-600 transition-colors">
+                {{ train.name }}
               </h3>
+              <span class="text-sm font-extrabold bg-rail-50 text-rail-700 border border-rail-200 px-2.5 py-0.5 rounded-lg">({{ train.number }})</span>
 
-              <!-- Layer 2: why the score is what it is, stated in plain English. -->
-              <span class="text-[11px] text-slate-500 font-semibold hidden lg:inline">
-                {{ getReliabilityReason(train) }}
-              </span>
+              <!-- 5-STAR VISUAL RATING WITH (i) INLINE POPOVER -->
+              <div class="relative flex items-center gap-1.5 bg-amber-50/90 border border-amber-200/90 px-2 py-0.5 rounded-lg text-amber-900 text-xs font-black shadow-2xs">
+                <!-- Visual 5 Stars -->
+                <div class="flex items-center gap-px">
+                  <template v-for="starIdx in 5" :key="starIdx">
+                    <Star v-if="starIdx <= Math.floor(getTrainRating(train))" class="w-3 h-3 fill-amber-400 text-amber-400" />
+                    <StarHalf v-else-if="starIdx === Math.ceil(getTrainRating(train)) && getTrainRating(train) % 1 >= 0.3" class="w-3 h-3 fill-amber-400 text-amber-400" />
+                    <Star v-else class="w-3 h-3 text-amber-200" />
+                  </template>
+                </div>
+                <span class="text-amber-800">{{ getTrainRating(train) }}</span>
+                <button
+                  type="button"
+                  @click.stop="toggleRatingPopover(train.id)"
+                  class="w-4 h-4 rounded-full bg-amber-200/80 hover:bg-amber-300 text-amber-950 flex items-center justify-center text-[10px] font-black transition-colors cursor-pointer"
+                  title="View Rating Parameters"
+                >
+                  i
+                </button>
+
+                <!-- Small Floating Info Box -->
+                <div
+                  v-if="activeRatingPopoverId === train.id"
+                  class="absolute left-0 top-full mt-1.5 w-64 bg-white rounded-xl border border-amber-200 shadow-2xl p-3 z-[999] text-slate-900 space-y-2 font-sans"
+                  @click.stop
+                >
+                  <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                    <span class="text-[11px] font-black text-amber-950 flex items-center gap-1">
+                      <Star class="w-3 h-3 fill-amber-400 text-amber-400" /> Rating Breakdown
+                    </span>
+                    <button @click="activeRatingPopoverId = null" class="text-slate-400 hover:text-slate-700 text-xs font-bold cursor-pointer">✕</button>
+                  </div>
+                  <div class="space-y-2 text-[11px] font-extrabold text-slate-700">
+                    <div v-for="param in [
+                      { label: '🍱 Food & Catering', val: getRatingBreakdown(train).food },
+                      { label: '🧹 Cleanliness', val: getRatingBreakdown(train).cleanliness },
+                      { label: '⏱️ On-Time', val: getRatingBreakdown(train).punctuality },
+                      { label: '💬 Community', val: getRatingBreakdown(train).community }
+                    ]" :key="param.label" class="flex items-center justify-between gap-2">
+                      <span class="shrink-0">{{ param.label }}</span>
+                      <div class="flex items-center gap-1">
+                        <div class="flex items-center gap-px">
+                          <template v-for="s in 5" :key="s">
+                            <Star v-if="s <= Math.floor(param.val)" class="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+                            <StarHalf v-else-if="s === Math.ceil(param.val) && param.val % 1 >= 0.3" class="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+                            <Star v-else class="w-2.5 h-2.5 text-slate-200" />
+                          </template>
+                        </div>
+                        <span class="text-amber-700 font-black text-[10px]">{{ param.val }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <!-- Sub-row: Days Running -->
-            <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
-              <span class="bg-slate-100/90 border border-slate-200/90 px-2.5 py-0.5 rounded-md text-slate-600 text-[11px]">
-                Runs: <strong class="text-slate-900 font-black">{{ train.runsOn.join(' ') }}</strong>
+            <div class="flex flex-wrap items-center gap-2.5 pl-5">
+              <span class="bg-slate-50 border border-slate-200/90 px-2.5 py-1 rounded-lg text-slate-600 text-xs font-bold">
+                Runs: <strong class="text-slate-900 font-black">{{ train.runsOn.join(' · ') }}</strong>
               </span>
-              <span class="text-[11px] text-slate-500 font-semibold lg:hidden">
-                {{ getReliabilityReason(train) }}
-              </span>
+              <button
+                @click="openTelemetryModal(train, 'trend')"
+                class="group inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-rail-500/30 bg-white text-rail-600 hover:bg-rail-600 hover:text-white hover:border-transparent text-xs font-bold transition-all duration-200 cursor-pointer"
+              >
+                <TrendingUp class="w-3.5 h-3.5 group-hover:text-white transition-colors" />
+                <span>30-Day Telemetry</span>
+              </button>
             </div>
           </div>
 
-          <!-- Right Actions Section: Shifted cleanly to the right side with Gauge Meter -->
-          <div class="flex items-center gap-3 shrink-0 self-start md:self-center">
-            <!-- Dynamic Speedometer Gauge Meter placed cleanly on the Right -->
+          <!-- Center: Departure → Duration → Arrival -->
+          <div class="flex items-center gap-4 shrink-0">
+            <div class="text-center">
+              <div class="text-xl font-black text-slate-900 tracking-tight leading-none">{{ train.deptTime }}</div>
+              <div class="text-[11px] font-bold text-rail-600 uppercase mt-1">{{ train.fromCode }}</div>
+            </div>
+
+            <div class="flex flex-col items-center gap-1">
+              <div class="text-xs font-black text-slate-500">{{ train.duration }}</div>
+              <div class="w-24 h-[2px] bg-gradient-to-r from-rail-400 via-slate-300 to-rail-400 rounded-full relative">
+                <div class="absolute -right-1 -top-[3px] w-2 h-2 rounded-full bg-rail-500"></div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <div class="text-xl font-black text-slate-900 tracking-tight leading-none">{{ train.arrTime }}</div>
+              <div class="text-[11px] font-bold text-rail-600 uppercase mt-1">{{ train.toCode }}</div>
+            </div>
+          </div>
+
+          <!-- Right: Gauge + (i) Button INLINE POPOVER -->
+          <div class="relative flex items-center gap-2 shrink-0">
             <ReliabilityGaugeMeter
               :score="confidenceOf(train)"
-              :width="90"
-              :height="45"
+              :width="100"
+              :height="50"
               :showLabels="true"
             />
-
-            <!-- 30-Day Telemetry Button -->
             <button
-              @click="openTelemetryModal(train, 'trend')"
-              class="group inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 border-rail-500/30 bg-white text-rail-600 hover:bg-gradient-to-r hover:from-rail-600 hover:to-emerald-500 hover:text-white hover:border-transparent text-xs font-black transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-lg hover:shadow-emerald-500/20 hover:scale-[1.04] active:scale-95"
+              type="button"
+              @click.stop="togglePredictionPopover(train.id)"
+              class="w-6 h-6 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-slate-950 font-black text-xs flex items-center justify-center border border-amber-300 shadow-md hover:scale-110 transition-all cursor-pointer shrink-0"
+              title="View Prediction Parameters"
             >
-              <TrendingUp class="w-4 h-4 text-rail-600 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
-              <span>30-Day Telemetry</span>
+              i
             </button>
 
-            <!-- What Could Go Wrong Button -->
-            <button
-              @click="router.push(`/train/${train.number}`)"
-              class="group inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 border-indigo-500/40 bg-indigo-50/80 text-indigo-700 hover:bg-gradient-to-r hover:from-rail-600 hover:to-emerald-500 hover:text-white hover:border-transparent text-xs font-black transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-lg hover:shadow-emerald-500/20 hover:scale-[1.04] active:scale-95"
+            <!-- Small Floating Info Box (Opens Upward) -->
+            <div
+              v-if="activePredictionPopoverId === train.id"
+              class="absolute right-0 bottom-full mb-1.5 w-60 bg-white rounded-xl border border-rail-200 shadow-2xl p-3 z-[999] text-slate-900 space-y-2 font-sans"
+              @click.stop
             >
-              <span>What could go wrong?</span>
-              <ChevronRight class="w-4 h-4 text-indigo-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
-            </button>
-          </div>
-        </div>
-
-        <!-- Schedule & Timing Line -->
-        <div class="p-5 flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-100">
-          <div class="text-left">
-            <div class="text-2xl font-black text-slate-900 tracking-tight">{{ train.deptTime }}</div>
-            <div class="text-xs font-black text-rail-600 uppercase mt-0.5">
-              {{ train.fromName }} ({{ train.fromCode }})
-            </div>
-          </div>
-
-          <div class="flex flex-col items-center justify-center flex-1 max-w-xs px-2">
-            <div class="text-[11px] font-extrabold text-slate-600 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-200 shadow-2xs mb-1">
-              {{ train.duration }}
-            </div>
-            <div class="w-full flex items-center gap-2 my-1">
-              <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
-              <div class="flex-1 h-1 bg-slate-200 rounded-full relative">
-                <div class="absolute left-0 top-0 bottom-0 bg-rail-500 rounded-full" style="width: 50%;"></div>
+              <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                <span class="text-[11px] font-black text-rail-900 flex items-center gap-1">
+                  <Gauge class="w-3 h-3 text-rail-600" /> Score Parameters
+                </span>
+                <button @click="activePredictionPopoverId = null" class="text-slate-400 hover:text-slate-700 text-xs font-bold cursor-pointer">✕</button>
               </div>
-              <span class="w-2.5 h-2.5 rounded-full bg-rail-600"></span>
-            </div>
-          </div>
-
-          <div class="text-right">
-            <div class="text-2xl font-black text-slate-900 tracking-tight">{{ train.arrTime }}</div>
-            <div class="text-xs font-black text-rail-600 uppercase mt-0.5">
-              {{ train.toName }} ({{ train.toCode }})
+              <div class="space-y-1.5 text-[11px] font-extrabold text-slate-700">
+                <div class="flex justify-between items-center"><span>📅 30-Day Punctuality</span><span class="text-rail-700 font-black">50% Weight</span></div>
+                <div class="flex justify-between items-center"><span>🚥 Track Congestion</span><span class="text-rail-700 font-black">30% Weight</span></div>
+                <div class="flex justify-between items-center"><span>🚉 Departure Delay Risk</span><span class="text-rail-700 font-black">20% Weight</span></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Class Availability & Action Row -->
-        <div class="p-4 bg-slate-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Row 2: Class Availability + Action -->
+        <div class="px-5 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
           <!-- Class Pills -->
           <div class="flex flex-wrap items-center gap-2">
             <div
@@ -449,7 +498,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSearchStore } from '@/stores/useSearchStore'
 import { useJourneyStore } from '@/stores/useJourneyStore'
@@ -465,7 +514,9 @@ import {
   getReliabilityBadgeClass,
   getReliabilityDotClass,
   getReliabilityTextClass,
-  getReliabilityReason
+  getReliabilityReason,
+  getTrainRating,
+  getRatingBreakdown
 } from '@/services/reliability'
 import {
   Train,
@@ -475,7 +526,9 @@ import {
   ChevronRight,
   Search,
   CheckCircle2,
-  Star
+  Star,
+  StarHalf,
+  Gauge
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -485,6 +538,25 @@ const journeyStore = useJourneyStore()
 const pnrSearchInput = ref('')
 const selectedTrainForTelemetry = ref(null)
 const modalTabMode = ref('trend')
+const activeRatingPopoverId = ref(null)
+const activePredictionPopoverId = ref(null)
+
+function toggleRatingPopover(trainId) {
+  activePredictionPopoverId.value = null
+  activeRatingPopoverId.value = activeRatingPopoverId.value === trainId ? null : trainId
+}
+
+function togglePredictionPopover(trainId) {
+  activeRatingPopoverId.value = null
+  activePredictionPopoverId.value = activePredictionPopoverId.value === trainId ? null : trainId
+}
+
+onMounted(() => {
+  window.addEventListener('click', () => {
+    activeRatingPopoverId.value = null
+    activePredictionPopoverId.value = null
+  })
+})
 
 const stationOptions = computed(() =>
   POPULAR_STATIONS.map(st => ({ label: `${st.city} (${st.code}) - ${st.name}`, value: st.code }))

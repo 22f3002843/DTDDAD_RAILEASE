@@ -60,8 +60,8 @@ export const MOCK_TRAINS = [
       { code: '3A', name: 'Third AC', price: 1380, status: 'RAC 14', statusType: 'rac' },
       { code: 'SL', name: 'Sleeper Class', price: 510, status: 'GNWL 48', statusType: 'wl' }
     ],
-    features: ['Frequent Track Clearance Delays', 'Not Recommended for Urgent Travel'],
-    runsOn: ['Daily'],
+    features: ['Tri-Weekly Service', 'Frequent Track Clearance Delays', 'Not Recommended for Urgent Travel'],
+    runsOn: ['Mon', 'Wed', 'Fri'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +78m', delayMinutes: 78, originDept: '+35m', destArr: '+78m', avgSpeed: '58 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +45m', delayMinutes: 45, originDept: '+20m', destArr: '+45m', avgSpeed: '64 km/h' },
@@ -131,8 +131,8 @@ export const MOCK_TRAINS = [
       { code: 'CC', name: 'AC Chair Car', price: 380, status: 'RAC 12', statusType: 'rac' },
       { code: '2S', name: 'Second Seating', price: 95, status: 'REGRET', statusType: 'regret' }
     ],
-    features: ['Frequent Ghat Section Holds', 'Low Priority Track'],
-    runsOn: ['Daily'],
+    features: ['4-Day Special Service', 'Frequent Ghat Section Holds', 'Low Priority Line'],
+    runsOn: ['Tue', 'Thu', 'Sat', 'Sun'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +54m', delayMinutes: 54, originDept: '+20m', destArr: '+54m', avgSpeed: '48 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +85m', delayMinutes: 85, originDept: '+40m', destArr: '+85m', avgSpeed: '42 km/h' },
@@ -200,8 +200,8 @@ export const MOCK_TRAINS = [
       { code: '3A', name: 'Third AC', price: 1150, status: 'RAC 18', statusType: 'rac' },
       { code: 'SL', name: 'Sleeper', price: 430, status: 'WL 65', statusType: 'wl' }
     ],
-    features: ['High Congestion Route', 'Heavy Section Delays'],
-    runsOn: ['Daily'],
+    features: ['Tri-Weekly Express', 'High Congestion Route', 'Heavy Section Delays'],
+    runsOn: ['Mon', 'Wed', 'Fri'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +140m', delayMinutes: 140, originDept: '+60m', destArr: '+140m', avgSpeed: '42 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +95m', delayMinutes: 95, originDept: '+40m', destArr: '+95m', avgSpeed: '48 km/h' },
@@ -272,8 +272,8 @@ export const MOCK_TRAINS = [
       { code: '2A', name: 'Second AC', price: 2880, status: 'AVAILABLE-24', statusType: 'available' },
       { code: '3A', name: 'Third AC', price: 2380, status: 'AVAILABLE-105', statusType: 'available' },
     ],
-    features: ['Tejas Smart Rake', 'Pantry Catering', 'CCTV Security'],
-    runsOn: ['Daily'],
+    features: ['4-Day Tejas Rake', 'Tejas Smart Rake', 'Pantry Catering', 'CCTV Security'],
+    runsOn: ['Mon', 'Tue', 'Thu', 'Sat'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '88 km/h' },
       { day: 'Tue, 04 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '89 km/h' },
@@ -336,8 +336,8 @@ export const MOCK_TRAINS = [
       { code: '3A', name: 'Third AC', price: 1480, status: 'AVAILABLE-28', statusType: 'available' },
       { code: 'SL', name: 'Sleeper', price: 550, status: 'WL 42', statusType: 'wl' }
     ],
-    features: ['Long Distance Express', 'High Capacity'],
-    runsOn: ['Daily'],
+    features: ['4-Day Superfast', 'Long Distance Express', 'High Capacity'],
+    runsOn: ['Mon', 'Wed', 'Thu', 'Sat'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +28m', delayMinutes: 28, originDept: '+10m', destArr: '+28m', avgSpeed: '68 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +15m', delayMinutes: 15, originDept: '+5m', destArr: '+15m', avgSpeed: '71 km/h' }
@@ -365,8 +365,8 @@ export const MOCK_TRAINS = [
       { code: '3A', name: 'Third AC', price: 1650, status: 'GNWL 88', statusType: 'wl' },
       { code: 'SL', name: 'Sleeper', price: 610, status: 'REGRET', statusType: 'regret' }
     ],
-    features: ['Many Intermediate Stops', 'Low Priority Line'],
-    runsOn: ['Daily'],
+    features: ['Tri-Weekly Service', 'Many Intermediate Stops', 'Low Priority Line'],
+    runsOn: ['Tue', 'Thu', 'Sat'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +160m', delayMinutes: 160, originDept: '+45m', destArr: '+160m', avgSpeed: '42 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +130m', delayMinutes: 130, originDept: '+60m', destArr: '+130m', avgSpeed: '45 km/h' },
@@ -402,8 +402,8 @@ export const MOCK_TRAINS = [
       { code: '2A', name: 'Second AC', price: 3150, status: 'AVAILABLE-22', statusType: 'available' },
       { code: '3A', name: 'Third AC', price: 2650, status: 'AVAILABLE-94', statusType: 'available' }
     ],
-    features: ['King of ER', 'WiFi Onboard', 'Hot Gourmet Meals'],
-    runsOn: ['Daily'],
+    features: ['4-Day Premium Service', 'King of ER', 'WiFi Onboard', 'Hot Gourmet Meals'],
+    runsOn: ['Mon', 'Wed', 'Fri', 'Sun'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '91 km/h' },
       { day: 'Tue, 04 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '92 km/h' }
@@ -431,8 +431,8 @@ export const MOCK_TRAINS = [
       { code: '3A', name: 'Third AC', price: 1320, status: 'WL 94', statusType: 'wl' },
       { code: 'SL', name: 'Sleeper Class', price: 490, status: 'REGRET', statusType: 'regret' }
     ],
-    features: ['Heavy Freight Bottleneck Zone', 'Frequent 4+ Hour Delays'],
-    runsOn: ['Daily'],
+    features: ['Tri-Weekly Express', 'Heavy Freight Bottleneck Zone', 'Frequent 4+ Hour Delays'],
+    runsOn: ['Mon', 'Thu', 'Sat'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +240m', delayMinutes: 240, originDept: '+90m', destArr: '+240m', avgSpeed: '38 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +180m', delayMinutes: 180, originDept: '+65m', destArr: '+180m', avgSpeed: '42 km/h' },
@@ -499,8 +499,8 @@ export const MOCK_TRAINS = [
       { code: '3A', name: 'Third AC', price: 1580, status: 'GNWL 75', statusType: 'wl' },
       { code: 'SL', name: 'Sleeper Class', price: 590, status: 'REGRET', statusType: 'regret' }
     ],
-    features: ['Slow Freight Corridor', 'Heavy Intermediate Delays'],
-    runsOn: ['Daily'],
+    features: ['Weekend Special', 'Slow Freight Corridor', 'Heavy Intermediate Delays'],
+    runsOn: ['Sat', 'Sun'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'Delayed +190m', delayMinutes: 190, originDept: '+75m', destArr: '+190m', avgSpeed: '40 km/h' },
       { day: 'Tue, 04 Aug', status: 'Delayed +160m', delayMinutes: 160, originDept: '+60m', destArr: '+160m', avgSpeed: '43 km/h' },
@@ -594,8 +594,8 @@ export const MOCK_TRAINS = [
       { code: 'EC', name: 'Executive Chair', price: 2120, status: 'AVAILABLE-15', statusType: 'available' },
       { code: 'CC', name: 'AC Chair Car', price: 1180, status: 'AVAILABLE-85', statusType: 'available' }
     ],
-    features: ['Dinner Included', 'Executive Comfort'],
-    runsOn: ['Mon', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    features: ['Tri-Weekly Shatabdi', 'Dinner Included', 'Executive Comfort'],
+    runsOn: ['Tue', 'Thu', 'Sat'],
     historyLogs: [
       { day: 'Mon, 03 Aug', status: 'On Time', delayMinutes: 0, originDept: 'On Time', destArr: 'On Time', avgSpeed: '92 km/h' }
     ]

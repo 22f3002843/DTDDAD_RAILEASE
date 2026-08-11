@@ -18,7 +18,7 @@ export default {
           700: '#1E40AF',
           800: '#1E3A8A',
           900: '#0F172A', // Text Dark
-          bg: '#F1F5F9',  // Cool grey canvas background
+          bg: '#D0DAE9',  // Deep blue-tinted slate canvas — white cards pop with strong contrast
           card: '#FFFFFF',
         }
       },
@@ -31,8 +31,8 @@ export default {
         sans: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
-        'soft-lg': '0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04)',
+        'soft': '0 2px 12px -2px rgba(15, 23, 42, 0.08), 0 1px 4px -1px rgba(15, 23, 42, 0.05)',
+        'soft-lg': '0 8px 28px -4px rgba(15, 23, 42, 0.10), 0 4px 12px -2px rgba(15, 23, 42, 0.06)',
         'glow': '0 0 25px -5px rgba(37, 99, 235, 0.3)',
       }
     },

@@ -113,23 +113,11 @@
               <p class="text-[11px] text-blue-100 font-semibold mt-1">See where it is now</p>
             </button>
 
-            <button
-              v-if="matchedTrain"
-              @click="router.push(`/train/${activeTrip.trainNumber}`)"
-              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-rail-400 hover:shadow-sm transition-all cursor-pointer"
-            >
-              <div class="flex items-center gap-2">
-                <AlertTriangle :class="['w-4 h-4', riskCount ? 'text-amber-500' : 'text-slate-400']" />
-                <span class="text-xs font-black text-slate-900">What could go wrong?</span>
-              </div>
-              <p class="text-[11px] text-slate-500 font-semibold mt-1">
-                {{ riskCount ? `${riskCount} thing${riskCount === 1 ? '' : 's'} to know` : 'Nothing flagged' }}
-              </p>
-            </button>
+
 
             <button
-              @click="selectedTrip = activeTrip"
-              class="group text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-rail-400 hover:shadow-sm transition-all cursor-pointer"
+              @click="showInlineTripDetails = !showInlineTripDetails"
+              :class="['group text-left p-3.5 rounded-xl border transition-all cursor-pointer', showInlineTripDetails ? 'bg-rail-50 border-rail-400 ring-2 ring-rail-500/20' : 'bg-white border-slate-200 hover:border-rail-400 hover:shadow-sm']"
             >
               <div class="flex items-center gap-2">
                 <Ticket class="w-4 h-4 text-slate-400" />
@@ -149,6 +137,102 @@
               <p class="text-[11px] text-slate-500 font-semibold mt-1">Find another way there</p>
             </button>
           </div>
+
+          <!-- INLINE TRIP DETAILS EXPANDABLE PANEL (NO OVERLAY, OVER THERE ONLY) -->
+          <transition
+            enter-active-class="transition duration-250 ease-out"
+            enter-from-class="opacity-0 -translate-y-2 scale-[0.99]"
+            enter-to-class="opacity-100 translate-y-0 scale-100"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="opacity-100 translate-y-0 scale-100"
+            leave-to-class="opacity-0 -translate-y-2 scale-[0.99]"
+          >
+            <div
+              v-if="showInlineTripDetails && activeTrip"
+              class="mt-3.5 bg-slate-50/90 rounded-2xl border border-rail-200/90 p-4 space-y-3 shadow-sm text-left font-sans"
+            >
+              <!-- Header Row -->
+              <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-black border border-emerald-300">
+                    PNR: {{ activeTrip.pnr }}
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-rail-100 text-rail-800 text-[11px] font-black">
+                    {{ activeTrip.status }}
+                  </span>
+                  <span class="text-xs font-black text-slate-800">
+                    Coach B1 • Seat 24 (Selected for RailEase Safeguards)
+                  </span>
+                </div>
+
+                <button
+                  @click="showInlineTripDetails = false"
+                  class="text-slate-400 hover:text-slate-700 text-xs font-bold px-2.5 py-1 rounded-lg hover:bg-slate-200/60 transition-colors cursor-pointer"
+                >
+                  Close ✕
+                </button>
+              </div>
+
+              <!-- 2-Column Inline Layout -->
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 text-xs">
+                <!-- Left Column: Intelligence Insights & Gauge -->
+                <div class="md:col-span-5 space-y-3 flex flex-col justify-between">
+                  <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-2xs">
+                    <div>
+                      <span class="text-slate-400 block text-[10px] font-black uppercase">Reliability Score</span>
+                      <span class="text-slate-900 font-black text-xs">Route Confidence</span>
+                    </div>
+                    <ReliabilityGaugeMeter
+                      :score="parseInt(activeTrip.routeReliability) || 92"
+                      :width="85"
+                      :height="42"
+                      :showLabels="true"
+                    />
+                  </div>
+
+                  <div v-if="activeTrip.predictionInsights" class="bg-white p-3 rounded-xl border border-slate-200 space-y-1 shadow-2xs flex-1 flex flex-col justify-center">
+                    <div class="font-black text-rail-800 uppercase flex items-center gap-1 text-[10px]">
+                      <Sparkles class="w-3.5 h-3.5 text-rail-600" />
+                      <span>RailEase Intelligence Insights</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700 font-medium text-[11px]">
+                      <li v-for="(ins, iIdx) in activeTrip.predictionInsights" :key="iIdx">
+                        {{ ins }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Right Column: Timeline Step Progress -->
+                <div class="md:col-span-7 bg-white p-3 rounded-xl border border-slate-200 space-y-1.5 shadow-2xs">
+                  <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-wider">Journey Progress Timeline</h4>
+                  <div class="space-y-1.5">
+                    <div
+                      v-for="(step, sIdx) in activeTrip.timeline"
+                      :key="sIdx"
+                      class="flex items-center gap-2.5 text-xs"
+                    >
+                      <div
+                        :class="[
+                          'w-4 h-4 rounded-full flex items-center justify-center font-black text-[9px] shrink-0',
+                          step.completed ? 'bg-emerald-500 text-white' :
+                          step.active ? 'bg-rail-600 text-white animate-pulse' : 'bg-slate-200 text-slate-500'
+                        ]"
+                      >
+                        {{ sIdx + 1 }}
+                      </div>
+                      <div class="flex-1 flex items-center justify-between border-b border-slate-100 pb-0.5">
+                        <span :class="step.active ? 'font-black text-slate-900' : 'font-semibold text-slate-700'" class="text-[11px]">
+                          {{ step.label }}
+                        </span>
+                        <span class="text-[10px] text-slate-400 font-extrabold">{{ step.time }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
         </div>
       </div>
 
@@ -195,14 +279,8 @@
 
           <div v-if="resolveWatched(entry)" class="flex flex-wrap gap-2">
             <button
-              @click="router.push(`/train/${entry.number}`)"
-              class="px-3.5 py-2 rounded-lg bg-rail-500 hover:bg-rail-600 text-white text-xs font-extrabold cursor-pointer transition-colors shadow-sm"
-            >
-              What could go wrong?
-            </button>
-            <button
               @click="router.push('/live-status')"
-              class="px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-extrabold cursor-pointer transition-colors"
+              class="px-3.5 py-2 rounded-lg bg-rail-500 hover:bg-rail-600 text-white text-xs font-extrabold cursor-pointer transition-colors shadow-sm"
             >
               Live status
             </button>
@@ -314,13 +392,14 @@ import RiskCard from '@/components/common/RiskCard.vue'
 import AuthWidget from '@/components/common/AuthWidget.vue'
 import TripDetailsModal from '@/components/common/TripDetailsModal.vue'
 import ReliabilityBadge from '@/components/common/ReliabilityBadge.vue'
+import ReliabilityGaugeMeter from '@/components/common/ReliabilityGaugeMeter.vue'
 import RouteStrip from '@/components/common/RouteStrip.vue'
 import { generateRiskCards } from '@/services/predictions'
 import { getRouteWaypoints } from '@/services/routes'
 import { getRealisticArrival } from '@/services/reliability'
 import { getHistory } from '@/services/history'
 import { minutesUntilDeparture, describeWait } from '@/services/recovery'
-import { Compass, X, Bell, ChevronRight, AlertTriangle, Ticket } from 'lucide-vue-next'
+import { Compass, X, Bell, ChevronRight, AlertTriangle, Ticket, Sparkles } from 'lucide-vue-next'
 
 const router = useRouter()
 const journeyStore = useJourneyStore()
@@ -328,6 +407,7 @@ const searchStore = useSearchStore()
 const watchStore = useWatchStore()
 const showAuthModal = ref(false)
 const selectedTrip = ref(null)
+const showInlineTripDetails = ref(false)
 
 const activeTrip = computed(() => journeyStore.activeTrip)
 const waypoints = computed(() => getRouteWaypoints(activeTrip.value))
