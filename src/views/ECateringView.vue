@@ -115,110 +115,101 @@
           </button>
         </div>
 
-        <!-- RADIAL GAUGE METER VISUALIZATION WITH DYNAMIC MOVING WAVES -->
-        <div class="flex flex-col md:flex-row items-center gap-6 bg-slate-950 text-white p-6 rounded-2xl border border-slate-800 shadow-md relative overflow-hidden">
-          <!-- Background Moving Wave Aura -->
-          <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <!-- RADIAL GAUGE METER VISUALIZATION WITH BLUISH-PURPLE LIGHT GRADIENT BACKGROUND -->
+        <div ref="meterCardRef" class="flex flex-col md:flex-row items-center gap-6 bg-gradient-to-br from-indigo-50/90 via-purple-50/60 to-sky-50/80 text-slate-900 p-6 rounded-2xl border border-indigo-200/80 shadow-sm relative overflow-hidden">
+          <!-- Background Soft Indigo/Purple Light Orb -->
+          <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-indigo-300/30 rounded-full blur-3xl pointer-events-none"></div>
 
-          <!-- Semi-Circular Radial SVG Speedometer Gauge Meter with Animated Waves -->
-          <div class="relative w-48 h-28 flex flex-col items-center justify-end shrink-0 select-none pt-1 z-10">
-            <svg class="w-48 h-26 overflow-visible" viewBox="0 0 200 115">
+          <!-- Apple / Stripe Style Modern Concentric Circular Ring Meter UI (Dynamic Scroll Animation) -->
+          <div class="relative w-44 h-44 flex items-center justify-center shrink-0 select-none z-10">
+            <svg class="w-44 h-44 overflow-visible" viewBox="0 0 160 160">
               <defs>
-                <linearGradient id="foodGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#ef4444" />
-                  <stop offset="35%" stop-color="#f59e0b" />
-                  <stop offset="70%" stop-color="#38bdf8" />
-                  <stop offset="100%" stop-color="#10b981" />
+                <linearGradient id="appleRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#10b981" />
+                  <stop offset="45%" stop-color="#0284c7" />
+                  <stop offset="90%" stop-color="#6366f1" />
                 </linearGradient>
 
-                <radialGradient id="sonarWaveGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
-                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
-                </radialGradient>
-
-                <filter id="gaugeShadow" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.5" />
+                <filter id="ringGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0284c7" flood-opacity="0.3" />
                 </filter>
               </defs>
 
-              <!-- Dynamic Sonar Wave Radial Rings (Pulsing & Rotating) -->
-              <circle cx="100" cy="100" r="88" fill="url(#sonarWaveGlow)" class="animate-pulse" />
-              <circle cx="100" cy="100" r="74" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.35" class="animate-spin" style="transform-origin: 100px 100px; animation-duration: 16s;" />
-              <circle cx="100" cy="100" r="62" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="6 12" opacity="0.25" class="animate-spin" style="transform-origin: 100px 100px; animation-duration: 10s; animation-direction: reverse;" />
+              <!-- Subtle Background Soft Halo Circle -->
+              <circle cx="80" cy="80" r="70" fill="#f8fafc" opacity="0.6" />
 
-              <!-- Outer Gauge Track Arc (Upward Arch) -->
+              <!-- Outer Dashed Micro Accent Track (Slow Animated Rotation) -->
+              <circle cx="80" cy="80" r="74" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4 8" class="animate-spin" style="transform-origin: 80px 80px; animation-duration: 25s;" />
+
+              <!-- Base Background Ring Track (280 Degree Arc) -->
               <path
-                d="M 20 100 A 80 80 0 0 1 180 100"
+                d="M 33 127 A 66 66 0 1 1 127 127"
                 fill="none"
-                stroke="#1e293b"
-                stroke-width="14"
+                stroke="#e2e8f0"
+                stroke-width="12"
                 stroke-linecap="round"
               />
 
-              <!-- Active Rating Progress Arc (96% / 4.8 Rating) -->
+              <!-- Active Glowing Ring Arc (Dynamic Stroke Offset Animation) -->
               <path
-                d="M 20 100 A 80 80 0 0 1 174 65"
+                d="M 33 127 A 66 66 0 1 1 127 127"
                 fill="none"
-                stroke="url(#foodGaugeGrad)"
-                stroke-width="14"
+                stroke="url(#appleRingGrad)"
+                stroke-width="12"
                 stroke-linecap="round"
-                filter="url(#gaugeShadow)"
+                stroke-dasharray="322.5"
+                :stroke-dashoffset="arcDashOffset"
+                filter="url(#ringGlow)"
+                class="transition-all duration-[1600ms] ease-out"
               />
 
-              <!-- Dynamic Electric Moving Wave Pulse overlay on active arc -->
-              <path
-                d="M 20 100 A 80 80 0 0 1 174 65"
-                fill="none"
-                stroke="#ffffff"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-dasharray="8 16"
-                opacity="0.75"
-                class="animate-pulse"
-              />
-
-              <!-- Tick Marks -->
-              <line x1="20" y1="100" x2="30" y2="100" stroke="#64748b" stroke-width="2" />
-              <line x1="100" y1="20" x2="100" y2="30" stroke="#64748b" stroke-width="2" />
-              <line x1="180" y1="100" x2="170" y2="100" stroke="#64748b" stroke-width="2" />
-
-              <!-- Animated Needle Pivot Point at (100, 100) -->
-              <g transform="translate(100, 100) rotate(73)">
-                <!-- Needle Line pointing up (-Y direction) -->
-                <line x1="0" y1="0" x2="0" y2="-66" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round" filter="url(#gaugeShadow)" />
-                <!-- Center Cap Pin with Sonar Wave Ring -->
-                <circle cx="0" cy="0" r="12" fill="#10b981" fill-opacity="0.2" class="animate-ping" />
-                <circle cx="0" cy="0" r="6" fill="#fbbf24" stroke="#0f172a" stroke-width="2" />
-                <circle cx="0" cy="0" r="2.5" fill="#0f172a" />
+              <!-- Electric Moving Light Bead dynamically tracking tip -->
+              <g v-if="animatedPercent > 0">
+                <circle :cx="beadPos.x" :cy="beadPos.y" r="5" fill="#ffffff" filter="url(#ringGlow)" class="animate-ping" />
+                <circle :cx="beadPos.x" :cy="beadPos.y" r="6" fill="#6366f1" stroke="#ffffff" stroke-width="2" />
               </g>
 
-              <!-- Rating Score Text Inside Arch (Positioned above needle pin cap with zero overlap) -->
-              <text x="100" y="64" text-anchor="middle" fill="#fbbf24" font-size="24" font-weight="900" font-family="sans-serif" class="drop-shadow-md">
-                4.8★
-              </text>
-              <text x="100" y="80" text-anchor="middle" fill="#cbd5e1" font-size="10" font-weight="900" font-family="sans-serif" letter-spacing="1">
-                OUT OF 5.0
-              </text>
+              <!-- Center Score Display: Dynamic Ticking Score & Star Badge -->
+              <g transform="translate(80, 68)">
+                <text x="0" y="0" text-anchor="middle" font-size="26" font-weight="900" font-family="sans-serif" class="tracking-tight">
+                  <tspan fill="#0f172a">{{ animatedScore.toFixed(1) }}</tspan>
+                  <tspan fill="#f59e0b" font-size="17" dx="3" dy="-2">★</tspan>
+                </text>
+                <text x="0" y="22" text-anchor="middle" fill="#059669" font-size="9.5" font-weight="900" font-family="sans-serif" letter-spacing="0.6">
+                  {{ animatedPercent }}% QUALITY
+                </text>
+              </g>
             </svg>
           </div>
 
-          <!-- Essential Key Performance Metrics (High-Legibility Larger Fonts) -->
-          <div class="space-y-3 flex-1 w-full">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-2.5 gap-1">
-              <span class="text-sm font-black uppercase text-emerald-400 tracking-wide">96% Food Quality Index</span>
-              <span class="text-xs font-extrabold text-slate-300">2,480 Verified Passenger Ratings</span>
+          <!-- Essential Key Performance Metrics (Bluish-Purple Card Theme) -->
+          <div class="space-y-3 flex-1 w-full z-10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-indigo-200/80 pb-2.5 gap-1">
+              <span class="text-sm font-black uppercase text-indigo-950 tracking-wide">{{ animatedPercent }}% Food Quality Index</span>
+              <span class="text-xs font-extrabold text-indigo-800">2,480 Verified Passenger Ratings</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <div class="px-3.5 py-2.5 rounded-xl bg-slate-900 text-emerald-300 border border-emerald-500/40 flex items-center gap-2 text-xs font-extrabold">
-                <Clock class="w-4 h-4 text-emerald-400 shrink-0" />
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- Pill 1: Platform Delivery (Vibrant Emerald Highlight) -->
+              <div class="px-3.5 py-3 rounded-2xl bg-emerald-50/90 text-emerald-950 border border-emerald-300 shadow-soft flex items-center gap-2.5 text-xs font-black hover:scale-[1.02] transition-transform cursor-default">
+                <div class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-300/80 shadow-2xs">
+                  <Clock class="w-4 h-4" />
+                </div>
                 <span>2.5 Min Platform Delivery</span>
               </div>
-              <div class="px-3.5 py-2.5 rounded-xl bg-slate-900 text-amber-300 border border-amber-500/40 flex items-center gap-2 text-xs font-extrabold">
-                <Flame class="w-4 h-4 text-amber-400 shrink-0" />
+
+              <!-- Pill 2: Served Hot (Vibrant Amber Highlight) -->
+              <div class="px-3.5 py-3 rounded-2xl bg-amber-50/90 text-amber-950 border border-amber-300 shadow-soft flex items-center gap-2.5 text-xs font-black hover:scale-[1.02] transition-transform cursor-default">
+                <div class="w-7 h-7 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 border border-amber-300/80 shadow-2xs">
+                  <Flame class="w-4 h-4" />
+                </div>
                 <span>64°C Served Hot</span>
               </div>
-              <div class="px-3.5 py-2.5 rounded-xl bg-slate-900 text-sky-300 border border-sky-500/40 flex items-center gap-2 text-xs font-extrabold">
-                <ShieldCheck class="w-4 h-4 text-sky-400 shrink-0" />
+
+              <!-- Pill 3: Tamper-Proof Seal (Vibrant Sky Highlight) -->
+              <div class="px-3.5 py-3 rounded-2xl bg-sky-50/90 text-sky-950 border border-sky-300 shadow-soft flex items-center gap-2.5 text-xs font-black hover:scale-[1.02] transition-transform cursor-default">
+                <div class="w-7 h-7 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 border border-sky-300/80 shadow-2xs">
+                  <ShieldCheck class="w-4 h-4" />
+                </div>
                 <span>Tamper-Proof Seal</span>
               </div>
             </div>
@@ -346,7 +337,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useJourneyStore } from '@/stores/useJourneyStore'
 import AppLayout from '@/layouts/AppLayout.vue'
@@ -367,6 +358,78 @@ import {
 
 const router = useRouter()
 const journeyStore = useJourneyStore()
+
+// DYNAMIC SCROLL & ENTRANCE ANIMATION FOR FOOD QUALITY METER SCALE
+const meterCardRef = ref(null)
+const animatedScore = ref(0.0)
+const animatedPercent = ref(0)
+const arcDashOffset = ref(322.5) // Total arc length = 322.5 (empty at 322.5, full 96% at 12.9)
+const hasAnimated = ref(false)
+let scrollObserver = null
+
+// Real-time dynamic light bead positioning along 280° arc path
+const beadPos = computed(() => {
+  const angleDeg = 135 + (280 * (animatedPercent.value / 100))
+  const rad = (angleDeg * Math.PI) / 180
+  return {
+    x: 80 + 66 * Math.cos(rad),
+    y: 80 + 66 * Math.sin(rad)
+  }
+})
+
+function triggerMeterAnimation() {
+  if (hasAnimated.value) return
+  hasAnimated.value = true
+
+  // 1. Smoothly animate SVG stroke offset to target 96% arc position (12.9)
+  arcDashOffset.value = 12.9
+
+  // 2. Smoothly tick up numerical score (0.0 -> 4.8) and percent (0% -> 96%) over 1.6 seconds
+  const duration = 1600
+  const startTime = performance.now()
+
+  function animateFrame(now) {
+    const elapsed = now - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    // Ease Out Cubic function for ultra-smooth realistic movement
+    const easeProgress = 1 - Math.pow(1 - progress, 3)
+
+    animatedScore.value = +(easeProgress * 4.8).toFixed(1)
+    animatedPercent.value = Math.round(easeProgress * 96)
+
+    if (progress < 1) {
+      requestAnimationFrame(animateFrame)
+    } else {
+      animatedScore.value = 4.8
+      animatedPercent.value = 96
+    }
+  }
+
+  requestAnimationFrame(animateFrame)
+}
+
+onMounted(() => {
+  if ('IntersectionObserver' in window && meterCardRef.value) {
+    scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          triggerMeterAnimation()
+        }
+      })
+    }, { threshold: 0.15 })
+
+    scrollObserver.observe(meterCardRef.value)
+  } else {
+    // Immediate fallback
+    triggerMeterAnimation()
+  }
+})
+
+onUnmounted(() => {
+  if (scrollObserver) {
+    scrollObserver.disconnect()
+  }
+})
 
 const searchQuery = ref('')
 const activeDietFilter = ref('All')
