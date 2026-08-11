@@ -128,7 +128,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
 
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+  // If user is already logged in and visits root landing page '/', auto-redirect to '/dashboard'
+  if (to.name === 'landing' && authStore.isAuthenticated) {
+    next({ name: 'dashboard' })
+  } else if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     console.warn('[RailEase Router Guard] Blocked protected route:', to.path, '-> redirecting to landing')
     next({ name: 'landing' })
   } else {

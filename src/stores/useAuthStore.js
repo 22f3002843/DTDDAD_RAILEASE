@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { STATIC_CREDENTIALS, MOCK_USER_PROFILE } from '@/data/auth'
 
 export const useAuthStore = defineStore('auth', () => {
-  const isStoredAuth = localStorage.getItem('railease_auth') === 'true'
-  const isAuthenticated = ref(isStoredAuth)
-  const user = ref(isStoredAuth ? MOCK_USER_PROFILE : null)
+  const storedAuth = localStorage.getItem('railease_auth')
+  // Default to true on initial visit so deployed demo users access all features immediately
+  const initialAuthState = storedAuth === null ? true : storedAuth === 'true'
+
+  const isAuthenticated = ref(initialAuthState)
+  const user = ref(initialAuthState ? MOCK_USER_PROFILE : null)
   const loginError = ref('')
   const isLoading = ref(false)
 
