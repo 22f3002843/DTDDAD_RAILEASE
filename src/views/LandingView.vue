@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-slate-50 flex flex-col relative overflow-hidden selection:bg-rail-500 selection:text-white">
-    <!-- Minimal Top Scroll Line with User's Custom White Train Icon -->
+    <!-- Minimal Top Scroll Progress Line with User's Custom White Train Icon -->
     <div class="fixed top-0 left-0 right-0 h-1 bg-slate-200/40 z-[100] pointer-events-none select-none">
       <div
         class="h-full bg-rail-500 relative transition-all duration-75 ease-out"
@@ -20,10 +20,9 @@
     <Navbar @openLogin="showAuthModal = true" />
 
     <!-- ==================== AMBIENT LIGHT HERO BACKDROP ==================== -->
-    <div class="absolute inset-x-0 top-0 h-[750px] overflow-hidden pointer-events-none z-0">
-
+    <div class="absolute inset-x-0 top-0 h-[850px] overflow-hidden pointer-events-none z-0">
       <!-- Soft Gradient Overlay to blend bottom into slate-50 -->
-      <div class="absolute inset-0 bg-gradient-to-b from-slate-50/40 via-slate-50/60 to-slate-50"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-slate-50/60 to-slate-50"></div>
 
       <!-- Main Soft Ambient Glow Orb 1 (Top Left Hero Brand Area) -->
       <div
@@ -35,7 +34,7 @@
         class="absolute top-10 right-10 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-sky-400/15 via-rail-500/10 to-transparent blur-[120px] animate-slow-rotate"
       ></div>
 
-      <!-- Subtle Dot Grid Pattern Background -->
+      <!-- Subtle Tech Grid Pattern Background -->
       <div
         class="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:24px_24px] opacity-25"
       ></div>
@@ -97,6 +96,121 @@
         <QuickBookWidget />
       </div>
     </section>
+
+    <!-- ==================== 3D INTERACTIVE DYNAMIC SCROLL FRAME SHOWCASE ==================== -->
+    <!-- Linear / Apple / Stripe Style Perspective 3D Dynamic Frame that tilts & scales as user scrolls -->
+    <section class="py-12 relative overflow-hidden">
+      <div class="max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-14">
+        <!-- Section Header Tagline -->
+        <div class="text-center max-w-2xl mx-auto mb-8 space-y-2">
+          <span class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 via-purple-50 to-sky-50 text-indigo-900 text-xs font-black border border-indigo-200 shadow-2xs inline-flex items-center gap-1.5">
+            <Activity class="w-3.5 h-3.5 text-indigo-600 animate-pulse" />
+            <span>Interactive 3D Radar Telemetry</span>
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            High-Fidelity Live Corridor Interface
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 font-medium">
+            Scroll to experience real-time 3D satellite train tracking in action
+          </p>
+        </div>
+
+        <!-- 3D Perspective Canvas Container -->
+        <div class="perspective-[1200px] flex justify-center items-center py-4">
+          <!-- Main 3D Moving Showcase Frame -->
+          <div
+            class="w-full max-w-[1280px] bg-slate-900 rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden relative group transition-all duration-300"
+            :style="heroFrameStyle"
+          >
+            <!-- Top App Chrome Header Bar (Browser/App Controls) -->
+            <div class="h-10 bg-slate-950/90 border-b border-slate-800 px-4 flex items-center justify-between">
+              <!-- Control Dots -->
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              </div>
+
+              <!-- Address / Status Bar Badge -->
+              <div class="px-4 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="text-slate-300 font-bold">railease.in/live-radar/12952</span>
+              </div>
+
+              <!-- Right Status Pill -->
+              <div class="text-[10px] font-black text-sky-400 uppercase tracking-widest hidden sm:block">
+                LIVE TELEMETRY ACTIVE
+              </div>
+            </div>
+
+            <!-- Frame Inner Visual Dashboard -->
+            <div class="p-6 sm:p-8 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white space-y-6 relative overflow-hidden">
+              <!-- Ambient Subtle Light Wave Overlay -->
+              <div class="absolute -right-20 -top-20 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+              <!-- Top Metrics Bar inside 3D Frame -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                  <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Active Train</div>
+                  <div class="text-base sm:text-lg font-black text-white mt-0.5">12952 Rajdhani</div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                  <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Current Speed</div>
+                  <div class="text-base sm:text-lg font-black text-sky-400 mt-0.5 flex items-center gap-1">
+                    ⚡ 130 km/h
+                  </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                  <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Next Station</div>
+                  <div class="text-base sm:text-lg font-black text-emerald-400 mt-0.5">Chennai</div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md">
+                  <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Punctuality Score</div>
+                  <div class="text-base sm:text-lg font-black text-amber-400 mt-0.5">88.4% On Time</div>
+                </div>
+              </div>
+
+              <!-- Simulated Track Path SVG with Glowing Vector Train -->
+              <div class="h-32 sm:h-40 rounded-xl bg-slate-950/80 border border-slate-800 relative flex items-center px-6 overflow-hidden">
+                <!-- Track Line -->
+                <div class="w-full h-2 bg-slate-800 rounded-full relative">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-500 rounded-full w-[65%] shadow-glow"></div>
+                  
+                  <!-- Glowing Bullet Train Marker Pin -->
+                  <div class="absolute top-1/2 left-[65%] -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center font-black shadow-lg ring-4 ring-sky-500/30 animate-pulse">
+                      <Train class="w-4 h-4 text-white" />
+                    </div>
+                    <span class="px-2.5 py-1 rounded-md bg-sky-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-md">
+                      Kota &rarr; Kanpur
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floating Micro Glass Badges Overlay inside Frame -->
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs font-bold text-slate-400 border-t border-slate-800/80">
+                <span class="flex items-center gap-1.5 text-slate-300">
+                  <ShieldCheck class="w-4 h-4 text-emerald-400" />
+                  <span>Verified 30-Day Pattern Engine</span>
+                </span>
+                <span class="flex items-center gap-1.5 text-slate-300">
+                  <Navigation class="w-4 h-4 text-sky-400" />
+                  <span>Real-Time GPS Signals</span>
+                </span>
+                <button
+                  @click="router.push('/live-status')"
+                  class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs transition-all shadow-md cursor-pointer ml-auto"
+                >
+                  Explore Full Radar &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- =================================================================================== -->
 
     <!-- SECTION 1: 4 Reliability Pillars Showcase -->
     <section id="features" class="bg-white/80 backdrop-blur-md py-20 border-t border-slate-200/80 relative">
@@ -177,7 +291,7 @@
       </div>
     </section>
 
-    <!-- NEW SECTION: 30-Day Delay Telemetry & Pattern Match Showcase (Interactive Scroll Delay Section) -->
+    <!-- SECTION: 30-Day Delay Telemetry & Pattern Match Showcase -->
     <section class="py-20 bg-slate-100/70 border-t border-slate-200/80 relative">
       <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 space-y-12">
         <div class="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
@@ -302,7 +416,7 @@
     </section>
 
     <!-- SECTION 2: Live High-Speed Corridors Radar Section -->
-    <section class="py-20 border-t border-slate-200/80 relative">
+    <section class="py-20 bg-white border-t border-slate-200/80 relative">
       <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 space-y-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 reveal-on-scroll">
           <div>
@@ -318,7 +432,7 @@
           <div
             v-for="(corridor, index) in expressCorridors"
             :key="corridor.name"
-            :class="['bg-white p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover space-y-4 reveal-on-scroll', `delay-${(index + 1) * 100}`]"
+            :class="['bg-slate-50/80 p-6 sm:p-7 rounded-card border border-slate-200/80 shadow-soft card-glow-hover space-y-4 reveal-on-scroll', `delay-${(index + 1) * 100}`]"
           >
             <div class="flex items-center justify-between">
               <span class="px-3 py-1 rounded-full bg-rail-50 text-rail-700 font-extrabold text-[11px] border border-rail-100">
@@ -335,7 +449,7 @@
               <p class="text-xs sm:text-sm text-slate-500 mt-0.5" v-html="corridor.route"></p>
             </div>
 
-            <div class="flex items-center justify-between text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
+            <div class="flex items-center justify-between text-xs sm:text-sm text-slate-600 border-t border-slate-200/60 pt-3">
               <span>Avg Speed: <strong>{{ corridor.speed }}</strong></span>
               <span class="text-slate-400">Daily Runs</span>
             </div>
@@ -452,25 +566,7 @@
     </section>
 
     <!-- SECTION 5: Final CTA Banner -->
-    <section class="py-16 bg-gradient-to-r from-rail-600 via-blue-600 to-indigo-700 text-white relative overflow-hidden">
-      <div class="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-14 2xl:px-16 text-center space-y-6 reveal-scale delay-150 relative z-10">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
-          Never get caught off-guard by railway delays again.
-        </h2>
-        <p class="text-blue-100 text-base sm:text-lg max-w-2xl mx-auto font-normal">
-          Join thousands of smart passengers planning journeys with real historical data.
-        </p>
-        <div class="pt-2 flex justify-center items-center gap-4">
-          <button
-            @click="router.push('/search')"
-            class="px-8 py-3.5 bg-white text-rail-700 hover:bg-slate-100 font-black text-sm rounded-btn shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center gap-2"
-          >
-            <BarChart3 class="w-4 h-4 text-rail-600" />
-            <span>Search Train Reliability Score</span>
-          </button>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- Sign In / Register Modal Dialog -->
     <div
@@ -495,7 +591,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Navbar from '@/components/navbar/Navbar.vue'
 import QuickBookWidget from '@/components/common/QuickBookWidget.vue'
@@ -520,14 +616,38 @@ import {
 const router = useRouter()
 const showAuthModal = ref(false)
 const scrollProgress = ref(0)
+const scrollY = ref(0)
 
-// Calculate top scroll progress bar
+// Calculate top scroll progress bar & 3D frame scroll transform
 function handleScroll() {
+  scrollY.value = window.scrollY
   const totalScroll = document.documentElement.scrollHeight - window.innerHeight
   if (totalScroll > 0) {
     scrollProgress.value = Math.min(100, Math.max(0, (window.scrollY / totalScroll) * 100))
   }
 }
+
+// 3D Perspective Transformation linked to scroll offset (Linear/Apple/Stripe style)
+const heroFrameStyle = computed(() => {
+  // Map scrollY range (100px to 750px) to 3D rotation & scale transition
+  const minScroll = 100
+  const maxScroll = 750
+  const rawProgress = (scrollY.value - minScroll) / (maxScroll - minScroll)
+  const progress = Math.min(1, Math.max(0, rawProgress))
+
+  const rotX = 22 - (progress * 22) // Starts tilted at 22deg, levels to 0deg
+  const rotY = (1 - progress) * -4 // Subtle horizontal perspective tilt
+  const scale = 0.92 + (progress * 0.08) // Scales from 0.92 to 1.0
+  const translateY = (1 - progress) * 50
+  const shadowBlur = 30 + (progress * 30)
+  const shadowOpacity = 0.2 + (progress * 0.25)
+
+  return {
+    transform: `perspective(1200px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale(${scale.toFixed(3)}) translateY(${translateY.toFixed(1)}px)`,
+    boxShadow: `0 ${20 + progress * 30}px ${shadowBlur}px rgba(15, 23, 42, ${shadowOpacity.toFixed(2)})`,
+    transition: 'transform 0.08s ease-out, box-shadow 0.08s ease-out'
+  }
+})
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
@@ -552,7 +672,7 @@ const sampleDelayLogs = [
 
 const expressCorridors = [
   { name: 'Vande Bharat Express', type: 'High-Speed AC', route: 'New Delhi &rarr; Varanasi', punctuality: '92.4%', speed: '130 km/h' },
-  { name: 'Mumbai Rajdhani', type: 'Superfast AC', route: 'New Delhi &rarr; Varanasi', punctuality: '89.2%', speed: '120 km/h' },
+  { name: 'Mumbai Rajdhani', type: 'Superfast AC', route: 'New Delhi &rarr; Mumbai Central', punctuality: '89.2%', speed: '120 km/h' },
   { name: 'IRCTC Tejas Express', type: 'Premium Chair', route: 'Ahmedabad &rarr; Mumbai Central', punctuality: '94.8%', speed: '125 km/h' }
 ]
 
