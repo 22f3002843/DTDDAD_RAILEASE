@@ -192,7 +192,7 @@
                 <button
                   type="button"
                   @click.stop="toggleRatingPopover(train.id)"
-                  class="w-4 h-4 rounded-full bg-amber-200/80 hover:bg-amber-300 text-amber-950 flex items-center justify-center text-[10px] font-black transition-colors cursor-pointer"
+                  class="w-4 h-4 rounded-full bg-amber-300 hover:bg-amber-400 text-amber-950 flex items-center justify-center text-[10px] font-black transition-all cursor-pointer animate-pulse-5 ring-2 ring-amber-400/60"
                   title="View Rating Parameters"
                 >
                   i
@@ -238,11 +238,12 @@
                 Runs: <strong class="text-slate-900 font-black">{{ train.runsOn.join(' · ') }}</strong>
               </span>
               <button
-                @click="openTelemetryModal(train, 'trend')"
-                class="group inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-rail-500/30 bg-white text-rail-600 hover:bg-rail-600 hover:text-white hover:border-transparent text-xs font-bold transition-all duration-200 cursor-pointer"
+                @click="toggleInlineTelemetry(train.id)"
+                class="group inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-rail-500/30 bg-white text-rail-600 hover:bg-rail-600 hover:text-white hover:border-transparent text-xs font-bold transition-all duration-200 cursor-pointer shadow-2xs"
               >
                 <TrendingUp class="w-3.5 h-3.5 group-hover:text-white transition-colors" />
-                <span>30-Day Telemetry</span>
+                <span>{{ expandedTelemetryTrainId === train.id ? 'Close Telemetry' : '30-Day Telemetry' }}</span>
+                <ChevronDown :class="['w-3.5 h-3.5 transition-transform duration-200', expandedTelemetryTrainId === train.id ? 'rotate-180' : '']" />
               </button>
             </div>
           </div>
@@ -278,7 +279,7 @@
             <button
               type="button"
               @click.stop="togglePredictionPopover(train.id)"
-              class="w-6 h-6 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-slate-950 font-black text-xs flex items-center justify-center border border-amber-300 shadow-md hover:scale-110 transition-all cursor-pointer shrink-0"
+              class="w-6 h-6 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-slate-950 font-black text-xs flex items-center justify-center border border-amber-300 shadow-md hover:scale-110 transition-all cursor-pointer shrink-0 animate-pulse-5 ring-2 ring-amber-400/60"
               title="View Prediction Parameters"
             >
               i
@@ -339,10 +340,157 @@
             <span>{{ isTrainSelectedAsActive(train) ? 'Active Journey Synced ✅' : 'Sync Active Journey' }}</span>
           </button>
         </div>
+
+        <!-- Row 3: INLINE EXPANDABLE 30-DAY TELEMETRY DRAWER (SILK-SMOOTH HARDWARE-ACCELERATED ANIMATION) -->
+        <div
+          :class="[
+            'grid transition-all duration-300 ease-in-out',
+            expandedTelemetryTrainId === train.id ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+          ]"
+        >
+          <div class="overflow-hidden">
+            <div class="border-t border-slate-200 bg-slate-50/90 p-5 space-y-4">
+              <!-- Header with Top-Left Close Button and Top-Right View Tabs -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+                <div class="flex items-center gap-3">
+                  <!-- TOP LEFT CLOSE DRAWER BUTTON -->
+                  <button
+                    @click="expandedTelemetryTrainId = null"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/90 rounded-xl text-xs font-black transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95 shrink-0"
+                    title="Close Telemetry Drawer"
+                  >
+                    <X class="w-3.5 h-3.5 text-rose-600" />
+                    <span>Close Drawer</span>
+                  </button>
+
+                  <div class="flex items-center gap-2">
+                    <span :class="['w-3 h-3 rounded-full shrink-0', getReliabilityDotClass(train)]"></span>
+                    <h4 class="text-xs sm:text-sm font-black text-slate-900 uppercase">
+                      30-Day Telemetry &bull; {{ train.name }} ({{ train.number }})
+                    </h4>
+                  </div>
+                </div>
+
+                <!-- View Tabs -->
+                <div class="flex items-center gap-1 bg-white p-1 rounded-lg border border-slate-200 shadow-2xs">
+                  <button
+                    @click="inlineTabMode = 'trend'"
+                    :class="[
+                      'px-3 py-1 rounded text-xs font-bold transition-all cursor-pointer',
+                      inlineTabMode === 'trend' ? 'bg-rail-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                    ]"
+                  >
+                    Forecast Graph
+                  </button>
+                  <button
+                    @click="inlineTabMode = 'table'"
+                    :class="[
+                      'px-3 py-1 rounded text-xs font-bold transition-all cursor-pointer',
+                      inlineTabMode === 'table' ? 'bg-rail-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                    ]"
+                  >
+                    Log Table
+                  </button>
+                </div>
+              </div>
+
+              <!-- Score Summary Cards -->
+              <div class="grid grid-cols-3 gap-3 items-center text-center bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
+                <div class="flex flex-col items-center justify-center">
+                  <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Punctuality Rating</div>
+                  <ReliabilityGaugeMeter
+                    :score="confidenceOf(train)"
+                    :width="90"
+                    :height="48"
+                    :showLabels="true"
+                  />
+                </div>
+                <div>
+                  <div class="text-[11px] text-slate-500 font-bold uppercase">Average Delay</div>
+                  <div class="text-xl font-black text-slate-900 mt-0.5">
+                    {{ getAverageDelay(train) }} mins
+                  </div>
+                </div>
+                <div>
+                  <div class="text-[11px] text-slate-500 font-bold uppercase">Buffer Rec.</div>
+                  <div class="text-xl font-black text-rail-700 mt-0.5">
+                    {{ getReliabilityLevel(train) === 'red' ? '+60m' : '+15m' }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Forecast Graph View -->
+              <div v-if="inlineTabMode === 'trend'" class="bg-white p-4 rounded-xl border border-slate-200/90 space-y-3">
+                <div class="relative h-44 w-full pt-2">
+                  <svg class="w-full h-full overflow-visible" viewBox="0 0 560 140">
+                    <defs>
+                      <linearGradient id="cleanGlowInline" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0284c7" stop-opacity="0.2" />
+                        <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0" />
+                      </linearGradient>
+                    </defs>
+
+                    <path :d="getSvgFilledAreaPath(train)" fill="url(#cleanGlowInline)" />
+                    <path :d="getSvgSolidTrendPath(train)" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
+                    <path :d="getSvgForecastPath(train)" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,5" />
+
+                    <g v-for="(point, pIdx) in getSvgPoints(train)" :key="pIdx">
+                      <circle :cx="point.x" :cy="point.y" r="5" :class="point.isForecast ? 'fill-orange-500' : 'fill-sky-600'" />
+                      <text :x="point.x" :y="point.y - 10" text-anchor="middle" class="text-[10px] font-extrabold fill-slate-700">
+                        {{ point.val }}m
+                      </text>
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="flex justify-between text-[11px] font-bold text-slate-500 pt-2 border-t border-slate-100">
+                  <span v-for="(log, lIdx) in windowFor(train)" :key="lIdx">
+                    {{ log.day.split(',')[0] }}
+                  </span>
+                  <span class="text-orange-600 font-extrabold">Forecast</span>
+                </div>
+              </div>
+
+              <!-- Table View -->
+              <div v-else class="bg-white border border-slate-200/90 rounded-xl overflow-hidden shadow-2xs">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-100 text-slate-700 font-extrabold border-b border-slate-200">
+                    <tr>
+                      <th class="p-2.5">Day &amp; Date</th>
+                      <th class="p-2.5">Origin Dept</th>
+                      <th class="p-2.5">Dest Arrival</th>
+                      <th class="p-2.5 text-right">Delay</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 font-semibold text-slate-800">
+                    <tr v-for="(log, idx) in windowFor(train)" :key="idx">
+                      <td class="p-2.5 font-bold text-slate-900">{{ log.day }}</td>
+                      <td class="p-2.5 text-slate-600">{{ log.originDept }}</td>
+                      <td class="p-2.5 text-slate-600">{{ log.destArr }}</td>
+                      <td class="p-2.5 text-right font-extrabold">
+                        <span :class="log.delayMinutes === 0 ? 'text-emerald-700' : 'text-amber-700'">{{ log.status }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Footer Actions -->
+              <div class="flex items-center justify-start pt-2">
+                <button
+                  @click="handleSelectActiveJourney(train)"
+                  class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
+                >
+                  Sync Active Journey
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- CLEAN TELEMETRY MODAL -->
+    <!-- CLEAN TELEMETRY MODAL (HIGH-COMPATIBILITY SCROLLABLE CONTAINER & PINNED FOOTER BUTTONS) -->
     <transition
       enter-active-class="transition duration-200 ease-out"
       enter-from-class="opacity-0 scale-95"
@@ -353,14 +501,14 @@
     >
       <div
         v-if="selectedTrainForTelemetry"
-        class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+        class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
         @click.self="selectedTrainForTelemetry = null"
       >
-        <div class="relative w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col my-auto overflow-hidden animate-fade-in">
-          <!-- Header -->
-          <div class="p-5 border-b border-slate-100 flex items-center justify-between relative">
+        <div class="relative w-full max-w-xl max-h-[70vh] sm:max-h-[75vh] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-fade-in my-auto">
+          <!-- Header (Fixed Top) -->
+          <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between shrink-0 relative bg-white">
             <div>
-              <h3 class="text-lg font-black text-slate-900 uppercase flex items-center gap-2">
+              <h3 class="text-base sm:text-lg font-black text-slate-900 uppercase flex items-center gap-2">
                 <span :class="['w-3 h-3 rounded-full shrink-0', getReliabilityDotClass(selectedTrainForTelemetry)]"></span>
                 <span>{{ selectedTrainForTelemetry.name }} ({{ selectedTrainForTelemetry.number }})</span>
               </h3>
@@ -370,11 +518,11 @@
             </div>
 
             <!-- View Tabs -->
-            <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200">
+            <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
               <button
                 @click="modalTabMode = 'trend'"
                 :class="[
-                  'px-3 py-1 rounded text-xs font-bold transition-all cursor-pointer',
+                  'px-2.5 py-1 rounded text-xs font-bold transition-all cursor-pointer',
                   modalTabMode === 'trend' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 ]"
               >
@@ -383,7 +531,7 @@
               <button
                 @click="modalTabMode = 'table'"
                 :class="[
-                  'px-3 py-1 rounded text-xs font-bold transition-all cursor-pointer',
+                  'px-2.5 py-1 rounded text-xs font-bold transition-all cursor-pointer',
                   modalTabMode === 'table' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 ]"
               >
@@ -392,28 +540,28 @@
             </div>
           </div>
 
-          <!-- Body -->
-          <div class="p-6 space-y-4">
+          <!-- Body (Scrollable Middle Area so Buttons are ALWAYS 100% Visible) -->
+          <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 min-h-0">
             <!-- Score Summary -->
-            <div class="grid grid-cols-3 gap-3 items-center text-center bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 items-center text-center bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
               <div class="flex flex-col items-center justify-center">
                 <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Punctuality Rating</div>
                 <ReliabilityGaugeMeter
                   :score="confidenceOf(selectedTrainForTelemetry)"
-                  :width="90"
-                  :height="48"
+                  :width="80"
+                  :height="42"
                   :showLabels="true"
                 />
               </div>
               <div>
-                <div class="text-[11px] text-slate-500 font-bold uppercase">Average Delay</div>
-                <div class="text-xl font-black text-slate-900 mt-0.5">
+                <div class="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase">Average Delay</div>
+                <div class="text-lg sm:text-xl font-black text-slate-900 mt-0.5">
                   {{ getAverageDelay(selectedTrainForTelemetry) }} mins
                 </div>
               </div>
               <div>
-                <div class="text-[11px] text-slate-500 font-bold uppercase">Buffer Rec.</div>
-                <div class="text-xl font-black text-rail-700 mt-0.5">
+                <div class="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase">Buffer Rec.</div>
+                <div class="text-lg sm:text-xl font-black text-rail-700 mt-0.5">
                   {{ getReliabilityLevel(selectedTrainForTelemetry) === 'red' ? '+60m' : '+15m' }}
                 </div>
               </div>
@@ -421,7 +569,7 @@
 
             <!-- Forecast Graph View -->
             <div v-if="modalTabMode === 'trend'" class="space-y-3">
-              <div class="relative h-48 w-full pt-2">
+              <div class="relative h-36 sm:h-40 w-full pt-2">
                 <svg class="w-full h-full overflow-visible" viewBox="0 0 560 150">
                   <defs>
                     <linearGradient id="cleanGlow" x1="0" y1="0" x2="0" y2="1">
@@ -443,7 +591,7 @@
                 </svg>
               </div>
 
-              <div class="flex justify-between text-[11px] font-bold text-slate-500 pt-2 border-t border-slate-100">
+              <div class="flex justify-between text-[10px] sm:text-[11px] font-bold text-slate-500 pt-2 border-t border-slate-100">
                 <span v-for="(log, lIdx) in windowFor(selectedTrainForTelemetry)" :key="lIdx">
                   {{ log.day.split(',')[0] }}
                 </span>
@@ -476,17 +624,17 @@
             </div>
           </div>
 
-          <!-- Footer -->
-          <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+          <!-- Footer (Fixed Bottom Pin) -->
+          <div class="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
             <button
               @click="handleSelectActiveJourney(selectedTrainForTelemetry); selectedTrainForTelemetry = null"
-              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold cursor-pointer"
+              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold cursor-pointer transition-colors shadow-sm"
             >
               Sync Active Journey
             </button>
             <button
               @click="selectedTrainForTelemetry = null"
-              class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold cursor-pointer"
+              class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-extrabold cursor-pointer transition-colors"
             >
               Close
             </button>
@@ -524,11 +672,13 @@ import {
   ArrowLeftRight,
   TrendingUp,
   ChevronRight,
+  ChevronDown,
   Search,
   CheckCircle2,
   Star,
   StarHalf,
-  Gauge
+  Gauge,
+  X
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -538,6 +688,17 @@ const journeyStore = useJourneyStore()
 const pnrSearchInput = ref('')
 const selectedTrainForTelemetry = ref(null)
 const modalTabMode = ref('trend')
+const expandedTelemetryTrainId = ref(null)
+const inlineTabMode = ref('trend')
+
+function toggleInlineTelemetry(trainId) {
+  if (expandedTelemetryTrainId.value === trainId) {
+    expandedTelemetryTrainId.value = null
+  } else {
+    expandedTelemetryTrainId.value = trainId
+    inlineTabMode.value = 'trend'
+  }
+}
 const activeRatingPopoverId = ref(null)
 const activePredictionPopoverId = ref(null)
 
@@ -708,3 +869,22 @@ function openTelemetryModal(train, mode = 'trend') {
   modalTabMode.value = mode
 }
 </script>
+
+<style scoped>
+@keyframes pulse5 {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.25);
+    box-shadow: 0 0 8px 4px rgba(251, 191, 36, 0.9);
+  }
+}
+
+.animate-pulse-5 {
+  animation: pulse5 0.75s ease-in-out 4; /* Blinks 4 times then stops */
+}
+</style>
