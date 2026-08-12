@@ -202,7 +202,7 @@
                 <div class="w-7 h-7 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 border border-amber-300/80 shadow-2xs">
                   <Flame class="w-4 h-4" />
                 </div>
-                <span>64°C Served Hot</span>
+                <span>Served Fresh &amp; Hot 🔥</span>
               </div>
 
               <!-- Pill 3: Tamper-Proof Seal (Vibrant Sky Highlight) -->
@@ -534,7 +534,7 @@ const reviewsList = ref([
     vendor: 'Haldiram Express',
     comment: 'Insanely punctual! The delivery executive was waiting right at coach B4 door as 12952 Rajdhani entered platform 1. Meal was piping hot, rotis wrapped in foil, paneer curry was super fresh.',
     deliverySpeed: '2 min Seat Delivery',
-    temperature: 'Served Hot (64°C)',
+    temperature: 'Served Fresh & Hot 🔥',
     packaging: 'Tamper-Proof Seal',
     helpfulCount: 34,
     isHelpful: false
