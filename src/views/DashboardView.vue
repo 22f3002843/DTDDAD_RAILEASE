@@ -84,7 +84,7 @@
                card shape without sending anyone to another page. -->
           <div v-if="sparkline.length" class="space-y-1.5">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider">
-              How this train ran over 30 days
+              How this train ran over 7 days
             </p>
             <div class="flex items-end gap-[2px] h-8">
               <div

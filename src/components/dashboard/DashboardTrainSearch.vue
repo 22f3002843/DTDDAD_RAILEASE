@@ -15,7 +15,7 @@
           <div class="w-6 h-6 rounded-lg bg-rail-100/80 border border-rail-200 flex items-center justify-center shrink-0">
             <Train class="w-3.5 h-3.5 text-rail-700" />
           </div>
-          <span>Search trains between any stations, analyze 30-day delay telemetry, or search by train number / PNR.</span>
+          <span>Search trains between any stations, analyze 7-day delay telemetry, or search by train number / PNR.</span>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5 shrink-0">
@@ -242,7 +242,7 @@
                 class="group inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-rail-500/30 bg-white text-rail-600 hover:bg-rail-600 hover:text-white hover:border-transparent text-xs font-bold transition-all duration-200 cursor-pointer shadow-2xs"
               >
                 <TrendingUp class="w-3.5 h-3.5 group-hover:text-white transition-colors" />
-                <span>{{ expandedTelemetryTrainId === train.id ? 'Close Telemetry' : '30-Day Telemetry' }}</span>
+                <span>{{ expandedTelemetryTrainId === train.id ? 'Close Telemetry' : '7-Day Telemetry' }}</span>
                 <ChevronDown :class="['w-3.5 h-3.5 transition-transform duration-200', expandedTelemetryTrainId === train.id ? 'rotate-180' : '']" />
               </button>
             </div>
@@ -298,7 +298,7 @@
                 <button @click="activePredictionPopoverId = null" class="text-slate-400 hover:text-slate-700 text-xs font-bold cursor-pointer">✕</button>
               </div>
               <div class="space-y-1.5 text-[11px] font-extrabold text-slate-700">
-                <div class="flex justify-between items-center"><span>📅 30-Day Punctuality</span><span class="text-rail-700 font-black">50% Weight</span></div>
+                <div class="flex justify-between items-center"><span>📅 7-Day Punctuality</span><span class="text-rail-700 font-black">50% Weight</span></div>
                 <div class="flex justify-between items-center"><span>🚥 Track Congestion</span><span class="text-rail-700 font-black">30% Weight</span></div>
                 <div class="flex justify-between items-center"><span>🚉 Departure Delay Risk</span><span class="text-rail-700 font-black">20% Weight</span></div>
               </div>
@@ -341,7 +341,7 @@
           </button>
         </div>
 
-        <!-- Row 3: INLINE EXPANDABLE 30-DAY TELEMETRY DRAWER (SILK-SMOOTH HARDWARE-ACCELERATED ANIMATION) -->
+        <!-- Row 3: INLINE EXPANDABLE 7-DAY TELEMETRY DRAWER (SILK-SMOOTH HARDWARE-ACCELERATED ANIMATION) -->
         <div
           :class="[
             'grid transition-all duration-300 ease-in-out',
@@ -366,7 +366,7 @@
                   <div class="flex items-center gap-2">
                     <span :class="['w-3 h-3 rounded-full shrink-0', getReliabilityDotClass(train)]"></span>
                     <h4 class="text-xs sm:text-sm font-black text-slate-900 uppercase">
-                      30-Day Telemetry &bull; {{ train.name }} ({{ train.number }})
+                      7-Day Telemetry &bull; {{ train.name }} ({{ train.number }})
                     </h4>
                   </div>
                 </div>
@@ -513,7 +513,7 @@
                 <span>{{ selectedTrainForTelemetry.name }} ({{ selectedTrainForTelemetry.number }})</span>
               </h3>
               <p class="text-xs text-slate-500 font-medium mt-0.5">
-                Past 30-day delay history and arrival punctuality
+                Past 7-day delay history and arrival punctuality
               </p>
             </div>
 
@@ -790,7 +790,7 @@ function handlePnrSync() {
  * @returns {Array<Object>} the history window, oldest day first
  */
 function windowFor(train) {
-  return getHistory(train)
+  return getHistory(train).slice(-7)
 }
 
 /**

@@ -9,7 +9,7 @@
             <span>Train Intelligence &amp; Sync</span>
           </h1>
           <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            Historical 30-day punctuality telemetry, AI delay predictions, and live PNR journey sync.
+            Historical 7-day punctuality telemetry, AI delay predictions, and live PNR journey sync.
           </p>
         </div>
 
@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <!-- Main Authenticated Search Component with 30-Day Past Delay Telemetry -->
+      <!-- Main Authenticated Search Component with 7-Day Past Delay Telemetry -->
       <DashboardTrainSearch />
     </div>
   </AppLayout>

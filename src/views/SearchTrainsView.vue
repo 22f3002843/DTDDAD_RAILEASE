@@ -284,7 +284,7 @@
               <Lock class="w-4 h-4 text-sky-300" />
             </div>
             <div>
-              <span class="text-xs font-black block text-sky-200 uppercase tracking-wider">Unlock Full 30-Day Delay Telemetry &amp; Live Journey Sync</span>
+              <span class="text-xs font-black block text-sky-200 uppercase tracking-wider">Unlock Full 7-Day Delay Telemetry &amp; Live Journey Sync</span>
               <span class="text-[11px] text-blue-100">Sign In to sync a live journey and get alerts. Reliability scores are free for everyone.</span>
             </div>
           </div>

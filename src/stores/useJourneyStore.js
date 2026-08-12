@@ -88,7 +88,7 @@ export const useJourneyStore = defineStore('journey', () => {
       ],
       predictedArrival: train.arrTime || '02:00 PM',
       predictionInsights: [
-        `Historical 30-day punctuality score for ${train.name} is ${train.punctualityScore || 92}%`,
+        `Historical 7-day punctuality score for ${train.name} is ${train.punctualityScore || 92}%`,
         `RailEase live satellite radar locked for ${train.fromName} -> ${train.toName} corridor`,
         'All eCatering, PNR alerts, and community feeds synced for this train'
       ]
